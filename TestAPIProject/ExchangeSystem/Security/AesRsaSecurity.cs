@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ExchangeSystem.Security
 {
-    public class AesRsaSecurity : PackageSecurity
+    public class AesRsaSecurity : SecurityData
     {
         public AesRsaSecurity(string rsaPublic, string aesKey, string aesIV)
         {

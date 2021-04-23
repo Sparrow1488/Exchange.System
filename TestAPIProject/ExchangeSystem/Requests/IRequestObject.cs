@@ -6,6 +6,6 @@ namespace ExchangeSystem.Requests
 {
     public interface IRequestObject
     {
-
+        //string ToJson();
     }
 }

@@ -11,24 +11,28 @@ namespace ExchangeSystem.Requests
     {
         public Package(int requestType, IRequestObject attachObject)
         {
-            AttachObject = attachObject;
+            RequestObject = attachObject;
             RequestType = requestType;
         }
         public Package(IRequestObject requestObject)
         {
-            AttachObject = requestObject;
+            RequestObject = requestObject;
         }
         [JsonProperty]
         public int RequestType { get; protected set; }
         [JsonProperty]
-        public IRequestObject AttachObject { get; protected set; }
-        public PackageSecurity SecurityInfo { get; } 
+        public IRequestObject RequestObject { get; protected set; }
+        [JsonProperty]
+        public SecurityData Security { get; } 
         public string UserToken { get; }
         public bool IsSecure { get; }
 
         public string ToJson()
         {
-            throw new NotImplementedException();
+            return JsonConvert.SerializeObject(this, Formatting.Indented, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All
+            });
         }
     }
 }

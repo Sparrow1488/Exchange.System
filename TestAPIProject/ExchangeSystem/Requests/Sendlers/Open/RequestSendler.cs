@@ -20,31 +20,38 @@ namespace ExchangeSystem.Requests.Sendlers.Open
         {
             var client = new TcpClient();
             client.Connect(ConnectionInfo.HostName, ConnectionInfo.Port);
-            var jsonPackage = JsonConvert.SerializeObject(RequestPackage, Formatting.Indented, new JsonSerializerSettings
-            {
-                TypeNameHandling = TypeNameHandling.All
-            });
+            string jsonPackage = RequestPackage.ToJson();
             byte[] buffer = Encoding.UTF32.GetBytes(jsonPackage);
             client.SendBufferSize = buffer.Length;
 
             var stream = client.GetStream();
-            do
-            {
-                stream.Write(buffer, 0, buffer.Length);
-            }
-            while (stream.DataAvailable);
 
-            int bufferSize = client.ReceiveBufferSize;
+            WriteData(ref stream, buffer);
+            byte[] receivedBuffer = ReadData(ref stream, 256);
+            
+            stream.Close();
+
+            string jsonResponse = Encoding.UTF32.GetString(receivedBuffer);
+            return jsonResponse;
+        }
+        private byte[] ReadData(ref NetworkStream stream, int bufferSize)
+        {
             byte[] receivedBuffer = new byte[bufferSize];
             do
             {
                 stream.Read(receivedBuffer, 0, receivedBuffer.Length);
             }
             while (stream.DataAvailable);
-            stream.Close();
+            return receivedBuffer;
+        }
 
-            string jsonResponse = Encoding.UTF32.GetString(receivedBuffer);
-            return jsonResponse;
+        private void WriteData(ref NetworkStream stream, byte[] buffer)
+        {
+            do
+            {
+                stream.Write(buffer, 0, buffer.Length);
+            }
+            while (stream.DataAvailable);
         }
     }
 }

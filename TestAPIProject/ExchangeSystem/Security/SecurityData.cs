@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ExchangeSystem.Security
 {
-    public abstract class PackageSecurity
+    public abstract class SecurityData
     {
         public int EncryptType { get; protected set; }
     }

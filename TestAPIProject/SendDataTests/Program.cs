@@ -1,4 +1,6 @@
 ﻿using ExchangeSystem.Requests;
+using ExchangeSystem.Requests.Objects;
+using ExchangeSystem.Requests.Objects.Entities;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -34,7 +36,8 @@ namespace SendDataTests
             });
             Console.WriteLine(pack);
 
-            
+            var authUser = new User(pack.RequestObject as UserInfo);
+
         }
     }
 }
