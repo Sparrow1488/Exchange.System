@@ -1,18 +1,15 @@
-﻿using ExchangeSystem.Requests;
-using ExchangeSystem.Security;
+﻿using ExchangeSystem.Requests.Objects;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ExchangeSystem.Requests
+namespace ExchangeSystem.Requests.Packages.Default
 {
     public abstract class Package : IPackage
     {
-        public Package(int requestType, IRequestObject attachObject)
+        public Package(int requestType, IRequestObject attachObject, string userToken)
         {
             RequestObject = attachObject;
             RequestType = requestType;
+            UserToken = userToken;
         }
         public Package(IRequestObject requestObject)
         {
@@ -23,9 +20,7 @@ namespace ExchangeSystem.Requests
         [JsonProperty]
         public IRequestObject RequestObject { get; protected set; }
         [JsonProperty]
-        public SecurityData Security { get; } 
         public string UserToken { get; }
-        public bool IsSecure { get; }
 
         public string ToJson()
         {

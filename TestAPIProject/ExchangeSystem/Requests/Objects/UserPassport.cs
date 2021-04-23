@@ -5,15 +5,15 @@ using System.Text;
 
 namespace ExchangeSystem.Requests.Objects
 {
-    public class UserInfo : IRequestObject
+    public class UserPassport : IRequestObject
     {
-        public UserInfo(string login, string password)
+        public UserPassport(string login, string password)
         {
             Login = login;
             Password = password;
         }
         [JsonConstructor]
-        public UserInfo(string login, string password, string token)
+        public UserPassport(string login, string password, string token)
         {
             Login = login;
             Password = password;

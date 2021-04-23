@@ -1,14 +1,13 @@
-﻿using ExchangeSystem.Requests;
-using ExchangeSystem.Requests.Objects;
-using ExchangeSystem.Requests.Packages;
+﻿using ExchangeSystem.Requests.Objects;
+using ExchangeSystem.Requests.Packages.Default;
 using ExchangeSystem.Requests.Sendlers;
+using ExchangeSystem.Requests.Sendlers.Close;
 using ExchangeSystem.Requests.Sendlers.Open;
-using Newtonsoft.Json;
 using System;
 
 namespace TestAPIProject
 {
-    class Program
+    public class Program
     {
         public enum Types
         {
@@ -16,12 +15,15 @@ namespace TestAPIProject
         }
         static void Main(string[] args)
         {
-            var info = new UserInfo("Valentin", "1488");
+            var info = new UserPassport("Valentin", "1488");
             Package auth = new Authorization(info);
             var connectionInfo = new ConnectionSettings("127.0.0.1", 80);
-            var sendler = new RequestSendler(auth, connectionInfo);
-            string jsonResponse = sendler.SendRequest();
+            var sendler = new RequestSendler(connectionInfo);
+            string jsonResponse = sendler.SendRequest(auth);
             Console.WriteLine(jsonResponse);
+
+            var aesRsa = new AesRsaSendler(connectionInfo);
+            string jsonSecretResponse = aesRsa.SendRequest(auth);
         }
     }
 }

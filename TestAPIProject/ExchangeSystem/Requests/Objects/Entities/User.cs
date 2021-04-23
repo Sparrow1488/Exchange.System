@@ -6,12 +6,12 @@ namespace ExchangeSystem.Requests.Objects.Entities
 {
     public class User
     {
-        public User(UserInfo info)
+        public User(UserPassport info)
         {
             Info = info;
         }
         public int ProfilePhotoId { get; private set; }
         public string Description { get; private set; }
-        public UserInfo Info { get; private set; }
+        public UserPassport Info { get; private set; }
     }
 }

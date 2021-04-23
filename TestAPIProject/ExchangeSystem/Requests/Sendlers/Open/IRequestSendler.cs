@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ExchangeSystem.Requests.Packages.Default;
 
 namespace ExchangeSystem.Requests.Sendlers.Open
 {
     public interface IRequestSendler
     {
-        string SendRequest();
+        string SendRequest(IPackage package);
     }
 }

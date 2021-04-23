@@ -36,7 +36,7 @@ namespace SendDataTests
             });
             Console.WriteLine(pack);
 
-            var authUser = new User(pack.RequestObject as UserInfo);
+            var authUser = new User(pack.RequestObject as UserPassport);
 
         }
     }
