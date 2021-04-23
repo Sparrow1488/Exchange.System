@@ -1,0 +1,17 @@
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\SendDataTests\bin\Debug\netcoreapp3.1\TenantServerTests.exe
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\SendDataTests\bin\Debug\netcoreapp3.1\TenantServerTests.deps.json
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\SendDataTests\bin\Debug\netcoreapp3.1\TenantServerTests.runtimeconfig.json
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\SendDataTests\bin\Debug\netcoreapp3.1\TenantServerTests.runtimeconfig.dev.json
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\SendDataTests\bin\Debug\netcoreapp3.1\TenantServerTests.dll
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\SendDataTests\bin\Debug\netcoreapp3.1\TenantServerTests.pdb
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\SendDataTests\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\SendDataTests\bin\Debug\netcoreapp3.1\ExchangeSystem.dll
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\SendDataTests\bin\Debug\netcoreapp3.1\ExchangeSystem.pdb
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\SendDataTests\obj\Debug\netcoreapp3.1\TenantServerTests.csprojAssemblyReference.cache
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\SendDataTests\obj\Debug\netcoreapp3.1\TenantServerTests.AssemblyInfoInputs.cache
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\SendDataTests\obj\Debug\netcoreapp3.1\TenantServerTests.AssemblyInfo.cs
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\SendDataTests\obj\Debug\netcoreapp3.1\TenantServerTests.csproj.CoreCompileInputs.cache
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\SendDataTests\obj\Debug\netcoreapp3.1\TenantServerTests.csproj.CopyComplete
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\SendDataTests\obj\Debug\netcoreapp3.1\TenantServerTests.dll
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\SendDataTests\obj\Debug\netcoreapp3.1\TenantServerTests.pdb
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\SendDataTests\obj\Debug\netcoreapp3.1\TenantServerTests.genruntimeconfig.cache

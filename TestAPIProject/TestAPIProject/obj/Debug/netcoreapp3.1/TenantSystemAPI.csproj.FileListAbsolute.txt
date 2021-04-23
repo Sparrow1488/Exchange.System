@@ -1,0 +1,17 @@
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\TestAPIProject\bin\Debug\netcoreapp3.1\TenantSystemAPI.exe
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\TestAPIProject\bin\Debug\netcoreapp3.1\TenantSystemAPI.deps.json
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\TestAPIProject\bin\Debug\netcoreapp3.1\TenantSystemAPI.runtimeconfig.json
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\TestAPIProject\bin\Debug\netcoreapp3.1\TenantSystemAPI.runtimeconfig.dev.json
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\TestAPIProject\bin\Debug\netcoreapp3.1\TenantSystemAPI.dll
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\TestAPIProject\bin\Debug\netcoreapp3.1\TenantSystemAPI.pdb
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\TestAPIProject\obj\Debug\netcoreapp3.1\TenantSystemAPI.csprojAssemblyReference.cache
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\TestAPIProject\obj\Debug\netcoreapp3.1\TenantSystemAPI.AssemblyInfoInputs.cache
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\TestAPIProject\obj\Debug\netcoreapp3.1\TenantSystemAPI.AssemblyInfo.cs
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\TestAPIProject\obj\Debug\netcoreapp3.1\TenantSystemAPI.csproj.CoreCompileInputs.cache
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\TestAPIProject\obj\Debug\netcoreapp3.1\TenantSystemAPI.dll
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\TestAPIProject\obj\Debug\netcoreapp3.1\TenantSystemAPI.pdb
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\TestAPIProject\obj\Debug\netcoreapp3.1\TenantSystemAPI.genruntimeconfig.cache
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\TestAPIProject\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\TestAPIProject\bin\Debug\netcoreapp3.1\ExchangeSystem.dll
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\TestAPIProject\bin\Debug\netcoreapp3.1\ExchangeSystem.pdb
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\TestAPIProject\obj\Debug\netcoreapp3.1\TenantSystemAPI.csproj.CopyComplete

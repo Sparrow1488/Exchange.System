@@ -1,20 +1,81 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dom\\Desktop\\Репозитории\\tenant-client-server\\TestAPIProject\\TestAPIProject\\TenantSystemAPI.csproj": {}
+    "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\open-close_exchange_system\\TestAPIProject\\TestAPIProject\\TenantSystemAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dom\\Desktop\\Репозитории\\tenant-client-server\\TestAPIProject\\TestAPIProject\\TenantSystemAPI.csproj": {
+    "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\open-close_exchange_system\\TestAPIProject\\ExchangeSystem\\ExchangeSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dom\\Desktop\\Репозитории\\tenant-client-server\\TestAPIProject\\TestAPIProject\\TenantSystemAPI.csproj",
-        "projectName": "TenantSystemAPI",
-        "projectPath": "C:\\Users\\Dom\\Desktop\\Репозитории\\tenant-client-server\\TestAPIProject\\TestAPIProject\\TenantSystemAPI.csproj",
-        "packagesPath": "C:\\Users\\Dom\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dom\\Desktop\\Репозитории\\tenant-client-server\\TestAPIProject\\TestAPIProject\\obj\\",
+        "projectUniqueName": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\open-close_exchange_system\\TestAPIProject\\ExchangeSystem\\ExchangeSystem.csproj",
+        "projectName": "ExchangeSystem",
+        "projectPath": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\open-close_exchange_system\\TestAPIProject\\ExchangeSystem\\ExchangeSystem.csproj",
+        "packagesPath": "C:\\Users\\DOM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\open-close_exchange_system\\TestAPIProject\\ExchangeSystem\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Dom\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\DOM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "dependencies": {
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\open-close_exchange_system\\TestAPIProject\\TestAPIProject\\TenantSystemAPI.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\open-close_exchange_system\\TestAPIProject\\TestAPIProject\\TenantSystemAPI.csproj",
+        "projectName": "TenantSystemAPI",
+        "projectPath": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\open-close_exchange_system\\TestAPIProject\\TestAPIProject\\TenantSystemAPI.csproj",
+        "packagesPath": "C:\\Users\\DOM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\open-close_exchange_system\\TestAPIProject\\TestAPIProject\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\DOM\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -27,7 +88,11 @@
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\open-close_exchange_system\\TestAPIProject\\ExchangeSystem\\ExchangeSystem.csproj": {
+                "projectPath": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\open-close_exchange_system\\TestAPIProject\\ExchangeSystem\\ExchangeSystem.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -54,7 +119,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
