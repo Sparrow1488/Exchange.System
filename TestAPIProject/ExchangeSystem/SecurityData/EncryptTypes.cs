@@ -6,6 +6,7 @@ namespace ExchangeSystem.SecurityData
 {
     public enum EncryptTypes
     {
-        AesRsa = 200
+        None,
+        AesRsa
     }
 }

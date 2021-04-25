@@ -1,4 +1,5 @@
 ﻿using Encryptors.Aes;
+using ExchangeSystem.Requests.Packages;
 using ExchangeSystem.Requests.Packages.Default;
 using ExchangeSystem.Requests.Packages.Protected;
 using ExchangeSystem.SecurityData;
@@ -15,11 +16,9 @@ namespace ExchangeSystem.Requests.Sendlers.Close
         {
             ConnectionSettings = settings;
         }
-
-        [JsonProperty]
         public ConnectionSettings ConnectionSettings { get; }
-        [JsonProperty]
         public ProtectedPackage SecretPackage { get; protected set; }
+        private RequestInformation _requestInfo;
 
         public string SendRequest(IPackage package)
         {
@@ -31,19 +30,30 @@ namespace ExchangeSystem.Requests.Sendlers.Close
             Security security = new AesRsaSecurity(string.Empty, string.Empty, base64KEY, base64IV);
             SecretPackage = new ProtectedPackage(encryptPackage, security);
             string secretJsonPackage = SecretPackage.ToJson();
+            
 
             var client = new TcpClient();
             client.Connect(ConnectionSettings.HostName, ConnectionSettings.Port);
+            
+            var stream = client.GetStream();
             byte[] buffer = Encoding.UTF32.GetBytes(secretJsonPackage);
 
-            var stream = client.GetStream();
+            _requestInfo = new RequestInformation(EncryptTypes.AesRsa, buffer.Length);
+            string requestJson = JsonConvert.SerializeObject(_requestInfo, Formatting.Indented, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All
+            });
+            byte[] requestInfoBuffer = Encoding.UTF32.GetBytes(requestJson);
 
+
+            WriteData(ref stream, requestInfoBuffer);
+            byte[] publicServerRsa = ReadData(ref stream, 256);
+            string _key = Encoding.UTF32.GetString(publicServerRsa);
             WriteData(ref stream, buffer);
-            byte[] receivedBuffer = ReadData(ref stream, 256);
 
             stream.Close();
 
-            string jsonResponse = Encoding.UTF32.GetString(receivedBuffer);
+            string jsonResponse = Encoding.UTF32.GetString(publicServerRsa);
             return jsonResponse;
         }
 

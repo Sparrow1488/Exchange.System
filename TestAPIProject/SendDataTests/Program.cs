@@ -2,6 +2,7 @@
 using ExchangeSystem.Requests;
 using ExchangeSystem.Requests.Objects;
 using ExchangeSystem.Requests.Objects.Entities;
+using ExchangeSystem.Requests.Packages;
 using ExchangeSystem.Requests.Packages.Default;
 using ExchangeSystem.Requests.Packages.Protected;
 using ExchangeSystem.SecurityData;
@@ -26,22 +27,46 @@ namespace SendDataTests
             Console.WriteLine("Connected");
             var stream = client.GetStream();
 
-            byte[] receiveArray = new byte[1024];
-            StringBuilder builder = new StringBuilder();
-            do
-            {
-                int bytes = stream.Read(receiveArray, 0, receiveArray.Length);
-                builder.Append(Encoding.UTF32.GetString(receiveArray, 0, bytes));
-            }
-            while (stream.DataAvailable);
-
-            ProtectedPackage pack = (ProtectedPackage)JsonConvert.DeserializeObject(builder.ToString(), new JsonSerializerSettings
+            byte[] receiveArray = ReadData(ref stream, 1024);
+            Console.WriteLine(receiveArray);
+            string _infoJson = Encoding.UTF32.GetString(receiveArray);
+            var _requestInfo = (RequestInformation)JsonConvert.DeserializeObject(_infoJson, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.All,
             });
-            Console.WriteLine(pack);
-            AesRsaReceiver(pack);
 
+            if(_requestInfo.EncryptType == EncryptTypes.AesRsa)
+            {
+                byte[] key = Encoding.UTF32.GetBytes("PUBLIC_RSA_SHO");
+                WriteData(ref stream, key);
+                byte[] _receivedProtectedPack = ReadData(ref stream, _requestInfo.DataSize);
+                string _protectedJsonPackage = Encoding.UTF32.GetString(_receivedProtectedPack);
+                ProtectedPackage pack = (ProtectedPackage)JsonConvert.DeserializeObject(_protectedJsonPackage, new JsonSerializerSettings
+                 {
+                     TypeNameHandling = TypeNameHandling.All,
+                 });
+                Console.WriteLine(pack);
+                AesRsaReceiver(pack);
+            }
+
+        }
+        private static byte[] ReadData(ref NetworkStream stream, int bufferSize)
+        {
+            byte[] receivedBuffer = new byte[bufferSize];
+            do
+            {
+                stream.Read(receivedBuffer, 0, receivedBuffer.Length);
+            }
+            while (stream.DataAvailable);
+            return receivedBuffer;
+        }
+        private static void WriteData(ref NetworkStream stream, byte[] buffer)
+        {
+            do
+            {
+                stream.Write(buffer, 0, buffer.Length);
+            }
+            while (stream.DataAvailable);
         }
         private static void AesRsaReceiver(ProtectedPackage protectedPackage)
         {
