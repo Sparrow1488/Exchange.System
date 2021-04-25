@@ -9,7 +9,8 @@
       "TenantServerTests/1.0.0": {
         "dependencies": {
           "ExchangeSystem": "1.0.0",
-          "Newtonsoft.Json": "13.0.1"
+          "Newtonsoft.Json": "13.0.1",
+          "Encryptors": "1.0.0.0"
         },
         "runtime": {
           "TenantServerTests.dll": {}
@@ -30,6 +31,14 @@
         "runtime": {
           "ExchangeSystem.dll": {}
         }
+      },
+      "Encryptors/1.0.0.0": {
+        "runtime": {
+          "Encryptors.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
       }
     }
   },
@@ -48,6 +57,11 @@
     },
     "ExchangeSystem/1.0.0": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Encryptors/1.0.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

@@ -9,7 +9,7 @@ namespace ExchangeSystem.Requests.Packages.Default
     {
         public NewMessage(IRequestObject requestObject) : base(requestObject)
         {
-            RequestType = (int)RequestTypes.NewMessage;
+            RequestType = RequestTypes.NewMessage;
         }
     }
 }

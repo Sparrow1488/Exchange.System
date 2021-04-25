@@ -5,7 +5,7 @@ namespace ExchangeSystem.Requests.Packages.Default
 {
     public abstract class Package : IPackage
     {
-        public Package(int requestType, IRequestObject attachObject, string userToken)
+        public Package(RequestTypes requestType, IRequestObject attachObject, string userToken)
         {
             RequestObject = attachObject;
             RequestType = requestType;
@@ -16,7 +16,7 @@ namespace ExchangeSystem.Requests.Packages.Default
             RequestObject = requestObject;
         }
         [JsonProperty]
-        public int RequestType { get; protected set; }
+        public RequestTypes RequestType { get; protected set; }
         [JsonProperty]
         public IRequestObject RequestObject { get; protected set; }
         [JsonProperty]

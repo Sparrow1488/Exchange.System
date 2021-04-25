@@ -19,10 +19,10 @@ namespace ExchangeSystem.Requests.Objects
             Password = password;
             Token = token;
         }
-        public string Login { get; }
+        public string Login { get; } = string.Empty;
         [JsonProperty]
-        private string Password { get; }
-        public string Token { get; }
-        public int UserId { get; }
+        private string Password { get; } = string.Empty;
+        public string Token { get; } = string.Empty;
+        public int UserId { get; } = -1;
     }
 }

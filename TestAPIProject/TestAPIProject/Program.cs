@@ -9,18 +9,14 @@ namespace TestAPIProject
 {
     public class Program
     {
-        public enum Types
-        {
-            Auth = 1
-        }
         static void Main(string[] args)
         {
             var info = new UserPassport("Valentin", "1488");
             Package auth = new Authorization(info);
             var connectionInfo = new ConnectionSettings("127.0.0.1", 80);
-            var sendler = new RequestSendler(connectionInfo);
-            string jsonResponse = sendler.SendRequest(auth);
-            Console.WriteLine(jsonResponse);
+            //var sendler = new RequestSendler(connectionInfo);
+            //string jsonResponse = sendler.SendRequest(auth);
+            //Console.WriteLine(jsonResponse);
 
             var aesRsa = new AesRsaSendler(connectionInfo);
             string jsonSecretResponse = aesRsa.SendRequest(auth);

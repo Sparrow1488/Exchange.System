@@ -8,4 +8,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Encryptors">
+      <HintPath>..\..\..\Encryptors\AESTest\AesEncryptor\bin\Debug\netstandard2.0\Encryptors.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

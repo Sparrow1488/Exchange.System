@@ -8,7 +8,6 @@ namespace ExchangeSystem.Requests.Sendlers.Close
     {
         public AesRsaSendler(ConnectionSettings settings) : base(settings)
         {
-            
         }
     }
 }

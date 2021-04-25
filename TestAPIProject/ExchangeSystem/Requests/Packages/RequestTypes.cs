@@ -6,7 +6,7 @@ namespace ExchangeSystem.Requests.Packages
 {
     public enum RequestTypes
     {
-        Auth = 20,
-        NewMessage = 14
+        Authorization,
+        NewMessage
     }
 }

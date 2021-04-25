@@ -1,24 +1,26 @@
-﻿using ExchangeSystem.Requests.Packages.Default;
-using ExchangeSystem.SecurityData;
+﻿using ExchangeSystem.SecurityData;
 using Newtonsoft.Json;
 
 namespace ExchangeSystem.Requests.Packages.Protected
 {
     public class ProtectedPackage : IProtectedPackage
     {
-        public ProtectedPackage(IPackage package, Security security)
+        public ProtectedPackage(string secretPackage, Security security)
         {
-            SecretPackage = package;
+            SecretPackage = secretPackage;
             Security = security;
         }
         [JsonProperty]
         public Security Security { get; }
-        private IPackage SecretPackage { get; }
-        public string SecretJson { get; }
+        [JsonProperty]
+        public string SecretPackage { get; } // json + encrypt + base64
 
         public string ToJson()
         {
-            throw new System.NotImplementedException();
+            return JsonConvert.SerializeObject(this, Formatting.Indented, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All
+            });
         }
     }
 }
