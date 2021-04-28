@@ -1,4 +1,5 @@
 ﻿using Encryptors.Aes;
+using Encryptors.Rsa;
 using ExchangeSystem.Requests;
 using ExchangeSystem.Requests.Objects;
 using ExchangeSystem.Requests.Objects.Entities;
@@ -37,10 +38,15 @@ namespace SendDataTests
 
             if(_requestInfo.EncryptType == EncryptTypes.AesRsa)
             {
-                byte[] key = Encoding.UTF32.GetBytes("PUBLIC_RSA_SHO");
-                WriteData(ref stream, key);
-                byte[] _receivedProtectedPack = ReadData(ref stream, _requestInfo.DataSize);
-                string _protectedJsonPackage = Encoding.UTF32.GetString(_receivedProtectedPack);
+                RsaEncryptor rsa = new RsaEncryptor();
+                RsaConverter converter = new RsaConverter();
+                var publicXmlKey = converter.AsXML(rsa.PublicKey);
+                byte[] publicRsa = Encoding.UTF32.GetBytes(publicXmlKey);
+                WriteData(ref stream, publicRsa);
+                byte[] _futureSecretPackageSize = ReadData(ref stream, 128);
+                string secretPackageSize = Encoding.UTF32.GetString(_futureSecretPackageSize);
+                byte[] bufferForSecretPackage = ReadData(ref stream, Convert.ToInt32(secretPackageSize));
+                string _protectedJsonPackage = Encoding.UTF32.GetString(bufferForSecretPackage);
                 ProtectedPackage pack = (ProtectedPackage)JsonConvert.DeserializeObject(_protectedJsonPackage, new JsonSerializerSettings
                  {
                      TypeNameHandling = TypeNameHandling.All,

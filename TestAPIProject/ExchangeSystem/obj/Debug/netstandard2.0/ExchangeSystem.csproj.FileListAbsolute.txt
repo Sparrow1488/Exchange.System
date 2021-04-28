@@ -19,3 +19,5 @@ C:\Users\Dom\Desktop\Репозитории\open-close_exchange_system\TestAPIPr
 C:\Users\Dom\Desktop\Репозитории\open-close_exchange_system\TestAPIProject\ExchangeSystem\bin\Debug\netstandard2.0\Encryptors.dll
 C:\Users\Dom\Desktop\Репозитории\open-close_exchange_system\TestAPIProject\ExchangeSystem\bin\Debug\netstandard2.0\Encryptors.pdb
 C:\Users\Dom\Desktop\Репозитории\open-close_exchange_system\TestAPIProject\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.csproj.CopyComplete
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\ExchangeSystem\bin\Debug\netstandard2.0\Encryptors.dll
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.csproj.CopyComplete

@@ -5,9 +5,9 @@ using System.Text;
 
 namespace ExchangeSystem.Requests.Sendlers.Close
 {
-    public interface IEncryptRequestSendler
-    {
-        string SendRequest(IPackage pack);
-        string ToEncryptJson();
-    }
+    //public interface IEncryptRequestSendler
+    //{
+    //    string SendRequest(IPackage pack);
+    //    string ToEncryptJson();
+    //}
 }
