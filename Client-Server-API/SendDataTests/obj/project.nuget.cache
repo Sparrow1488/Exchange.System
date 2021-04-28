@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Ksa4KE39MUhm/A9nkOyk2ymmI6J8qctSUESloe0aZd3B+kxF1PxLRLwqG76dwgjO8aOknqhkC58bMTeVmQO6HA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\open-close_exchange_system\\TestAPIProject\\SendDataTests\\ExchangeServer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\DOM\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
