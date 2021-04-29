@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <Reference Include="Encryptors">
-      <HintPath>..\..\..\..\..\..\..\Downloads\Encryptors.dll</HintPath>
+      <HintPath>..\Encryptors.dll</HintPath>
     </Reference>
   </ItemGroup>
 
