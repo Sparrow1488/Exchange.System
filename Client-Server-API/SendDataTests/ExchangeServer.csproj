@@ -14,14 +14,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Encryptors">
-      <HintPath>..\..\..\..\..\..\..\Downloads\Encryptors.dll</HintPath>
-    </Reference>
+    <Folder Include="MVC\Views\" />
+    <Folder Include="MVC\Controllers\" />
+    <Folder Include="MVC\Models\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MVC\" />
-    <Folder Include="Decryptors\" />
+    <Reference Include="Encryptors">
+      <HintPath>..\Encryptors.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
