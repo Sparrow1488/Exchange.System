@@ -27,11 +27,12 @@ namespace SendDataTests
         {
             Router router = new Router();
             var requestPackage = router.IssueRequest(client) as Package;
-            Console.WriteLine("Received package has '{0}' request type", requestPackage.RequestType);
+            var encryptType = router.GetEncryptType();
+            Console.WriteLine("Received package has '{0}' request type and encrypt type '{1}'", requestPackage.RequestType, encryptType);
 
             ControllerSelector controllerSelector = new ControllerSelector();
             Controller controller = controllerSelector.SelectController(requestPackage);
-            controller.ProcessRequest(requestPackage, client);
+            controller.ProcessRequest(requestPackage, encryptType);
 
             Console.WriteLine(requestPackage.RequestObject);
         }

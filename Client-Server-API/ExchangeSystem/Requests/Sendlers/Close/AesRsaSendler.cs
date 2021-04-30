@@ -28,10 +28,7 @@ namespace ExchangeSystem.Requests.Sendlers.Close
 
         public override string SendRequest(IPackage package)
         {
-            var client = new TcpClient();
-            client.Connect(ConnectionSettings.HostName, ConnectionSettings.Port);
-            _stream = client.GetStream();
-
+            ConnectToServer();
             SendRequestInformation();
             ReceiveServerPublicKey();
             EncryptAesRsaPackage(package);
@@ -41,7 +38,12 @@ namespace ExchangeSystem.Requests.Sendlers.Close
 
             throw new ArgumentNullException("Where response from server ???????????????????");
         }
-
+        private void ConnectToServer()
+        {
+            var client = new TcpClient();
+            client.Connect(ConnectionSettings.HostName, ConnectionSettings.Port);
+            _stream = client.GetStream();
+        }
         private void SendRequestInformation()
         {
             PrepareRequestInformation();
