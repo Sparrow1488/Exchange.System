@@ -1,29 +1,37 @@
 ﻿using ExchangeServer.MVC.Controllers;
 using ExchangeServer.MVC.Routers;
-using ExchangeServer.Protocols;
 using ExchangeServer.Protocols.Receivers;
 using ExchangeSystem.Requests.Packages.Default;
 using System;
-using System.Linq;
-using System.Reflection;
+using System.Net.Sockets;
+using System.Threading.Tasks;
 
 namespace SendDataTests
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             ClientReceiver receiver = new ClientReceiver("127.0.0.1", 80);
             receiver.StartReceive();
-            var client = receiver.AcceptClient();
-            Console.WriteLine("Client was connected");
+            while (true)
+            {
+                Console.WriteLine("Server waiting requests...");
+                var client = receiver.AcceptClient();
+                Console.WriteLine("Client was connected");
 
+                Task.Factory.StartNew(() => ServerProcessing(client));
+            }
+        }
+        private static void ServerProcessing(TcpClient client)
+        {
             Router router = new Router();
             var requestPackage = router.IssueRequest(client) as Package;
             Console.WriteLine("Received package has '{0}' request type", requestPackage.RequestType);
 
             ControllerSelector controllerSelector = new ControllerSelector();
             Controller controller = controllerSelector.SelectController(requestPackage);
+            controller.ProcessRequest(requestPackage, client);
 
             Console.WriteLine(requestPackage.RequestObject);
         }
