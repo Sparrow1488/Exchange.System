@@ -9,6 +9,11 @@ namespace ExchangeServer.Protocols
     {
         public override EncryptTypes EncryptType { get; protected set; } = EncryptTypes.None;
 
+        public override Security GetPackageSecurity()
+        {
+            throw new NotImplementedException();
+        }
+
         public override IPackage ReceivePackage(TcpClient client)
         {
             throw new NotImplementedException();

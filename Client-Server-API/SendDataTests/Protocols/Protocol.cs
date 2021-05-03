@@ -7,6 +7,9 @@ namespace ExchangeServer.Protocols
     public abstract class Protocol : IProtocol
     {
         public abstract EncryptTypes EncryptType { get; protected set; }
+
+        public abstract Security GetPackageSecurity();
+
         public abstract IPackage ReceivePackage(TcpClient client);
     }
 }

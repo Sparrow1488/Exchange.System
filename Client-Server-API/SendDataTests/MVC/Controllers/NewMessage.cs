@@ -15,20 +15,50 @@ namespace ExchangeServer.MVC.Controllers
         protected override IResponderSelector ResponderSelector { get; set; }
         private Package _clientRequestObject;
         private TcpClient _client;
+        private EncryptTypes _encryptType = EncryptTypes.None;
+        private Security _security;
+        private ResponsePackage _responsePackage;
 
-        public override void ProcessRequest(TcpClient connectedClient, IPackage package, EncryptTypes encryptType)
+        public override void ProcessRequest(TcpClient connectedClient, IPackage package, Security packageSecurity)
         {
-            _client = connectedClient;
-            _clientRequestObject = (Package)package;
+            CheckValidation(connectedClient, package, packageSecurity);
 
             MessageModel model = new MessageModel();
             bool wasAddSuccess = model.AddNew(); // ЭТО ВСЕ ВРЕМЕННЫЕ УСЛОВНОСТИ
+            PrepareResponsePackage(wasAddSuccess);
+
             ResponderSelector responderSelector = new ResponderSelector();
-            Responder = responderSelector.SelectResponder(encryptType);
+            Responder = responderSelector.SelectResponder(_encryptType);
             if (connectedClient.Connected)
-                Responder.SendResponse(connectedClient, null); //TODO: подумать над форматом ответов
+                Responder.SendResponse(connectedClient, _responsePackage); //TODO: подумать над форматом ответов
             else
                 throw new ConnectionException("Клиент был не подключен");
+
+        }
+        private void CheckValidation(TcpClient client, IPackage package, Security packageSecurity)
+        {
+            _client = client;
+            _clientRequestObject = (Package)package;
+            if (packageSecurity != null)
+            {
+                _encryptType = packageSecurity.EncryptType;
+                _security = packageSecurity;
+            }
+        }
+        private void PrepareResponsePackage(bool addMessageSuccess)
+        {
+            string errorMessage = string.Empty;
+            object responseObject;
+            if (addMessageSuccess)
+            {
+                responseObject = "Сообщение доставлено";
+                _responsePackage = new ResponsePackage(responseObject, ResponseStatus.Ok);
+            }
+            else
+            {
+                errorMessage = "Неизвестная ошибка";
+                _responsePackage = new ResponsePackage(null, ResponseStatus.Exception, errorMessage);
+            }
         }
     }
 }

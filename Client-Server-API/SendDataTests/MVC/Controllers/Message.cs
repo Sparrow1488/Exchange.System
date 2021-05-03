@@ -12,6 +12,6 @@ namespace ExchangeServer.MVC.Controllers
         protected override abstract Responder Responder { get; set; }
         protected override abstract IResponderSelector ResponderSelector { get; set; }
 
-        public override abstract void ProcessRequest(TcpClient connectedClient, IPackage package, EncryptTypes encryptType);
+        public override abstract void ProcessRequest(TcpClient connectedClient, IPackage package, Security packageSecurity);
     }
 }

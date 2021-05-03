@@ -11,7 +11,7 @@ namespace ExchangeServer.MVC.Controllers
 {
     public class ControllerSelector : IControllerSelector
     {
-        public Controller SelectController(Package package)
+        public Controller SelectController(RequestTypes RequestType)
         {
             Type parent = typeof(Controller);
             Type[] findTypes = Assembly.GetExecutingAssembly()
@@ -25,7 +25,7 @@ namespace ExchangeServer.MVC.Controllers
             foreach (var type in findTypes)
             {
                 var instance = (Controller)Activator.CreateInstance(Type.GetType(type.FullName));
-                if (instance.RequestType == package.RequestType)
+                if (instance.RequestType == RequestType)
                     return instance;
             }
             throw new NullReferenceException("Reflection can't found no one controller");

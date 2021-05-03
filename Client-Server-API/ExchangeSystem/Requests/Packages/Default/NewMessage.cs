@@ -6,7 +6,7 @@ namespace ExchangeSystem.Requests.Packages.Default
     {
         public NewMessage(Message requestObject) : base(requestObject)
         {
-            RequestType = RequestTypes.NewMessage;
+            RequestType = Packages.RequestTypes.NewMessage;
         }
     }
 }

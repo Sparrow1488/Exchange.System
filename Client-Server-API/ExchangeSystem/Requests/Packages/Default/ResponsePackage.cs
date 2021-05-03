@@ -5,9 +5,10 @@ namespace ExchangeSystem.Requests.Packages.Default
 {
     public class ResponsePackage : IPackage
     {
-        public ResponsePackage(object response)
+        public ResponsePackage(object response, ResponseStatus status)
         {
             ResponseData = response;
+            Status = status;
         }
         /// <summary>
         /// ErrorMessage не может быть null!!!
@@ -15,12 +16,13 @@ namespace ExchangeSystem.Requests.Packages.Default
         /// <param name="response"></param>
         /// <param name="errorMessage"></param>
         /// <exception cref="ArgumentException">Если errorMessage == null</exception>
-        public ResponsePackage(object response, string errorMessage)
+        public ResponsePackage(object response, ResponseStatus status, string errorMessage)
         {
             ResponseData = response;
             ErrorMessage = errorMessage;
+            Status = status;
         }
-        [JsonProperty]
+        [JsonProperty("errorMessage")]
         public string ErrorMessage 
         { 
             get { return _errorMessage; } 
@@ -35,6 +37,8 @@ namespace ExchangeSystem.Requests.Packages.Default
         private string _errorMessage = string.Empty;
         [JsonProperty("response")]
         public object ResponseData { get; }
+        [JsonProperty("status")]
+        public ResponseStatus Status { get; set; }
 
         public string ToJson()
         {

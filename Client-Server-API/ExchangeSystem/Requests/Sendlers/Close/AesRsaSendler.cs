@@ -25,6 +25,8 @@ namespace ExchangeSystem.Requests.Sendlers.Close
         private RSAParameters _serverKey;
         private NetworkStream _stream;
         private byte[] _readySecretPackage;
+        private int _responseDataSize = 0;
+
 
         public override string SendRequest(IPackage package)
         {
@@ -37,6 +39,7 @@ namespace ExchangeSystem.Requests.Sendlers.Close
             SendSecretPackage();
 
             ReceiveResponseSize();
+            ReceiveResponseData();
 
             throw new ArgumentNullException("Where response from server ???????????????????");
         }
@@ -107,11 +110,16 @@ namespace ExchangeSystem.Requests.Sendlers.Close
                 TypeNameHandling = TypeNameHandling.All
             });
         }
-        private int ReceiveResponseSize()
+        private void ReceiveResponseSize()
         {
             byte[] response = ReadData(ref _stream, 128);
             string sizeToString = Encoding.UTF32.GetString(response);
-            return Convert.ToInt32(sizeToString);
+            _responseDataSize = Convert.ToInt32(sizeToString);
+        }
+        private void ReceiveResponseData()
+        {
+            byte[] response = ReadData(ref _stream, _responseDataSize);
+            string jsonResponse = Encoding.UTF32.GetString(response);
         }
     }
 }

@@ -21,7 +21,9 @@ namespace ExchangeServer.Protocols
         private RSAParameters _publicKey;
         private TcpClient _client;
         private NetworkHelper _networkHelper = new NetworkHelper();
+        private Security _packageSecurity;
         public override EncryptTypes EncryptType { get; protected set; } = EncryptTypes.AesRsa;
+
         public override IPackage ReceivePackage(TcpClient client)
         {
             if (!client.Connected)
@@ -47,11 +49,17 @@ namespace ExchangeServer.Protocols
             var finalyPack = AesRsaReceiver(pack);
             return finalyPack;
         }
+        
+        public override Security GetPackageSecurity()
+        {
+            return _packageSecurity;
+        }
 
         private IPackage AesRsaReceiver(ProtectedPackage protectedPackage)
         {
             if (protectedPackage?.Security?.EncryptType != EncryptTypes.AesRsa)
                 throw new ProtocolTypeException();
+            _packageSecurity = protectedPackage?.Security;
 
             AesRsaSecurity aesRsa = protectedPackage.Security as AesRsaSecurity;
             RsaEncryptor rsa = new RsaEncryptor();
