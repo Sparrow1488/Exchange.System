@@ -1,5 +1,8 @@
 ﻿using ExchangeSystem.SecurityData;
 using System;
+using System.Linq;
+using System.Net.Sockets;
+using System.Reflection;
 
 namespace ExchangeServer.Protocols.Responders
 {
@@ -7,7 +10,22 @@ namespace ExchangeServer.Protocols.Responders
     {
         public Responder SelectResponder(EncryptTypes encryptType)
         {
-            throw new NotImplementedException();
+            Type responderParent = typeof(Responder);
+            Type[] findTypes = Assembly.GetExecutingAssembly()
+                                                    .GetTypes()
+                                                    .Where(type => responderParent.IsAssignableFrom(type) &&
+                                                                !type.IsInterface &&
+                                                                !type.IsAbstract).ToArray();
+            if (findTypes.Length == 0)
+                throw new NullReferenceException("Reflection can't found no one responder");
+
+            foreach (var responder in findTypes)
+            {
+                var instance = (Responder)Activator.CreateInstance(Type.GetType(responder.FullName));
+                if (instance.EncryptType == encryptType)
+                    return instance;
+            }
+            throw new NullReferenceException("Reflection can't found no one responder");
         }
     }
 }

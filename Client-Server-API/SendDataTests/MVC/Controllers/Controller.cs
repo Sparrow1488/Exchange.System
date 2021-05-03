@@ -8,10 +8,9 @@ namespace ExchangeServer.MVC.Controllers
 {
     public abstract class Controller
     {
-        public Controller(TcpClient client) { }
         protected abstract Responder Responder { get; set; }
         protected abstract IResponderSelector ResponderSelector { get; set; }
         public abstract RequestTypes RequestType { get; }
-        public abstract void ProcessRequest(IPackage package, EncryptTypes encryptType);
+        public abstract void ProcessRequest(TcpClient connectedClient, IPackage package, EncryptTypes encryptType);
     }
 }

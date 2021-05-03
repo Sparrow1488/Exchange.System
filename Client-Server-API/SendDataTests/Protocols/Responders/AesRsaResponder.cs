@@ -2,20 +2,20 @@
 using ExchangeSystem.SecurityData;
 using System;
 using System.Net.Sockets;
+using System.Text;
 
 namespace ExchangeServer.Protocols.Responders
 {
     public class AesRsaResponder : Responder
     {
-        public AesRsaResponder(TcpClient client) : base(client)
-        {
-        }
-
         public override EncryptTypes EncryptType => EncryptTypes.AesRsa;
+        private NetworkHelper _networkHelper = new NetworkHelper();
 
-        public override void SendResponse(object response)
+        public override void SendResponse(TcpClient toClient, object response)
         {
-            throw new NotImplementedException();
+            var clientStream = toClient.GetStream();
+            byte[] responseSize = Encoding.UTF32.GetBytes(Convert.ToString(228));
+            _networkHelper.WriteData(ref clientStream, responseSize);
         }
     }
 }

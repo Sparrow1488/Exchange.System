@@ -8,13 +8,10 @@ namespace ExchangeServer.MVC.Controllers
 {
     public abstract class Message : Controller
     {
-        protected Message(TcpClient client) : base(client)
-        {
-        }
         public override abstract RequestTypes RequestType { get; }
         protected override abstract Responder Responder { get; set; }
         protected override abstract IResponderSelector ResponderSelector { get; set; }
 
-        public override abstract void ProcessRequest(IPackage package, EncryptTypes encryptType);
+        public override abstract void ProcessRequest(TcpClient connectedClient, IPackage package, EncryptTypes encryptType);
     }
 }

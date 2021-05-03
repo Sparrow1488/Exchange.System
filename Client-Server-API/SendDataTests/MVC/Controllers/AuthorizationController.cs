@@ -9,19 +9,14 @@ namespace ExchangeServer.MVC.Controllers
 {
     public class AuthorizationController : Controller
     {
-        public AuthorizationController(TcpClient client) : base(client)
-        {
-            _client = client;
-        }
         private TcpClient _client;
         public override RequestTypes RequestType => RequestTypes.Authorization;
         protected override Responder Responder { get; set; }
         protected override IResponderSelector ResponderSelector { get; set; }
 
-
-        public override void ProcessRequest(IPackage package, EncryptTypes encryptType)
+        public override void ProcessRequest(TcpClient connectedClient, IPackage package, EncryptTypes encryptType)
         {
-            throw new NotImplementedException();
+            _client = connectedClient;
         }
     }
 }

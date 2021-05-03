@@ -1,4 +1,5 @@
-﻿using ExchangeServer.MVC.Models;
+﻿using ExchangeServer.MVC.Exceptions.NetworkExceptions;
+using ExchangeServer.MVC.Models;
 using ExchangeServer.Protocols.Responders;
 using ExchangeSystem.Requests.Packages;
 using ExchangeSystem.Requests.Packages.Default;
@@ -9,23 +10,25 @@ namespace ExchangeServer.MVC.Controllers
 {
     public class NewMessage : Message
     {
-        public NewMessage(TcpClient client) : base(client)
-        {
-            _client = client;
-        }
-        private TcpClient _client;
         public override RequestTypes RequestType => RequestTypes.NewMessage;
         protected override Responder Responder { get; set; }
         protected override IResponderSelector ResponderSelector { get; set; }
+        private Package _clientRequestObject;
+        private TcpClient _client;
 
-        public override void ProcessRequest(IPackage package, EncryptTypes encryptType)
+        public override void ProcessRequest(TcpClient connectedClient, IPackage package, EncryptTypes encryptType)
         {
+            _client = connectedClient;
+            _clientRequestObject = (Package)package;
+
             MessageModel model = new MessageModel();
-            string response = model.Get(); // ЭТО ВСЕ ВРЕМЕННЫЕ УСЛОВНОСТИ
+            bool wasAddSuccess = model.AddNew(); // ЭТО ВСЕ ВРЕМЕННЫЕ УСЛОВНОСТИ
             ResponderSelector responderSelector = new ResponderSelector();
-            var pack = (Package)package;
-            var responder = responderSelector.SelectResponder(encryptType);
-            responder.SendResponse(response); //TODO: подумать над форматом ответов
+            Responder = responderSelector.SelectResponder(encryptType);
+            if (connectedClient.Connected)
+                Responder.SendResponse(connectedClient, null); //TODO: подумать над форматом ответов
+            else
+                throw new ConnectionException("Клиент был не подключен");
         }
     }
 }

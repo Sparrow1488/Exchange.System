@@ -32,7 +32,7 @@ namespace SendDataTests
 
             ControllerSelector controllerSelector = new ControllerSelector();
             Controller controller = controllerSelector.SelectController(requestPackage);
-            controller.ProcessRequest(requestPackage, encryptType);
+            controller.ProcessRequest(client, requestPackage, encryptType);
 
             Console.WriteLine(requestPackage.RequestObject);
         }

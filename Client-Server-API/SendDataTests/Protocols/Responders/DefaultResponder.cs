@@ -7,14 +7,10 @@ namespace ExchangeServer.Protocols.Responders
 {
     public class DefaultResponder : Responder
     {
-        public DefaultResponder(TcpClient client) : base(client)
-        {
-            _client = client;
-        }
         private TcpClient _client;
         public override EncryptTypes EncryptType => EncryptTypes.None;
 
-        public override void SendResponse(object response)
+        public override void SendResponse(TcpClient toClient, object response)
         {
             throw new NotImplementedException();
         }

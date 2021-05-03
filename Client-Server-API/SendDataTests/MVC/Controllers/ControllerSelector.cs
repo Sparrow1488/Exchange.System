@@ -1,7 +1,9 @@
-﻿using ExchangeSystem.Requests.Packages.Default;
+﻿using ExchangeSystem.Requests.Packages;
+using ExchangeSystem.Requests.Packages.Default;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 
@@ -22,7 +24,7 @@ namespace ExchangeServer.MVC.Controllers
 
             foreach (var type in findTypes)
             {
-                var instance = (Controller)type.Assembly.CreateInstance(type.FullName);
+                var instance = (Controller)Activator.CreateInstance(Type.GetType(type.FullName));
                 if (instance.RequestType == package.RequestType)
                     return instance;
             }

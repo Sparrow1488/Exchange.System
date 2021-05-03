@@ -2,9 +2,9 @@
 {
     public class MessageModel
     {
-        public string Get()
+        public bool AddNew()
         {
-            return "Ответ";
+            return true;
         }
     }
 }

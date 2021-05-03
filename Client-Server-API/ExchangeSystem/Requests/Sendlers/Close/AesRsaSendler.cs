@@ -36,6 +36,8 @@ namespace ExchangeSystem.Requests.Sendlers.Close
             SendSecretPackageSize();
             SendSecretPackage();
 
+            ReceiveResponseSize();
+
             throw new ArgumentNullException("Where response from server ???????????????????");
         }
         private void ConnectToServer()
@@ -104,6 +106,12 @@ namespace ExchangeSystem.Requests.Sendlers.Close
             {
                 TypeNameHandling = TypeNameHandling.All
             });
+        }
+        private int ReceiveResponseSize()
+        {
+            byte[] response = ReadData(ref _stream, 128);
+            string sizeToString = Encoding.UTF32.GetString(response);
+            return Convert.ToInt32(sizeToString);
         }
     }
 }
