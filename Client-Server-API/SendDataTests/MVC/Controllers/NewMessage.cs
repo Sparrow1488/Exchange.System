@@ -1,10 +1,13 @@
-﻿using ExchangeServer.MVC.Exceptions.NetworkExceptions;
+﻿using Encryptors.Aes;
+using Encryptors.Rsa;
+using ExchangeServer.MVC.Exceptions.NetworkExceptions;
 using ExchangeServer.MVC.Models;
 using ExchangeServer.Protocols.Responders;
 using ExchangeSystem.Requests.Packages;
 using ExchangeSystem.Requests.Packages.Default;
 using ExchangeSystem.SecurityData;
 using System.Net.Sockets;
+using System.Text;
 
 namespace ExchangeServer.MVC.Controllers
 {
@@ -16,7 +19,7 @@ namespace ExchangeServer.MVC.Controllers
         private Package _clientRequestObject;
         private TcpClient _client;
         private EncryptTypes _encryptType = EncryptTypes.None;
-        private Security _security;
+        private AesRsaSecurity _security;
         private ResponsePackage _responsePackage;
 
         public override void ProcessRequest(TcpClient connectedClient, IPackage package, Security packageSecurity)
@@ -30,9 +33,9 @@ namespace ExchangeServer.MVC.Controllers
             ResponderSelector responderSelector = new ResponderSelector();
             Responder = responderSelector.SelectResponder(_encryptType);
             if (connectedClient.Connected)
-                Responder.SendResponse(connectedClient, _responsePackage); //TODO: подумать над форматом ответов
+                Responder.SendResponse(connectedClient, _responsePackage);
             else
-                throw new ConnectionException("Клиент был не подключен");
+                throw new ConnectionException("Клиент не был подключен");
 
         }
         private void CheckValidation(TcpClient client, IPackage package, Security packageSecurity)
@@ -42,7 +45,7 @@ namespace ExchangeServer.MVC.Controllers
             if (packageSecurity != null)
             {
                 _encryptType = packageSecurity.EncryptType;
-                _security = packageSecurity;
+                _security = packageSecurity as AesRsaSecurity;
             }
         }
         private void PrepareResponsePackage(bool addMessageSuccess)
@@ -60,5 +63,6 @@ namespace ExchangeServer.MVC.Controllers
                 _responsePackage = new ResponsePackage(null, ResponseStatus.Exception, errorMessage);
             }
         }
+        
     }
 }

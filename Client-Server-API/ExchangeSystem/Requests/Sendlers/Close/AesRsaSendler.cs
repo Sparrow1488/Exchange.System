@@ -27,6 +27,11 @@ namespace ExchangeSystem.Requests.Sendlers.Close
         private byte[] _readySecretPackage;
         private int _responseDataSize = 0;
 
+        private RSAParameters _newPublicKey;
+        private RSAParameters _newPrivateKey;
+        private ProtectedPackage _receivedProtectedPackage;
+        private ResponsePackage _finaly;
+
 
         public override string SendRequest(IPackage package)
         {
@@ -38,8 +43,11 @@ namespace ExchangeSystem.Requests.Sendlers.Close
             SendSecretPackageSize();
             SendSecretPackage();
 
+            PrepareRsaKeys();
+            SendRsaKey();
             ReceiveResponseSize();
-            ReceiveResponseData();
+            ReceiveProtectedPackage();
+            DecryptPackage(_receivedProtectedPackage);
 
             throw new ArgumentNullException("Where response from server ???????????????????");
         }
@@ -116,10 +124,45 @@ namespace ExchangeSystem.Requests.Sendlers.Close
             string sizeToString = Encoding.UTF32.GetString(response);
             _responseDataSize = Convert.ToInt32(sizeToString);
         }
-        private void ReceiveResponseData()
+        private void ReceiveProtectedPackage()
         {
             byte[] response = ReadData(ref _stream, _responseDataSize);
             string jsonResponse = Encoding.UTF32.GetString(response);
+            _receivedProtectedPackage = (ProtectedPackage)JsonConvert.DeserializeObject(jsonResponse, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All,
+            });
+        }
+        private void DecryptPackage(ProtectedPackage protectedPackage)
+        {
+            AesRsaSecurity aesRsa = protectedPackage.Security as AesRsaSecurity;
+            RsaEncryptor rsa = new RsaEncryptor();
+            byte[] encAesKey = Convert.FromBase64String(aesRsa.AesKey);
+            byte[] encAesIV = Convert.FromBase64String(aesRsa.AesIV);
+
+            byte[] decryptAesKey = rsa.Decrypt(encAesKey, _newPrivateKey);
+            byte[] decryptAesIV = rsa.Decrypt(encAesIV, _newPrivateKey);
+            AesEncryptor newAesRsa = new AesEncryptor(decryptAesKey, decryptAesIV);
+
+            string jsonPack = newAesRsa.DecryptString(Convert.FromBase64String(protectedPackage.SecretPackage));
+            ResponsePackage deryptPack = (ResponsePackage)JsonConvert.DeserializeObject(jsonPack, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All,
+            });
+            _finaly = deryptPack;
+        }
+        private void PrepareRsaKeys()
+        {
+            var rsa = new RsaEncryptor();
+            _newPublicKey = rsa.PublicKey;
+            _newPrivateKey = rsa.PrivateKey;
+        }
+        private void SendRsaKey()
+        {
+            var converter = new RsaConverter();
+            var xmlPublicRsa = converter.AsXML(_newPublicKey);
+            byte[] publicKeyData = Encoding.UTF32.GetBytes(xmlPublicRsa);
+            WriteData(ref _stream, publicKeyData);
         }
     }
 }
