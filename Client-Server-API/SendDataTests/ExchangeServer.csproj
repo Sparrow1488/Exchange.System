@@ -14,11 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MVC\Views\" />
-    <Folder Include="MVC\Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="Encryptors">
       <HintPath>..\Encryptors.dll</HintPath>
     </Reference>

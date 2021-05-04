@@ -21,7 +21,6 @@ C:\Users\Dom\Desktop\Репозитории\open-close_exchange_system\TestAPIPr
 C:\Users\Dom\Desktop\Репозитории\open-close_exchange_system\TestAPIProject\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.csproj.CopyComplete
 C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\ExchangeSystem\bin\Debug\netstandard2.0\Encryptors.dll
 C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\TestAPIProject\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.csproj.CopyComplete
-C:\Users\Dom\Desktop\Репозитории\open-close_exchange_system\Client-Server-API\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.csprojAssemblyReference.cache
 C:\Users\Dom\Desktop\Репозитории\open-close_exchange_system\Client-Server-API\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.AssemblyInfoInputs.cache
 C:\Users\Dom\Desktop\Репозитории\open-close_exchange_system\Client-Server-API\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.AssemblyInfo.cs
 C:\Users\Dom\Desktop\Репозитории\open-close_exchange_system\Client-Server-API\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.csproj.CoreCompileInputs.cache
@@ -32,3 +31,14 @@ C:\Users\Dom\Desktop\Репозитории\open-close_exchange_system\Client-Se
 C:\Users\Dom\Desktop\Репозитории\open-close_exchange_system\Client-Server-API\ExchangeSystem\bin\Debug\netstandard2.0\ExchangeSystem.pdb
 C:\Users\Dom\Desktop\Репозитории\open-close_exchange_system\Client-Server-API\ExchangeSystem\bin\Debug\netstandard2.0\Encryptors.dll
 C:\Users\Dom\Desktop\Репозитории\open-close_exchange_system\Client-Server-API\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.csproj.CopyComplete
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\Client-Server-API\ExchangeSystem\bin\Debug\netstandard2.0\ExchangeSystem.deps.json
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\Client-Server-API\ExchangeSystem\bin\Debug\netstandard2.0\ExchangeSystem.dll
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\Client-Server-API\ExchangeSystem\bin\Debug\netstandard2.0\ExchangeSystem.pdb
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\Client-Server-API\ExchangeSystem\bin\Debug\netstandard2.0\Encryptors.dll
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\Client-Server-API\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.csprojAssemblyReference.cache
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\Client-Server-API\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.AssemblyInfoInputs.cache
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\Client-Server-API\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.AssemblyInfo.cs
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\Client-Server-API\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.csproj.CoreCompileInputs.cache
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\Client-Server-API\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.csproj.CopyComplete
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\Client-Server-API\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.dll
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\open-close_exchange_system\Client-Server-API\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.pdb

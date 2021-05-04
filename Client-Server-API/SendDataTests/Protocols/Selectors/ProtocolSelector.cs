@@ -7,14 +7,14 @@ namespace ExchangeServer.Protocols.Selectors
 {
     public class ProtocolSelector : IProtocolSelector
     {
-        public IProtocol SelectProtocol(EncryptTypes encryptType)
+        public IProtocol SelectProtocol(EncryptType encryptType)
         {
             Type parent = typeof(IProtocol);
             Type[] findTypes = Assembly.GetExecutingAssembly()
                                                     .GetTypes()
-                                                    .Where(t => parent.IsAssignableFrom(t) &&
-                                                                !t.IsInterface &&
-                                                                !t.IsAbstract).ToArray();
+                                                    .Where(type => parent.IsAssignableFrom(type) &&
+                                                                !type.IsInterface &&
+                                                                !type.IsAbstract).ToArray();
             if (findTypes.Length == 0)
                 throw new NullReferenceException("Reflection can't found no one protocols");
 
@@ -24,7 +24,7 @@ namespace ExchangeServer.Protocols.Selectors
                 if (instance.EncryptType == encryptType)
                     return instance;
             }
-            throw new NullReferenceException("Рефлексией не было выявлено ни одного протокола");
+            throw new NullReferenceException("Reflection can't found no one protocols");
         }
     }
 }

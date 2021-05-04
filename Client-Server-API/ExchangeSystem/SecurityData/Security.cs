@@ -2,6 +2,6 @@
 {
     public abstract class Security
     {
-        public abstract EncryptTypes EncryptType { get; }
+        public abstract EncryptType EncryptType { get; }
     }
 }

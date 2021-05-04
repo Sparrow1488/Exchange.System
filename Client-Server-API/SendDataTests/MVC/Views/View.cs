@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ExchangeSystem.Requests.Objects
+namespace ExchangeServer.MVC.Views
 {
-    public interface IRequestObject
+    public abstract class View
     {
-        
     }
 }

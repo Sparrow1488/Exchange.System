@@ -19,6 +19,6 @@ namespace ExchangeSystem.SecurityData
         public string AesKey { get; } = string.Empty;
         [JsonProperty("aesBase64IV")]
         public string AesIV { get; } = string.Empty;
-        public override EncryptTypes EncryptType { get; } = EncryptTypes.AesRsa;
+        public override EncryptType EncryptType { get; } = EncryptType.AesRsa;
     }
 }

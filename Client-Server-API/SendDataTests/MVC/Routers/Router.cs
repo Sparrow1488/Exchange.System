@@ -1,16 +1,12 @@
 ﻿using ExchangeServer.MVC.Exceptions.NetworkExceptions;
 using ExchangeServer.Protocols;
 using ExchangeServer.Protocols.Selectors;
-using ExchangeSystem.Requests.Objects;
-using ExchangeSystem.Requests.Objects.Entities;
 using ExchangeSystem.Requests.Packages;
 using ExchangeSystem.Requests.Packages.Default;
 using ExchangeSystem.SecurityData;
 using Newtonsoft.Json;
 using System;
-using System.Linq;
 using System.Net.Sockets;
-using System.Reflection;
 using System.Text;
 
 namespace ExchangeServer.MVC.Routers
@@ -22,6 +18,7 @@ namespace ExchangeServer.MVC.Routers
         private IProtocol _selectedProtocol;
         private IPackage _receivedPackage;
         private NetworkHelper _networkHelper = new NetworkHelper();
+        private EncryptType _encryptType = EncryptType.None;
         public IPackage IssueRequest(TcpClient client)
         {
             if (!client.Connected)
@@ -38,25 +35,27 @@ namespace ExchangeServer.MVC.Routers
             {
                 TypeNameHandling = TypeNameHandling.All,
             });
+            _encryptType = _requestInfo.EncryptType;
 
-            if (_requestInfo.EncryptType != EncryptTypes.None)
-            {
-                _selectedProtocol = LookForProtocol(_requestInfo.EncryptType);
-                _receivedPackage = _selectedProtocol.ReceivePackage(client);
-            }
-            else
-            {
-                var defaultProtocol = new DefaultProtocol();
-                _receivedPackage = defaultProtocol.ReceivePackage(client);
-            }
+            _selectedProtocol = LookForProtocol(_requestInfo.EncryptType);
+            _receivedPackage = _selectedProtocol.ReceivePackage(client);
+            _encryptType = _selectedProtocol.GetPackageEncryptType();
 
             return _receivedPackage;
         }
 
-        private IProtocol LookForProtocol(EncryptTypes encryptType)
+        private IProtocol LookForProtocol(EncryptType encryptType)
         {
             _selector = new ProtocolSelector();
             return _selector.SelectProtocol(encryptType);
+        }
+        /// <summary>
+        /// Используйте этот метод после метода "IssueRequest()".
+        /// </summary>
+        /// <returns>Null, если у пакета отсутсвует защита</returns>
+        public EncryptType GetPackageEncryptType()
+        {
+            return _encryptType;
         }
 
         

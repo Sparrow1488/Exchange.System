@@ -4,6 +4,6 @@ namespace ExchangeSystem.Requests.Packages
 {
     public abstract class RequestInformator
     {
-        public EncryptTypes EncryptType { get; protected set; }
+        public EncryptType EncryptType { get; protected set; }
     }
 }

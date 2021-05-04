@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ExchangeSystem.SecurityData
 {
-    public enum EncryptTypes
+    public enum EncryptType
     {
         None,
         AesRsa
