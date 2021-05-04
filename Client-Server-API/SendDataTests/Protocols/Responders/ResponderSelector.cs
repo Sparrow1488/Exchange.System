@@ -8,7 +8,7 @@ namespace ExchangeServer.Protocols.Responders
 {
     public class ResponderSelector : IResponderSelector
     {
-        public Responder SelectResponder(EncryptTypes encryptType)
+        public Responder SelectResponder(EncryptType encryptType)
         {
             Type responderParent = typeof(Responder);
             Type[] findTypes = Assembly.GetExecutingAssembly()

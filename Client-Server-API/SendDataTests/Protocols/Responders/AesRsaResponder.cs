@@ -13,7 +13,7 @@ namespace ExchangeServer.Protocols.Responders
 {
     public class AesRsaResponder : Responder
     {
-        public override EncryptTypes EncryptType => EncryptTypes.AesRsa;
+        public override EncryptType EncryptType => EncryptType.AesRsa;
         private NetworkHelper _networkHelper = new NetworkHelper();
         private RSAParameters _clientPublicKey;
         private NetworkStream _stream;

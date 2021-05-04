@@ -15,7 +15,7 @@ namespace ExchangeSystem.Requests.Sendlers.Close
         protected ConnectionSettings ConnectionSettings { get; }
         protected ProtectedPackage SecretPackage { get; set; }
         protected Informator _requestInfo;
-        public abstract string SendRequest(IPackage package);
+        public abstract ResponsePackage SendRequest(IPackage package);
 
         protected byte[] ReadData(ref NetworkStream stream, int bufferSize)
         {

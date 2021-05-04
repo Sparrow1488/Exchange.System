@@ -11,6 +11,6 @@ namespace ExchangeServer.Protocols
         /// Используйте этот метод после метода "ReceivePackage()". 
         /// </summary>
         /// <returns>Null, если у пакета отсутсвует защита</returns>
-        Security GetPackageSecurity();
+        EncryptType GetPackageEncryptType();
     }
 }

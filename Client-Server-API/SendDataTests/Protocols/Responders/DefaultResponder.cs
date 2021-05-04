@@ -8,7 +8,7 @@ namespace ExchangeServer.Protocols.Responders
     public class DefaultResponder : Responder
     {
         private TcpClient _client;
-        public override EncryptTypes EncryptType => EncryptTypes.None;
+        public override EncryptType EncryptType => EncryptType.None;
 
         public override void SendResponse(TcpClient toClient, object response)
         {

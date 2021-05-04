@@ -4,6 +4,6 @@ namespace ExchangeSystem.Requests.Sendlers.Open
 {
     public interface IRequestSendler
     {
-        string SendRequest(IPackage package);
+        ResponsePackage SendRequest(IPackage package);
     }
 }

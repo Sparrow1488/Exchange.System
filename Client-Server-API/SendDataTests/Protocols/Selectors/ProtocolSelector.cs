@@ -7,7 +7,7 @@ namespace ExchangeServer.Protocols.Selectors
 {
     public class ProtocolSelector : IProtocolSelector
     {
-        public IProtocol SelectProtocol(EncryptTypes encryptType)
+        public IProtocol SelectProtocol(EncryptType encryptType)
         {
             Type parent = typeof(IProtocol);
             Type[] findTypes = Assembly.GetExecutingAssembly()

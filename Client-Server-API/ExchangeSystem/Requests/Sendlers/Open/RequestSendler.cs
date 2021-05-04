@@ -1,4 +1,5 @@
 ﻿using ExchangeSystem.Requests.Packages.Default;
+using System;
 using System.Net.Sockets;
 using System.Text;
 
@@ -13,7 +14,7 @@ namespace ExchangeSystem.Requests.Sendlers.Open
         public IPackage RequestPackage { get; private set; }
         public ConnectionSettings ConnectionInfo { get; }
 
-        public string SendRequest(IPackage package)
+        public ResponsePackage SendRequest(IPackage package)
         {
             RequestPackage = package;
             var client = new TcpClient();
@@ -29,7 +30,7 @@ namespace ExchangeSystem.Requests.Sendlers.Open
             stream.Close();
 
             string jsonResponse = Encoding.UTF32.GetString(receivedBuffer);
-            return jsonResponse;
+            throw new ArgumentException("а как же пробразование?");
         }
 
         private byte[] ReadData(ref NetworkStream stream, int bufferSize)

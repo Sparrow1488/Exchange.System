@@ -18,8 +18,7 @@ namespace ExchangeServer.MVC.Routers
         private IProtocol _selectedProtocol;
         private IPackage _receivedPackage;
         private NetworkHelper _networkHelper = new NetworkHelper();
-        private EncryptTypes _encryptType = EncryptTypes.None;
-        private Security _packageSecurity;
+        private EncryptType _encryptType = EncryptType.None;
         public IPackage IssueRequest(TcpClient client)
         {
             if (!client.Connected)
@@ -40,12 +39,12 @@ namespace ExchangeServer.MVC.Routers
 
             _selectedProtocol = LookForProtocol(_requestInfo.EncryptType);
             _receivedPackage = _selectedProtocol.ReceivePackage(client);
-            _packageSecurity = _selectedProtocol.GetPackageSecurity();
+            _encryptType = _selectedProtocol.GetPackageEncryptType();
 
             return _receivedPackage;
         }
 
-        private IProtocol LookForProtocol(EncryptTypes encryptType)
+        private IProtocol LookForProtocol(EncryptType encryptType)
         {
             _selector = new ProtocolSelector();
             return _selector.SelectProtocol(encryptType);
@@ -54,9 +53,9 @@ namespace ExchangeServer.MVC.Routers
         /// Используйте этот метод после метода "IssueRequest()".
         /// </summary>
         /// <returns>Null, если у пакета отсутсвует защита</returns>
-        public Security GetPackageSecurity()
+        public EncryptType GetPackageEncryptType()
         {
-            return _packageSecurity;
+            return _encryptType;
         }
 
         

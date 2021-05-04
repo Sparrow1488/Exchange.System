@@ -7,9 +7,9 @@ namespace ExchangeServer.Protocols
 {
     public class DefaultProtocol : Protocol
     {
-        public override EncryptTypes EncryptType { get; protected set; } = EncryptTypes.None;
+        public override EncryptType EncryptType { get; protected set; } = EncryptType.None;
 
-        public override Security GetPackageSecurity()
+        public override EncryptType GetPackageEncryptType()
         {
             throw new NotImplementedException();
         }

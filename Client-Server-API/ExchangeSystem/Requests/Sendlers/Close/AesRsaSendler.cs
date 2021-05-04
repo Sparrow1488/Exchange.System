@@ -30,10 +30,10 @@ namespace ExchangeSystem.Requests.Sendlers.Close
         private RSAParameters _newPublicKey;
         private RSAParameters _newPrivateKey;
         private ProtectedPackage _receivedProtectedPackage;
-        private ResponsePackage _finaly;
+        private ResponsePackage _finally;
 
 
-        public override string SendRequest(IPackage package)
+        public override ResponsePackage SendRequest(IPackage package)
         {
             ConnectToServer();
             SendRequestInformation();
@@ -49,7 +49,7 @@ namespace ExchangeSystem.Requests.Sendlers.Close
             ReceiveProtectedPackage();
             DecryptPackage(_receivedProtectedPackage);
 
-            throw new ArgumentNullException("Where response from server ???????????????????");
+            return _finally;
         }
         private void ConnectToServer()
         {
@@ -100,7 +100,7 @@ namespace ExchangeSystem.Requests.Sendlers.Close
         }
         private void PrepareRequestInformation()
         {
-            _requestInfo = new Informator(EncryptTypes.AesRsa);
+            _requestInfo = new Informator(EncryptType.AesRsa);
         }
         private void SendSecretPackage()
         {
@@ -149,7 +149,7 @@ namespace ExchangeSystem.Requests.Sendlers.Close
             {
                 TypeNameHandling = TypeNameHandling.All,
             });
-            _finaly = deryptPack;
+            _finally = deryptPack;
         }
         private void PrepareRsaKeys()
         {

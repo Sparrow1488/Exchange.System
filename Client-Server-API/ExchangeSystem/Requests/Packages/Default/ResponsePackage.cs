@@ -16,6 +16,7 @@ namespace ExchangeSystem.Requests.Packages.Default
         /// <param name="response"></param>
         /// <param name="errorMessage"></param>
         /// <exception cref="ArgumentException">Если errorMessage == null</exception>
+        [JsonConstructor]
         public ResponsePackage(object response, ResponseStatus status, string errorMessage)
         {
             ResponseData = response;

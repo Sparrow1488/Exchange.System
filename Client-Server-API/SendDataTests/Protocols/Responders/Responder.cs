@@ -7,7 +7,7 @@ namespace ExchangeServer.Protocols.Responders
     public abstract class Responder
     {
         public TcpClient Client { get; }
-        public abstract EncryptTypes EncryptType { get; }
+        public abstract EncryptType EncryptType { get; }
         public abstract void SendResponse(TcpClient toClient, object response);
     }
 }

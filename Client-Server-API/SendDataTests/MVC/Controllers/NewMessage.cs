@@ -18,13 +18,12 @@ namespace ExchangeServer.MVC.Controllers
         protected override IResponderSelector ResponderSelector { get; set; }
         private Package _clientRequestObject;
         private TcpClient _client;
-        private EncryptTypes _encryptType = EncryptTypes.None;
-        private AesRsaSecurity _security;
+        private EncryptType _encryptType = EncryptType.None;
         private ResponsePackage _responsePackage;
 
-        public override void ProcessRequest(TcpClient connectedClient, IPackage package, Security packageSecurity)
+        public override void ProcessRequest(TcpClient connectedClient, IPackage package, EncryptType encryptType)
         {
-            CheckValidation(connectedClient, package, packageSecurity);
+            CheckValidation(connectedClient, package, encryptType);
 
             MessageModel model = new MessageModel();
             bool wasAddSuccess = model.AddNew(); // ЭТО ВСЕ ВРЕМЕННЫЕ УСЛОВНОСТИ
@@ -38,15 +37,11 @@ namespace ExchangeServer.MVC.Controllers
                 throw new ConnectionException("Клиент не был подключен");
 
         }
-        private void CheckValidation(TcpClient client, IPackage package, Security packageSecurity)
+        private void CheckValidation(TcpClient client, IPackage package, EncryptType encryptType)
         {
             _client = client;
             _clientRequestObject = (Package)package;
-            if (packageSecurity != null)
-            {
-                _encryptType = packageSecurity.EncryptType;
-                _security = packageSecurity as AesRsaSecurity;
-            }
+            _encryptType = encryptType;
         }
         private void PrepareResponsePackage(bool addMessageSuccess)
         {
