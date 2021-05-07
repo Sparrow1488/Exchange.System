@@ -35,12 +35,12 @@ namespace ExchangeServer.Protocols
             _privateKey = rsa.PrivateKey;
             RsaConverter converter = new RsaConverter();
             var publicXmlKey = converter.AsXML(rsa.PublicKey);
-            byte[] publicRsa = Encoding.UTF32.GetBytes(publicXmlKey);
-            _networkHelper.WriteData(ref stream, publicRsa);
-            byte[] _futureSecretPackageSize = _networkHelper.ReadData(ref stream, 128);
-            string secretPackageSize = Encoding.UTF32.GetString(_futureSecretPackageSize);
-            byte[] bufferForSecretPackage = _networkHelper.ReadData(ref stream, Convert.ToInt32(secretPackageSize));
-            string _protectedJsonPackage = Encoding.UTF32.GetString(bufferForSecretPackage);
+            byte[] publicRsa = _networkHelper.Encoding.GetBytes(publicXmlKey);
+            _networkHelper.WriteData(stream, publicRsa);
+            byte[] _futureSecretPackageSize = _networkHelper.ReadData(stream, 128);
+            string secretPackageSize = _networkHelper.Encoding.GetString(_futureSecretPackageSize); //TODO: херня с получением длины
+            byte[] bufferForSecretPackage = _networkHelper.ReadData(stream, Convert.ToInt32(secretPackageSize));
+            string _protectedJsonPackage = _networkHelper.Encoding.GetString(bufferForSecretPackage);
             ProtectedPackage pack = (ProtectedPackage)JsonConvert.DeserializeObject(_protectedJsonPackage, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.All,

@@ -14,8 +14,17 @@ namespace TestAPIProject
         private static ConnectionSettings connectionSettings = new ConnectionSettings("127.0.0.1", 80);
         static void Main(string[] args)
         {
-            StartTen();
-
+            SendRequest();
+            Console.ReadKey();
+            SendRequest();
+            Console.ReadKey();
+            SendRequest();
+            Console.ReadKey();
+            SendRequest();
+            Console.ReadKey();
+            SendRequest();
+            Console.ReadKey();
+            SendRequest();
             Console.ReadKey();
         }
         private static int exceptions = 0;
@@ -45,8 +54,8 @@ namespace TestAPIProject
         }
         static void SendRequest()
         {
-            try
-            {
+            //try
+            //{
                 var message = new Message("Чеб такого написать чтоп пш пш по приколу");
                 var pack = new NewMessage(message);
                 var aesRsaSender = new AesRsaSendler(connectionSettings);
@@ -60,8 +69,8 @@ namespace TestAPIProject
                 Console.WriteLine("Response received in {0} millisecond", stopwatch.ElapsedMilliseconds);
                 processed++;
                 Console.Write("Exceptions: {0}; Processed: {1}", exceptions, processed);
-            }
-            catch { exceptions++; processed++; Console.WriteLine("==========Exception==========="); }
+            //}
+            //catch { exceptions++; processed++; Console.WriteLine("==========Exception==========="); }
         }
     }
 }
