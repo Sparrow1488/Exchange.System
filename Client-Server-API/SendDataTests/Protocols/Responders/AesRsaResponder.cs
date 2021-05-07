@@ -47,8 +47,8 @@ namespace ExchangeServer.Protocols.Responders
 
         private void ReceiveClientKey()
         {
-            byte[] clientKeyData = _networkHelper.ReadData(ref _stream, 2100);
-            var xmlKey = Encoding.UTF32.GetString(clientKeyData);
+            byte[] clientKeyData = _networkHelper.ReadData(_stream, 2100);
+            var xmlKey = _networkHelper.Encoding.GetString(clientKeyData);
             _clientPublicKey = new RsaConverter().AsParameters(xmlKey);
         }
         private void PrepareResponsePackage()
@@ -58,7 +58,7 @@ namespace ExchangeServer.Protocols.Responders
         private void SendResponseSize()
         {
             _responsePackageSize = _responseData.Length;
-            _networkHelper.WriteData(ref _stream, Encoding.UTF32.GetBytes(_responsePackageSize.ToString()));
+            _networkHelper.WriteData(_stream, _networkHelper.Encoding.GetBytes(_responsePackageSize.ToString()));
         }
         private void EncryptAesRsaPackage(IPackage package)
         {
@@ -77,11 +77,11 @@ namespace ExchangeServer.Protocols.Responders
         }
         private void PrepareData()
         {
-            _responseData = Encoding.UTF32.GetBytes(_protectedPackage.ToJson());
+            _responseData = _networkHelper.Encoding.GetBytes(_protectedPackage.ToJson());
         }
         private void SendResponseData()
         {
-            _networkHelper.WriteData(ref _stream, _responseData);
+            _networkHelper.WriteData(_stream, _responseData);
         }
     }
 }

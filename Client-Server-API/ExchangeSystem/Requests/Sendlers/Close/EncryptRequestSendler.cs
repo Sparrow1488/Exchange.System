@@ -3,6 +3,7 @@ using ExchangeSystem.Requests.Packages.Default;
 using ExchangeSystem.Requests.Packages.Protected;
 using System;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 namespace ExchangeSystem.Requests.Sendlers.Close
 {
@@ -17,7 +18,7 @@ namespace ExchangeSystem.Requests.Sendlers.Close
         protected Informator _requestInfo;
         public abstract ResponsePackage SendRequest(IPackage package);
 
-        protected byte[] ReadData(ref NetworkStream stream, int bufferSize)
+        protected byte[] ReadData(NetworkStream stream, int bufferSize)
         {
             byte[] receivedBuffer = new byte[bufferSize];
             do
@@ -27,7 +28,7 @@ namespace ExchangeSystem.Requests.Sendlers.Close
             while (stream.DataAvailable);
             return receivedBuffer;
         }
-        protected void WriteData(ref NetworkStream stream, byte[] buffer)
+        protected void WriteData(NetworkStream stream, byte[] buffer)
         {
             do
             {

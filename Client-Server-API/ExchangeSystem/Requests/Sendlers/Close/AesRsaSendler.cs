@@ -9,6 +9,7 @@ using System;
 using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ExchangeSystem.Requests.Sendlers.Close
 {
@@ -20,6 +21,7 @@ namespace ExchangeSystem.Requests.Sendlers.Close
             _privateKey = rsa.PrivateKey;
             _publicKey = rsa.PublicKey;
         }
+        private NetworkHelper _networkHelper = new NetworkHelper();
         private RSAParameters _privateKey;
         private RSAParameters _publicKey;
         private RSAParameters _serverKey;
@@ -61,12 +63,12 @@ namespace ExchangeSystem.Requests.Sendlers.Close
         {
             PrepareRequestInformation();
             string requestJson = Serialize(_requestInfo);
-            byte[] requestInfoBuffer = Encoding.UTF32.GetBytes(requestJson);
-            WriteData(ref _stream, requestInfoBuffer);
+            byte[] requestInfoBuffer = _networkHelper.Encoding.GetBytes(requestJson);
+            WriteData(_stream, requestInfoBuffer);
         }
         private void ReceiveServerPublicKey()
         {
-            byte[] publicServerRsa = ReadData(ref _stream, 2100);
+            byte[] publicServerRsa = ReadData(_stream, 2100);
             _serverKey = DecodeServerRsa(publicServerRsa);
         }
         private void EncryptAesRsaPackage(IPackage package)
@@ -88,12 +90,12 @@ namespace ExchangeSystem.Requests.Sendlers.Close
         private void SendSecretPackageSize()
         {
             string size = _readySecretPackage.Length.ToString();
-            byte[] secretPackageSize = Encoding.UTF32.GetBytes(size);
-            WriteData(ref _stream, secretPackageSize);
+            byte[] secretPackageSize = _networkHelper.Encoding.GetBytes(size);
+            WriteData(_stream, secretPackageSize);
         }
         private RSAParameters DecodeServerRsa(byte[] serverRsaBuffer)
         {
-            string jsonServerRsa = Encoding.UTF32.GetString(serverRsaBuffer);
+            string jsonServerRsa = _networkHelper.Encoding.GetString(serverRsaBuffer);
             RsaConverter converter = new RsaConverter();
              
             return converter.AsParameters(jsonServerRsa);
@@ -104,12 +106,12 @@ namespace ExchangeSystem.Requests.Sendlers.Close
         }
         private void SendSecretPackage()
         {
-            WriteData(ref _stream, _readySecretPackage);
+            WriteData(_stream, _readySecretPackage);
         }
         private void PrepareSecretPackage()
         {
             string jsonSecretPackage = SecretPackage.ToJson();
-            _readySecretPackage = Encoding.UTF32.GetBytes(jsonSecretPackage);
+            _readySecretPackage = _networkHelper.Encoding.GetBytes(jsonSecretPackage);
         }
         private string Serialize(object obj)
         {
@@ -120,14 +122,14 @@ namespace ExchangeSystem.Requests.Sendlers.Close
         }
         private void ReceiveResponseSize()
         {
-            byte[] response = ReadData(ref _stream, 128);
-            string sizeToString = Encoding.UTF32.GetString(response);
+            byte[] response = ReadData(_stream, 64);
+            string sizeToString = _networkHelper.Encoding.GetString(response);
             _responseDataSize = Convert.ToInt32(sizeToString);
         }
         private void ReceiveProtectedPackage()
         {
-            byte[] response = ReadData(ref _stream, _responseDataSize);
-            string jsonResponse = Encoding.UTF32.GetString(response);
+            byte[] response = ReadData(_stream, _responseDataSize);
+            string jsonResponse = _networkHelper.Encoding.GetString(response);
             _receivedProtectedPackage = (ProtectedPackage)JsonConvert.DeserializeObject(jsonResponse, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.All,
@@ -162,7 +164,7 @@ namespace ExchangeSystem.Requests.Sendlers.Close
             var converter = new RsaConverter();
             var xmlPublicRsa = converter.AsXML(_newPublicKey);
             byte[] publicKeyData = Encoding.UTF32.GetBytes(xmlPublicRsa);
-            WriteData(ref _stream, publicKeyData);
+            WriteData(_stream, publicKeyData);
         }
     }
 }
