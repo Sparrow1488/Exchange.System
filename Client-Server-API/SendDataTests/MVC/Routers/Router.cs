@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ExchangeServer.MVC.Routers
 {
@@ -19,7 +20,7 @@ namespace ExchangeServer.MVC.Routers
         private IPackage _receivedPackage;
         private NetworkHelper _networkHelper = new NetworkHelper();
         private EncryptType _encryptType = EncryptType.None;
-        public IPackage IssueRequest(TcpClient client)
+        public async Task<IPackage> IssueRequestAsync(TcpClient client)
         {
             if (!client.Connected)
                 throw new ConnectionException();
@@ -29,7 +30,7 @@ namespace ExchangeServer.MVC.Routers
             _client = client;
             var stream = _client.GetStream();
 
-            byte[] receivedData = _networkHelper.ReadData(stream, 1024);
+            byte[] receivedData = await _networkHelper.ReadDataAsync(stream, 1024);
             string _requestInfoJson = _networkHelper.Encoding.GetString(receivedData);
             var _requestInfo = (RequestInformator)JsonConvert.DeserializeObject(_requestInfoJson, new JsonSerializerSettings
             {
@@ -38,7 +39,7 @@ namespace ExchangeServer.MVC.Routers
             _encryptType = _requestInfo.EncryptType;
 
             _selectedProtocol = LookForProtocol(_requestInfo.EncryptType);
-            _receivedPackage = _selectedProtocol.ReceivePackage(client);
+            _receivedPackage = await _selectedProtocol.ReceivePackage(client);
             _encryptType = _selectedProtocol.GetPackageEncryptType();
 
             return _receivedPackage;

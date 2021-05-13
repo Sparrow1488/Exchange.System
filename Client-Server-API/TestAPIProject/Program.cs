@@ -14,18 +14,16 @@ namespace TestAPIProject
         private static ConnectionSettings connectionSettings = new ConnectionSettings("127.0.0.1", 80);
         static void Main(string[] args)
         {
-            SendRequest();
-            Console.ReadKey();
-            SendRequest();
-            Console.ReadKey();
-            SendRequest();
-            Console.ReadKey();
-            SendRequest();
-            Console.ReadKey();
-            SendRequest();
-            Console.ReadKey();
-            SendRequest();
-            Console.ReadKey();
+            //StartTen();
+            try
+            {
+                Console.WriteLine("Send...");
+                SendRequest();
+                Console.ReadKey();
+                Console.WriteLine("Send...");
+                SendRequest();
+            }
+            catch { Console.WriteLine("Ошибка"); };
         }
         private static int exceptions = 0;
         private static int processed = 0;
@@ -63,9 +61,9 @@ namespace TestAPIProject
                 stopwatch.Start();
                 var response = aesRsaSender.SendRequest(pack);
                 stopwatch.Stop();
-                Console.WriteLine("Response status: {0}", response.Status);
-                Console.WriteLine("Server error message: {0}", response.ErrorMessage);
-                Console.WriteLine("Response as string {0}", (string)response.ResponseData);
+                Console.WriteLine("Response status: {0}", response.Result.Status);
+                Console.WriteLine("Server error message: {0}", response.Result.ErrorMessage);
+                Console.WriteLine("Response as string {0}", (string)response.Result.ResponseData);
                 Console.WriteLine("Response received in {0} millisecond", stopwatch.ElapsedMilliseconds);
                 processed++;
                 Console.Write("Exceptions: {0}; Processed: {1}", exceptions, processed);

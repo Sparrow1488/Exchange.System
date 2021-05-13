@@ -2,6 +2,7 @@
 using ExchangeSystem.SecurityData;
 using System;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 namespace ExchangeServer.Protocols.Responders
 {
@@ -10,7 +11,7 @@ namespace ExchangeServer.Protocols.Responders
         private TcpClient _client;
         public override EncryptType EncryptType => EncryptType.None;
 
-        public override void SendResponse(TcpClient toClient, object response)
+        public override async Task SendResponse(TcpClient toClient, object response)
         {
             throw new NotImplementedException();
         }

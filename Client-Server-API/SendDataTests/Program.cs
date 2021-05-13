@@ -10,7 +10,7 @@ namespace SendDataTests
 {
     public class Program
     {
-        private static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
             ClientReceiver receiver = new ClientReceiver("127.0.0.1", 80);
             receiver.StartReceive();
@@ -20,13 +20,13 @@ namespace SendDataTests
                 var client = receiver.AcceptClient();
                 Console.WriteLine("Client was connected");
 
-                Task.Factory.StartNew(() => ServerProcessing(client));
+                await ServerProcessing(client);
             }
         }
-        private static void ServerProcessing(TcpClient client)
+        private static async  Task ServerProcessing(TcpClient client)
         {
             Router router = new Router();
-            var requestPackage = router.IssueRequest(client) as Package;
+            var requestPackage = await router.IssueRequestAsync(client) as Package;
             var packageEncryptType = router.GetPackageEncryptType();
             Console.WriteLine("Received package has '{0}' request type and encrypt type '{1}'", requestPackage.RequestType, packageEncryptType);
 
@@ -35,6 +35,7 @@ namespace SendDataTests
             controller.ProcessRequest(client, requestPackage, packageEncryptType);
 
             Console.WriteLine(requestPackage.RequestObject);
+            return;
         }
      }
 }

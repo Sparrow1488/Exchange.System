@@ -2,6 +2,7 @@
 using ExchangeSystem.SecurityData;
 using System;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 namespace ExchangeServer.Protocols
 {
@@ -14,7 +15,7 @@ namespace ExchangeServer.Protocols
             throw new NotImplementedException();
         }
 
-        public override IPackage ReceivePackage(TcpClient client)
+        public override Task<IPackage> ReceivePackage(TcpClient client)
         {
             throw new NotImplementedException();
         }

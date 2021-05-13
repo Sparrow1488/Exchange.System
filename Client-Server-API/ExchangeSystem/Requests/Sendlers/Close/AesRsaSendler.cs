@@ -21,6 +21,7 @@ namespace ExchangeSystem.Requests.Sendlers.Close
             _privateKey = rsa.PrivateKey;
             _publicKey = rsa.PublicKey;
         }
+        private TcpClient _client;
         private NetworkHelper _networkHelper = new NetworkHelper();
         private RSAParameters _privateKey;
         private RSAParameters _publicKey;
@@ -35,40 +36,41 @@ namespace ExchangeSystem.Requests.Sendlers.Close
         private ResponsePackage _finally;
 
 
-        public override ResponsePackage SendRequest(IPackage package)
+        public override async Task<ResponsePackage> SendRequest(IPackage package)
         {
             ConnectToServer();
-            SendRequestInformation();
-            ReceiveServerPublicKey();
+            await SendRequestInformation();
+            await ReceiveServerPublicKey();
             EncryptAesRsaPackage(package);
             PrepareSecretPackage();
-            SendSecretPackageSize();
-            SendSecretPackage();
+            await SendSecretPackageSize();
+            await SendSecretPackage();
 
             PrepareRsaKeys();
-            SendRsaKey();
-            ReceiveResponseSize();
-            ReceiveProtectedPackage();
+            await SendRsaKey();
+            await ReceiveResponseSize();
+            await ReceiveProtectedPackage();
             DecryptPackage(_receivedProtectedPackage);
+            Disconnect();
 
             return _finally;
         }
         private void ConnectToServer()
         {
-            var client = new TcpClient();
-            client.Connect(ConnectionSettings.HostName, ConnectionSettings.Port);
-            _stream = client.GetStream();
+            _client = new TcpClient();
+            _client.Connect(ConnectionSettings.HostName, ConnectionSettings.Port);
+            _stream = _client.GetStream();
         }
-        private void SendRequestInformation()
+        private async Task SendRequestInformation()
         {
             PrepareRequestInformation();
             string requestJson = Serialize(_requestInfo);
             byte[] requestInfoBuffer = _networkHelper.Encoding.GetBytes(requestJson);
-            WriteData(_stream, requestInfoBuffer);
+            await _networkHelper.WriteDataAsync(_stream, requestInfoBuffer);
         }
-        private void ReceiveServerPublicKey()
+        private async Task ReceiveServerPublicKey()
         {
-            byte[] publicServerRsa = ReadData(_stream, 2100);
+            byte[] publicServerRsa = await _networkHelper.ReadDataAsync(_stream, 2100);
             _serverKey = DecodeServerRsa(publicServerRsa);
         }
         private void EncryptAesRsaPackage(IPackage package)
@@ -87,11 +89,11 @@ namespace ExchangeSystem.Requests.Sendlers.Close
             Security security = new AesRsaSecurity(clientXmlKey, string.Empty, encryptAesKeyAsBase64, encryptAesIVAsBase64);
             SecretPackage = new ProtectedPackage(encryptBase64Package, security);
         }
-        private void SendSecretPackageSize()
+        private async Task SendSecretPackageSize()
         {
             string size = _readySecretPackage.Length.ToString();
             byte[] secretPackageSize = _networkHelper.Encoding.GetBytes(size);
-            WriteData(_stream, secretPackageSize);
+            await _networkHelper.WriteDataAsync(_stream, secretPackageSize);
         }
         private RSAParameters DecodeServerRsa(byte[] serverRsaBuffer)
         {
@@ -104,9 +106,9 @@ namespace ExchangeSystem.Requests.Sendlers.Close
         {
             _requestInfo = new Informator(EncryptType.AesRsa);
         }
-        private void SendSecretPackage()
+        private async Task SendSecretPackage()
         {
-            WriteData(_stream, _readySecretPackage);
+            await _networkHelper.WriteDataAsync(_stream, _readySecretPackage);
         }
         private void PrepareSecretPackage()
         {
@@ -120,15 +122,15 @@ namespace ExchangeSystem.Requests.Sendlers.Close
                 TypeNameHandling = TypeNameHandling.All
             });
         }
-        private void ReceiveResponseSize()
+        private async Task ReceiveResponseSize()
         {
-            byte[] response = ReadData(_stream, 64);
+            byte[] response = await _networkHelper.ReadDataAsync(_stream, 64);
             string sizeToString = _networkHelper.Encoding.GetString(response);
             _responseDataSize = Convert.ToInt32(sizeToString);
         }
-        private void ReceiveProtectedPackage()
+        private async Task ReceiveProtectedPackage()
         {
-            byte[] response = ReadData(_stream, _responseDataSize);
+            byte[] response = await _networkHelper.ReadDataAsync(_stream, _responseDataSize);
             string jsonResponse = _networkHelper.Encoding.GetString(response);
             _receivedProtectedPackage = (ProtectedPackage)JsonConvert.DeserializeObject(jsonResponse, new JsonSerializerSettings
             {
@@ -159,12 +161,18 @@ namespace ExchangeSystem.Requests.Sendlers.Close
             _newPublicKey = rsa.PublicKey;
             _newPrivateKey = rsa.PrivateKey;
         }
-        private void SendRsaKey()
+        private async Task SendRsaKey()
         {
             var converter = new RsaConverter();
             var xmlPublicRsa = converter.AsXML(_newPublicKey);
             byte[] publicKeyData = Encoding.UTF32.GetBytes(xmlPublicRsa);
-            WriteData(_stream, publicKeyData);
+            await _networkHelper.WriteDataAsync(_stream, publicKeyData);
+        }
+        private void Disconnect()
+        {
+            _stream.Close();
+            _client.Dispose();
+            _client.Close();
         }
     }
 }
