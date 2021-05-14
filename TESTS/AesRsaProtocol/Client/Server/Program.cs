@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
@@ -14,25 +15,13 @@ namespace Server
 
         static void Main(string[] args)
         {
-            var listener = new TcpListener(80);
-            listener.Start();
-            var client = listener.AcceptTcpClient();
-            var stream = client.GetStream();
-
-            stream.Read(buffer1, 0, buffer1.Length);
-            Console.WriteLine(Encoding.UTF8.GetString(buffer1));
-
-            stream.Read(buffer2, 0, buffer2.Length);
-            Console.WriteLine(Encoding.UTF8.GetString(buffer1));
-
-            stream.Read(buffer3, 0, buffer3.Length);
-            Console.WriteLine(Encoding.UTF8.GetString(buffer1));
-
-            stream.Read(buffer4, 0, buffer4.Length);
-            Console.WriteLine(Encoding.UTF8.GetString(buffer1));
-
-            stream.Read(buffer5, 0, buffer5.Length);
-            Console.WriteLine(Encoding.UTF8.GetString(buffer1));
+            byte[] requestdata = new byte[128];
+            var socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
+            socket.Bind(new IPEndPoint(127001, 80));
+            var connectedSocket = socket.Accept();
+            connectedSocket.Receive(requestdata);
+            string message = Encoding.UTF8.GetString(requestdata);
+            Console.WriteLine(message);
         }
     }
 }
