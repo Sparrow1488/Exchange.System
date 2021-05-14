@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "OfbgTUEWWMZs7h6avkcBw9XLEHrXfMsgMmSIVShDTdq78k7RA8QjjIdmFPQ3fvHN7rFUwbKxvjkExGGeYIu/cg==",
+  "dgSpecHash": "7UEWZKanv1aljhfvcI8TNR3wTjZizklaMHIMI2yKPIlj9QHao2BGU6F2YYM7WVBz0xpxCg6eXFVpabuUaWchBg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\open-close_exchange_system\\Client-Server-API\\SendDataTests\\ExchangeServer.csproj",
+  "projectFilePath": "C:\\Users\\Dom\\Desktop\\Репозитории\\open-close_exchange_system\\Client-Server-API\\SendDataTests\\ExchangeServer.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\DOM\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+    "C:\\Users\\Dom\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
   ],
   "logs": []
 }

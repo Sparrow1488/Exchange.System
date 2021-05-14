@@ -17,37 +17,59 @@ namespace ExchangeSystem.Requests.Sendlers.Open
         public ConnectionSettings ConnectionInfo { get; }
         private NetworkHelper _networkHelper = new NetworkHelper();
         private NetworkStream _stream;
+        private TcpClient _client;
         private Informator _informator = new Informator(SecurityData.EncryptType.None);
+        private byte[] _requestData;
 
         public async Task<ResponsePackage> SendRequest(IPackage package)
         {
             RequestPackage = package;
             Connect();
+            SendInformator();
+            PrepareRequestPackage();
+            SendPackageSize();
+            await SendRequest();
 
-            string jsonPackage = RequestPackage.ToJson();
-            byte[] buffer = _networkHelper.Encoding.GetBytes(jsonPackage);
-
-           await _networkHelper.WriteDataAsync(_stream, buffer);
             byte[] receivedBuffer = await _networkHelper.ReadDataAsync(_stream, 256);
 
             _stream.Close();
             string jsonResponse = _networkHelper.Encoding.GetString(receivedBuffer);
-            throw new ArgumentException("а как же пробразование?");
+            throw new ArgumentException("а как же прeобразование?");
         }
         private void Connect()
         {
-            var client = new TcpClient();
-            client.Connect(ConnectionInfo.HostName, ConnectionInfo.Port);
-            _stream = client.GetStream();
+            _client = new TcpClient();
+            _client.Connect(ConnectionInfo.HostName, ConnectionInfo.Port);
+            _stream = _client.GetStream();
         }
-        private async Task SendInformator()
+        private async Task ReceiveReport()
+        {
+            await _networkHelper.ReadDataAsync(_stream, 64);
+        }
+        private void SendInformator()
         {
             var requestJsonInfo = JsonConvert.SerializeObject(_informator, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.All,
             });
             var infoData = _networkHelper.Encoding.GetBytes(requestJsonInfo);
-            await _networkHelper.WriteDataAsync(_stream, infoData);
+            _networkHelper.WriteData(_stream, infoData);
+        }
+        private void PrepareRequestPackage()
+        {
+            string jsonPackage = RequestPackage.ToJson();
+            _requestData = _networkHelper.Encoding.GetBytes(jsonPackage);
+        }
+        private void SendPackageSize()
+        {
+            string requestSize = _requestData.Length.ToString();
+            var requestDataSize = _networkHelper.Encoding.GetBytes(requestSize);
+            _networkHelper.WriteData(_stream, requestDataSize);
+            //do { Task.Delay(150).Wait(); } while (_stream.Length > 0);
+        }
+        private async Task SendRequest()
+        {
+            await _networkHelper.WriteDataAsync(_stream, _requestData);
         }
     }
 }
