@@ -15,7 +15,6 @@ namespace ExchangeServer.Protocols.Responders
     public class AesRsaResponder : Responder
     {
         public override EncryptType EncryptType => EncryptType.AesRsa;
-        private NetworkHelper _networkHelper = new NetworkHelper();
         private RSAParameters _clientPublicKey;
         private NetworkStream _stream;
         private ResponsePackage _responsePackage;
@@ -35,13 +34,10 @@ namespace ExchangeServer.Protocols.Responders
             PrepareResponsePackage();
             EncryptAesRsaPackage(_responsePackage);
             PrepareData();
+            Task.Delay(100).Wait(); // я не знаю почему, но без этого не работает корректная передача :/
             await SendResponseSize();
+            Task.Delay(100).Wait();
             await SendResponseData();
-
-            Task.Delay(2500).Wait();
-            _stream.Close();
-            toClient.Dispose();
-            toClient.Close();
         }
         private string ToJson(object obj)
         {
@@ -53,8 +49,8 @@ namespace ExchangeServer.Protocols.Responders
 
         private async Task ReceiveClientKey()
         {
-            byte[] clientKeyData = await _networkHelper.ReadDataAsync(_stream, 2100);
-            var xmlKey = _networkHelper.Encoding.GetString(clientKeyData);
+            byte[] clientKeyData = await new NetworkHelper().ReadDataAsync(_stream, 2100);
+            var xmlKey = new NetworkHelper().Encoding.GetString(clientKeyData);
             _clientPublicKey = new RsaConverter().AsParameters(xmlKey);
         }
         private void PrepareResponsePackage()
@@ -64,7 +60,7 @@ namespace ExchangeServer.Protocols.Responders
         private async Task SendResponseSize()
         {
             _responsePackageSize = _responseData.Length;
-            await _networkHelper.WriteDataAsync(_stream, _networkHelper.Encoding.GetBytes(_responsePackageSize.ToString()));
+            await new NetworkHelper().WriteDataAsync(_stream, new NetworkHelper().Encoding.GetBytes(_responsePackageSize.ToString()));
         }
         private void EncryptAesRsaPackage(IPackage package)
         {
@@ -83,11 +79,11 @@ namespace ExchangeServer.Protocols.Responders
         }
         private void PrepareData()
         {
-            _responseData = _networkHelper.Encoding.GetBytes(_protectedPackage.ToJson());
+            _responseData = new NetworkHelper().Encoding.GetBytes(_protectedPackage.ToJson());
         }
         private async Task SendResponseData()
         {
-            await _networkHelper.WriteDataAsync(_stream, _responseData);
+            await new NetworkHelper().WriteDataAsync(_stream, _responseData);
         }
     }
 }

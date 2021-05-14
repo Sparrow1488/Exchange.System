@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchangeServer", "SendDataT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchangeSystem", "ExchangeSystem\ExchangeSystem.csproj", "{690AD9DC-0264-47A1-9D5C-61C146501A48}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp3", "WindowsFormsApp3\WindowsFormsApp3.csproj", "{D2F20043-D338-45AD-A772-EC452A722283}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{690AD9DC-0264-47A1-9D5C-61C146501A48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{690AD9DC-0264-47A1-9D5C-61C146501A48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{690AD9DC-0264-47A1-9D5C-61C146501A48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2F20043-D338-45AD-A772-EC452A722283}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2F20043-D338-45AD-A772-EC452A722283}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2F20043-D338-45AD-A772-EC452A722283}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2F20043-D338-45AD-A772-EC452A722283}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

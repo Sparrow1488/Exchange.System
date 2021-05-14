@@ -4,6 +4,7 @@ using ExchangeServer.Protocols.Receivers;
 using ExchangeSystem.Requests.Packages.Default;
 using System;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SendDataTests
@@ -16,11 +17,15 @@ namespace SendDataTests
             receiver.StartReceive();
             while (true)
             {
-                Console.WriteLine("Server waiting requests...");
-                var client = receiver.AcceptClient();
-                Console.WriteLine("Client was connected");
+                try
+                {
+                    Console.WriteLine("Server waiting requests...");
+                    var client = receiver.AcceptClient();
+                    Console.WriteLine("Client was connected");
 
-                await ServerProcessing(client);
+                    await ServerProcessing(client);
+                }
+                catch { Console.WriteLine("ERROR"); }
             }
         }
         private static async  Task ServerProcessing(TcpClient client)

@@ -165,7 +165,7 @@ namespace ExchangeSystem.Requests.Sendlers.Close
         {
             var converter = new RsaConverter();
             var xmlPublicRsa = converter.AsXML(_newPublicKey);
-            byte[] publicKeyData = Encoding.UTF32.GetBytes(xmlPublicRsa);
+            byte[] publicKeyData = _networkHelper.Encoding.GetBytes(xmlPublicRsa);
             await _networkHelper.WriteDataAsync(_stream, publicKeyData);
         }
         private void Disconnect()

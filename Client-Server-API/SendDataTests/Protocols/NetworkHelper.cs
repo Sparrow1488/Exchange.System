@@ -6,7 +6,7 @@ namespace ExchangeServer.Protocols
 {
     public class NetworkHelper
     {
-        public Encoding Encoding { get; } = Encoding.UTF32;
+        public Encoding Encoding { get; } = Encoding.UTF8;
         public async Task<byte[]> ReadDataAsync(NetworkStream stream, int bufferSize)
         {
             byte[] receivedBuffer = new byte[bufferSize];
@@ -20,6 +20,7 @@ namespace ExchangeServer.Protocols
         }
         public async Task WriteDataAsync(NetworkStream stream, byte[] buffer)
         {
+            stream.Flush();
             do
             {
                 await stream.WriteAsync(buffer, 0, buffer.Length);
