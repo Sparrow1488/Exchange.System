@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "GYQElB+Ohm2YKoqoaBG0c9hqIIKOrVjz02zCaM8QqftfJea0+AQJXqwnGl4j3yiYeLtNPBXeUdYBi5O3gNGLBA==",
+  "dgSpecHash": "u9x7pWaPpdSmMdi079yjrGBaXhpmCdC5y1baQmPbsKK/eiQkxbDV8FzzBXx/d2ul/Q4iJi/zbVibqWhhg2LQqw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Dom\\Desktop\\Репозитории\\open-close_exchange_system\\Client-Server-API\\TestAPIProject\\TenantSystemAPI.csproj",
+  "projectFilePath": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\2\\open-close_exchange_system\\Client-Server-API\\TestAPIProject\\TenantSystemAPI.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Dom\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+    "C:\\Users\\DOM\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
   ],
   "logs": []
 }
