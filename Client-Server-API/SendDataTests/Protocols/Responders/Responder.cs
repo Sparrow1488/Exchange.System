@@ -9,6 +9,6 @@ namespace ExchangeServer.Protocols.Responders
     {
         public TcpClient Client { get; }
         public abstract EncryptType EncryptType { get; }
-        public abstract Task SendResponse(TcpClient toClient, object response);
+        public abstract Task SendResponse(TcpClient toClient, ResponsePackage response);
     }
 }

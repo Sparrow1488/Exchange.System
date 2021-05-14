@@ -1,15 +1,23 @@
-﻿using ExchangeSystem.Requests.Objects.Entities;
-using System;
+﻿using ExchangeSystem.Requests.Objects;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ExchangeServer.MVC.Models
 {
     public class UserModel
     {
-        public User Receive(string id)
+        private List<UserPassport> _userPassports = new List<UserPassport>();
+        public UserModel()
         {
-            throw new NotImplementedException("ПЕРНИ МЕТОД");
+            CreateUserCollection();
+        }
+        private void CreateUserCollection()
+        {
+            _userPassports.Add(new UserPassport("Sparrow", "1488"));
+            _userPassports.Add(new UserPassport("Nigger", "228"));
+        }
+        public UserPassport Receive(string login)
+        {
+            return _userPassports.Find(pass => pass.Login == login);
         }
     }
 }

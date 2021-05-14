@@ -23,11 +23,11 @@ namespace ExchangeServer.Protocols.Responders
         private int _responsePackageSize = 0;
         private byte[] _responseData;
 
-        public override async Task SendResponse(TcpClient toClient, object response)
+        public override async Task SendResponse(TcpClient toClient, ResponsePackage response)
         {
             if (response == null)
                 throw new NullReferenceException("Похоже, вы передали null при отправке ответа");
-            _responsePackage = (ResponsePackage)response; //ВРЕМЕННО
+            _responsePackage = response;
 
             _stream = toClient.GetStream();
             await ReceiveClientKey();

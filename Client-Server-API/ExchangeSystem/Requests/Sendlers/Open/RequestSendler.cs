@@ -1,7 +1,9 @@
-﻿using ExchangeSystem.Requests.Packages.Default;
+﻿using ExchangeSystem.Requests.Packages;
+using ExchangeSystem.Requests.Packages.Default;
+using Newtonsoft.Json;
 using System;
 using System.Net.Sockets;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace ExchangeSystem.Requests.Sendlers.Open
 {
@@ -13,43 +15,39 @@ namespace ExchangeSystem.Requests.Sendlers.Open
         }
         public IPackage RequestPackage { get; private set; }
         public ConnectionSettings ConnectionInfo { get; }
+        private NetworkHelper _networkHelper = new NetworkHelper();
+        private NetworkStream _stream;
+        private Informator _informator = new Informator(SecurityData.EncryptType.None);
 
-        public ResponsePackage SendRequest(IPackage package)
+        public async Task<ResponsePackage> SendRequest(IPackage package)
         {
             RequestPackage = package;
-            var client = new TcpClient();
-            client.Connect(ConnectionInfo.HostName, ConnectionInfo.Port);
+            Connect();
+
             string jsonPackage = RequestPackage.ToJson();
-            byte[] buffer = Encoding.UTF32.GetBytes(jsonPackage);
+            byte[] buffer = _networkHelper.Encoding.GetBytes(jsonPackage);
 
-            var stream = client.GetStream();
+           await _networkHelper.WriteDataAsync(_stream, buffer);
+            byte[] receivedBuffer = await _networkHelper.ReadDataAsync(_stream, 256);
 
-            WriteData(ref stream, buffer);
-            byte[] receivedBuffer = ReadData(ref stream, 256);
-
-            stream.Close();
-
-            string jsonResponse = Encoding.UTF32.GetString(receivedBuffer);
+            _stream.Close();
+            string jsonResponse = _networkHelper.Encoding.GetString(receivedBuffer);
             throw new ArgumentException("а как же пробразование?");
         }
-
-        private byte[] ReadData(ref NetworkStream stream, int bufferSize)
+        private void Connect()
         {
-            byte[] receivedBuffer = new byte[bufferSize];
-            do
-            {
-                stream.Read(receivedBuffer, 0, receivedBuffer.Length);
-            }
-            while (stream.DataAvailable);
-            return receivedBuffer;
+            var client = new TcpClient();
+            client.Connect(ConnectionInfo.HostName, ConnectionInfo.Port);
+            _stream = client.GetStream();
         }
-        private void WriteData(ref NetworkStream stream, byte[] buffer)
+        private async Task SendInformator()
         {
-            do
+            var requestJsonInfo = JsonConvert.SerializeObject(_informator, new JsonSerializerSettings
             {
-                stream.Write(buffer, 0, buffer.Length);
-            }
-            while (stream.DataAvailable);
+                TypeNameHandling = TypeNameHandling.All,
+            });
+            var infoData = _networkHelper.Encoding.GetBytes(requestJsonInfo);
+            await _networkHelper.WriteDataAsync(_stream, infoData);
         }
     }
 }

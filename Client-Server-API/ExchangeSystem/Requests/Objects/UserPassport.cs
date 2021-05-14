@@ -21,7 +21,7 @@ namespace ExchangeSystem.Requests.Objects
         }
         public string Login { get; } = string.Empty;
         [JsonProperty]
-        private string Password { get; } = string.Empty;
+        public string Password { get; } = string.Empty;
         public string Token { get; } = string.Empty;
         public int UserId { get; } = -1;
     }

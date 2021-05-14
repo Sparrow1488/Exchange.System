@@ -10,10 +10,14 @@ namespace ExchangeServer.Protocols.Responders
     {
         private TcpClient _client;
         public override EncryptType EncryptType => EncryptType.None;
+        private NetworkHelper _networkHelper = new NetworkHelper();
 
-        public override async Task SendResponse(TcpClient toClient, object response)
+        public override async Task SendResponse(TcpClient toClient, ResponsePackage response)
         {
-            throw new NotImplementedException();
+            var stream = toClient.GetStream();
+            var jsonResponse = response.ToJson();
+            var responseData = _networkHelper.Encoding.GetBytes(jsonResponse);
+            await _networkHelper.WriteDataAsync(stream, responseData);
         }
     }
 }
