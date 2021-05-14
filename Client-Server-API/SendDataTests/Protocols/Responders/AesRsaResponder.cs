@@ -8,13 +8,13 @@ using System;
 using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ExchangeServer.Protocols.Responders
 {
     public class AesRsaResponder : Responder
     {
         public override EncryptType EncryptType => EncryptType.AesRsa;
-        private NetworkHelper _networkHelper = new NetworkHelper();
         private RSAParameters _clientPublicKey;
         private NetworkStream _stream;
         private ResponsePackage _responsePackage;
@@ -23,19 +23,21 @@ namespace ExchangeServer.Protocols.Responders
         private int _responsePackageSize = 0;
         private byte[] _responseData;
 
-        public override void SendResponse(TcpClient toClient, object response)
+        public override async Task SendResponse(TcpClient toClient, object response)
         {
             if (response == null)
                 throw new NullReferenceException("Похоже, вы передали null при отправке ответа");
             _responsePackage = (ResponsePackage)response; //ВРЕМЕННО
 
             _stream = toClient.GetStream();
-            ReceiveClientKey();
+            await ReceiveClientKey();
             PrepareResponsePackage();
             EncryptAesRsaPackage(_responsePackage);
             PrepareData();
-            SendResponseSize();
-            SendResponseData();
+            Task.Delay(100).Wait(); // я не знаю почему, но без этого не работает корректная передача :/
+            await SendResponseSize();
+            Task.Delay(100).Wait();
+            await SendResponseData();
         }
         private string ToJson(object obj)
         {
@@ -45,20 +47,20 @@ namespace ExchangeServer.Protocols.Responders
             });
         }
 
-        private void ReceiveClientKey()
+        private async Task ReceiveClientKey()
         {
-            byte[] clientKeyData = _networkHelper.ReadData(_stream, 2100);
-            var xmlKey = _networkHelper.Encoding.GetString(clientKeyData);
+            byte[] clientKeyData = await new NetworkHelper().ReadDataAsync(_stream, 2100);
+            var xmlKey = new NetworkHelper().Encoding.GetString(clientKeyData);
             _clientPublicKey = new RsaConverter().AsParameters(xmlKey);
         }
         private void PrepareResponsePackage()
         {
             _jsonResponsePackage = _responsePackage.ToJson();
         }
-        private void SendResponseSize()
+        private async Task SendResponseSize()
         {
             _responsePackageSize = _responseData.Length;
-            _networkHelper.WriteData(_stream, _networkHelper.Encoding.GetBytes(_responsePackageSize.ToString()));
+            await new NetworkHelper().WriteDataAsync(_stream, new NetworkHelper().Encoding.GetBytes(_responsePackageSize.ToString()));
         }
         private void EncryptAesRsaPackage(IPackage package)
         {
@@ -77,11 +79,11 @@ namespace ExchangeServer.Protocols.Responders
         }
         private void PrepareData()
         {
-            _responseData = _networkHelper.Encoding.GetBytes(_protectedPackage.ToJson());
+            _responseData = new NetworkHelper().Encoding.GetBytes(_protectedPackage.ToJson());
         }
-        private void SendResponseData()
+        private async Task SendResponseData()
         {
-            _networkHelper.WriteData(_stream, _responseData);
+            await new NetworkHelper().WriteDataAsync(_stream, _responseData);
         }
     }
 }

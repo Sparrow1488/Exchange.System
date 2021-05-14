@@ -10,6 +10,7 @@ using System;
 using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ExchangeServer.Protocols
 {
@@ -20,11 +21,10 @@ namespace ExchangeServer.Protocols
         private RSAParameters _privateKey;
         private RSAParameters _publicKey;
         private TcpClient _client;
-        private NetworkHelper _networkHelper = new NetworkHelper();
         private EncryptType _ecnryptType;
         public override EncryptType EncryptType { get; protected set; } = EncryptType.AesRsa;
 
-        public override IPackage ReceivePackage(TcpClient client)
+        public override async Task<IPackage> ReceivePackage(TcpClient client)
         {
             if (!client.Connected)
                 throw new ConnectionException();
@@ -35,12 +35,16 @@ namespace ExchangeServer.Protocols
             _privateKey = rsa.PrivateKey;
             RsaConverter converter = new RsaConverter();
             var publicXmlKey = converter.AsXML(rsa.PublicKey);
-            byte[] publicRsa = _networkHelper.Encoding.GetBytes(publicXmlKey);
-            _networkHelper.WriteData(stream, publicRsa);
-            byte[] _futureSecretPackageSize = _networkHelper.ReadData(stream, 128);
-            string secretPackageSize = _networkHelper.Encoding.GetString(_futureSecretPackageSize); //TODO: херня с получением длины
-            byte[] bufferForSecretPackage = _networkHelper.ReadData(stream, Convert.ToInt32(secretPackageSize));
-            string _protectedJsonPackage = _networkHelper.Encoding.GetString(bufferForSecretPackage);
+            byte[] publicRsa = new NetworkHelper().Encoding.GetBytes(publicXmlKey);
+            await new NetworkHelper().WriteDataAsync(stream, publicRsa);
+            stream.Flush();
+            byte[] _futureSecretPackageSize = await new NetworkHelper().ReadDataAsync(stream, 128);
+            string secretPackageSize = new NetworkHelper().Encoding.GetString(_futureSecretPackageSize); //TODO: херня с получением длины
+            bool can = Int32.TryParse(secretPackageSize, out int correctSecretPack);
+            if (!can)
+                throw new Exception("Пришла хуета, а не размер пакета");
+            byte[] bufferForSecretPackage = await new NetworkHelper().ReadDataAsync(stream, correctSecretPack);
+            string _protectedJsonPackage = new NetworkHelper().Encoding.GetString(bufferForSecretPackage);
             ProtectedPackage pack = (ProtectedPackage)JsonConvert.DeserializeObject(_protectedJsonPackage, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.All,
