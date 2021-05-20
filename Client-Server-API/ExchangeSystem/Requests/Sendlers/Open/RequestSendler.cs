@@ -25,9 +25,9 @@ namespace ExchangeSystem.Requests.Sendlers.Open
         {
             RequestPackage = package;
             Connect();
-            SendInformator();
+            await SendInformator();
+            Task.Delay(150).Wait();
             PrepareRequestPackage();
-            SendPackageSize();
             await SendRequest();
 
             byte[] receivedBuffer = await _networkHelper.ReadDataAsync(_stream, 256);
@@ -42,30 +42,19 @@ namespace ExchangeSystem.Requests.Sendlers.Open
             _client.Connect(ConnectionInfo.HostName, ConnectionInfo.Port);
             _stream = _client.GetStream();
         }
-        private async Task ReceiveReport()
-        {
-            await _networkHelper.ReadDataAsync(_stream, 64);
-        }
-        private void SendInformator()
+        private async Task SendInformator()
         {
             var requestJsonInfo = JsonConvert.SerializeObject(_informator, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.All,
             });
             var infoData = _networkHelper.Encoding.GetBytes(requestJsonInfo);
-            _networkHelper.WriteData(_stream, infoData);
+            await _networkHelper.WriteDataAsync(_stream, infoData);
         }
         private void PrepareRequestPackage()
         {
             string jsonPackage = RequestPackage.ToJson();
             _requestData = _networkHelper.Encoding.GetBytes(jsonPackage);
-        }
-        private void SendPackageSize()
-        {
-            string requestSize = _requestData.Length.ToString();
-            var requestDataSize = _networkHelper.Encoding.GetBytes(requestSize);
-            _networkHelper.WriteData(_stream, requestDataSize);
-            //do { Task.Delay(150).Wait(); } while (_stream.Length > 0);
         }
         private async Task SendRequest()
         {
