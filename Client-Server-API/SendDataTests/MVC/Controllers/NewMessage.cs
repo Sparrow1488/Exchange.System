@@ -23,7 +23,7 @@ namespace ExchangeServer.MVC.Controllers
 
         public override void ProcessRequest(TcpClient connectedClient, IPackage package, EncryptType encryptType)
         {
-            CheckValidation(connectedClient, package, encryptType);
+            AssignValues(connectedClient, package, encryptType);
 
             MessageModel model = new MessageModel();
             bool wasAddSuccess = model.AddNew(); // ЭТО ВСЕ ВРЕМЕННЫЕ УСЛОВНОСТИ
@@ -37,7 +37,7 @@ namespace ExchangeServer.MVC.Controllers
                 throw new ConnectionException("Клиент не был подключен");
 
         }
-        private void CheckValidation(TcpClient client, IPackage package, EncryptType encryptType)
+        private void AssignValues(TcpClient client, IPackage package, EncryptType encryptType)
         {
             _client = client;
             _clientRequestObject = (Package)package;
