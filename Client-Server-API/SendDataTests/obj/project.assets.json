@@ -72,11 +72,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\open-close_exchange_system\\Client-Server-API\\SendDataTests\\ExchangeServer.csproj",
+      "projectUniqueName": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\2\\open-close_exchange_system\\Client-Server-API\\SendDataTests\\ExchangeServer.csproj",
       "projectName": "ExchangeServer",
-      "projectPath": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\open-close_exchange_system\\Client-Server-API\\SendDataTests\\ExchangeServer.csproj",
+      "projectPath": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\2\\open-close_exchange_system\\Client-Server-API\\SendDataTests\\ExchangeServer.csproj",
       "packagesPath": "C:\\Users\\DOM\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\open-close_exchange_system\\Client-Server-API\\SendDataTests\\obj\\",
+      "outputPath": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\2\\open-close_exchange_system\\Client-Server-API\\SendDataTests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\DOM\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -93,8 +93,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\open-close_exchange_system\\Client-Server-API\\ExchangeSystem\\ExchangeSystem.csproj": {
-              "projectPath": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\open-close_exchange_system\\Client-Server-API\\ExchangeSystem\\ExchangeSystem.csproj"
+            "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\2\\open-close_exchange_system\\Client-Server-API\\ExchangeSystem\\ExchangeSystem.csproj": {
+              "projectPath": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\2\\open-close_exchange_system\\Client-Server-API\\ExchangeSystem\\ExchangeSystem.csproj"
             }
           }
         }

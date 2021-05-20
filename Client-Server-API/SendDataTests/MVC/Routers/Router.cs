@@ -19,6 +19,7 @@ namespace ExchangeServer.MVC.Routers
         private IProtocol _selectedProtocol;
         private IPackage _receivedPackage;
         private EncryptType _encryptType = EncryptType.None;
+        private NetworkHelper _networkHelper = new NetworkHelper();
         public async Task<IPackage> IssueRequestAsync(TcpClient client)
         {
             if (!client.Connected)
@@ -29,8 +30,8 @@ namespace ExchangeServer.MVC.Routers
             _client = client;
             var stream = _client.GetStream();
 
-            byte[] receivedData = await new NetworkHelper().ReadDataAsync(stream, 1024);
-            string _requestInfoJson = new NetworkHelper().Encoding.GetString(receivedData);
+            byte[] receivedData = await _networkHelper.ReadDataAsync(stream, 1024);
+            string _requestInfoJson = _networkHelper.Encoding.GetString(receivedData);
             var _requestInfo = (RequestInformator)JsonConvert.DeserializeObject(_requestInfoJson, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.All,

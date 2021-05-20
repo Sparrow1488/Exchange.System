@@ -1,6 +1,6 @@
 ﻿using ExchangeSystem.Requests.Packages.Default;
 using ExchangeSystem.SecurityData;
-using System;
+using Newtonsoft.Json;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
@@ -9,15 +9,27 @@ namespace ExchangeServer.Protocols
     public class DefaultProtocol : Protocol
     {
         public override EncryptType EncryptType { get; protected set; } = EncryptType.None;
+        private NetworkHelper _networkHelper = new NetworkHelper();
+        private NetworkStream _stream;
 
         public override EncryptType GetPackageEncryptType()
         {
-            throw new NotImplementedException();
+            return EncryptType;
         }
-
-        public override Task<IPackage> ReceivePackage(TcpClient client)
+        public override async Task<IPackage> ReceivePackage(TcpClient client)
         {
-            throw new NotImplementedException();
+            _stream = client.GetStream();
+            return await ReceiveRequest();
+        }
+        private async Task<IPackage> ReceiveRequest()
+        {
+            var receivedRequest = await _networkHelper.ReadDataAsync(_stream, 2048);
+            var jsonPackage = _networkHelper.Encoding.GetString(receivedRequest);
+            IPackage receivedPack = (IPackage)JsonConvert.DeserializeObject(jsonPackage, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All,
+            });
+            return receivedPack;
         }
     }
 }
