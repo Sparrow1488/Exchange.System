@@ -4,7 +4,6 @@ using ExchangeServer.Protocols.Receivers;
 using ExchangeSystem.Requests.Packages.Default;
 using System;
 using System.Net.Sockets;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace SendDataTests
@@ -25,7 +24,7 @@ namespace SendDataTests
 
                     await ServerProcessing(client);
                 }
-                catch { Console.WriteLine("ERROR"); }
+                catch { PrintError("ERROR"); }
             }
         }
         private static async  Task ServerProcessing(TcpClient client)
@@ -41,6 +40,12 @@ namespace SendDataTests
 
             Console.WriteLine(requestPackage.RequestObject);
             return;
+        }
+        private static void PrintError(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
+            Console.ResetColor();
         }
      }
 }
