@@ -20,6 +20,7 @@ namespace ExchangeSystem.Requests.Sendlers.Open
         private TcpClient _client;
         private Informator _informator = new Informator(SecurityData.EncryptType.None);
         private byte[] _requestData;
+        private ResponsePackage _responsePackage;
 
         public async Task<ResponsePackage> SendRequest(IPackage package)
         {
@@ -30,11 +31,10 @@ namespace ExchangeSystem.Requests.Sendlers.Open
             PrepareRequestPackage();
             await SendRequest();
 
-            byte[] receivedBuffer = await _networkHelper.ReadDataAsync(_stream, 256);
-
-            _stream.Close();
-            string jsonResponse = _networkHelper.Encoding.GetString(receivedBuffer);
-            throw new ArgumentException("а как же прeобразование?");
+            await ReceiveResponse();
+            if (_responsePackage == null)
+                throw new ArgumentNullException("Ответ не является валидным!");
+            return _responsePackage;
         }
         private void Connect()
         {
@@ -59,6 +59,15 @@ namespace ExchangeSystem.Requests.Sendlers.Open
         private async Task SendRequest()
         {
             await _networkHelper.WriteDataAsync(_stream, _requestData);
+        }
+        private async Task ReceiveResponse()
+        {
+            byte[] receivedBuffer = await _networkHelper.ReadDataAsync(_stream, 256);
+            string jsonResponse = _networkHelper.Encoding.GetString(receivedBuffer);
+            _responsePackage = (ResponsePackage)JsonConvert.DeserializeObject(jsonResponse, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All,
+            });
         }
     }
 }

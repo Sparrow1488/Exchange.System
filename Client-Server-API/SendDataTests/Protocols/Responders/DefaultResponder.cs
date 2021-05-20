@@ -8,16 +8,27 @@ namespace ExchangeServer.Protocols.Responders
 {
     public class DefaultResponder : Responder
     {
-        private TcpClient _client;
         public override EncryptType EncryptType => EncryptType.None;
+        private NetworkStream _stream;
         private NetworkHelper _networkHelper = new NetworkHelper();
+        private ResponsePackage _response;
+        private byte[] _responseData;
 
         public override async Task SendResponse(TcpClient toClient, ResponsePackage response)
         {
-            var stream = toClient.GetStream();
-            var jsonResponse = response.ToJson();
-            var responseData = _networkHelper.Encoding.GetBytes(jsonResponse);
-            await _networkHelper.WriteDataAsync(stream, responseData);
+            _stream = toClient.GetStream();
+            _response = response;
+            PrepareResponseData();
+            await SendResponse();
+        }
+        private void PrepareResponseData()
+        {
+            var jsonResponse = _response.ToJson();
+            _responseData = _networkHelper.Encoding.GetBytes(jsonResponse);
+        }
+        private async Task SendResponse()
+        {
+            await _networkHelper.WriteDataAsync(_stream, _responseData);
         }
     }
 }

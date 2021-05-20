@@ -1,7 +1,6 @@
 ﻿using ExchangeSystem.Requests.Packages.Default;
 using ExchangeSystem.SecurityData;
 using Newtonsoft.Json;
-using System;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
@@ -31,11 +30,6 @@ namespace ExchangeServer.Protocols
                 TypeNameHandling = TypeNameHandling.All,
             });
             return receivedPack;
-        }
-        private async Task SendReport()
-        {
-            var report = _networkHelper.Encoding.GetBytes("OK");
-            await _networkHelper.WriteDataAsync(_stream, report);
         }
     }
 }
