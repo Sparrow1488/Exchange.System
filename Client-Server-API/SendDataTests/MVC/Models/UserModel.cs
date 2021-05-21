@@ -1,31 +1,54 @@
-﻿using ExchangeSystem.Requests.Objects;
+﻿using ExchangeServer.SQLDataBase;
+using ExchangeSystem.Requests.Objects;
 using ExchangeSystem.Requests.Objects.Entities;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ExchangeServer.MVC.Models
 {
     public class UserModel
     {
-        private List<UserPassport> _userPassports = new List<UserPassport>();
-        private List<User> _users = new List<User>();
         public UserModel()
         {
-            CreateUserCollection();
         }
-        private void CreateUserCollection()
-        {
-        }
+        /// <summary>
+        /// Получает паспорт по логину и паролю
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns>UserPassport or Null</returns>
         public UserPassport ReceivePassportBy(string login, string password)
         {
-            return _userPassports.Find(pass => pass.Login == login && pass.Password == password);
+            using (UsersDbContext db = new UsersDbContext())
+            {
+                var findPassport = db.Passports.Where(passport => passport.Login == login && passport.Password == password).FirstOrDefault();
+                return findPassport;
+            }
         }
+        /// <summary>
+        /// Получает паспорт по токену
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns>UserPassport or Null</returns>
         public UserPassport ReceivePassportBy(string token)
         {
-            return _userPassports.Find(pass => pass.Token == token);
+            using (UsersDbContext db = new UsersDbContext())
+            {
+                var findPassport = db.Passports.Where(pass => pass.Token == token).FirstOrDefault();
+                return findPassport;
+            }
         }
+        /// <summary>
+        /// Получает User по id пользователя
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns>User or Null</returns>
         public User ReceiveUserBy(int id)
         {
-            return _users.Find(user => user?.Passport.Id == id);
+            using (UsersDbContext db = new UsersDbContext())
+            {
+                var findUser = db.Users.Where(pass => pass.Id == id).FirstOrDefault();
+                return findUser;
+            }
         }
     }
 }

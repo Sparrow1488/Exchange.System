@@ -289,17 +289,17 @@
           }
         }
       },
-      "ExchangeSystemCore/1.0.0": {
+      "ExchangeSystem/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
           "Newtonsoft.Json": "13.0.1"
         },
         "compile": {
-          "bin/placeholder/ExchangeSystemCore.dll": {}
+          "bin/placeholder/ExchangeSystem.dll": {}
         },
         "runtime": {
-          "bin/placeholder/ExchangeSystemCore.dll": {}
+          "bin/placeholder/ExchangeSystem.dll": {}
         }
       }
     }
@@ -1067,7 +1067,7 @@
         "version.txt"
       ]
     },
-    "ExchangeSystemCore/1.0.0": {
+    "ExchangeSystem/1.0.0": {
       "type": "project",
       "path": "../ExchangeSystemCore/ExchangeSystemCore.csproj",
       "msbuildProject": "../ExchangeSystemCore/ExchangeSystemCore.csproj"
@@ -1076,7 +1076,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "EntityFramework >= 6.4.4",
-      "ExchangeSystemCore >= 1.0.0",
+      "ExchangeSystem >= 1.0.0",
       "Newtonsoft.Json >= 13.0.1"
     ]
   },

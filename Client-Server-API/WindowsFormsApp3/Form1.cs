@@ -41,7 +41,7 @@ namespace WindowsFormsApp3
             try
             {
                 ConnectionSettings connectionSettings = new ConnectionSettings("127.0.0.1", 80);
-                var passport = new UserPassport("Sparrow", "1488");
+                var passport = new UserPassport("Sparrow", "asd");
                 var pack = new Authorization(passport);
                 var sendler = new RequestSendler(connectionSettings);
                 var response = await sendler.SendRequest(pack);

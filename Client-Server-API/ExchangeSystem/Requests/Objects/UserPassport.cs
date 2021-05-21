@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using ExchangeSystem.Requests.Objects.Entities;
+using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ExchangeSystem.Requests.Objects
 {
@@ -16,6 +19,9 @@ namespace ExchangeSystem.Requests.Objects
             Password = password;
             Token = token;
         }
+        public UserPassport() { }
+        [Key]
+        [ForeignKey("User")]
         public int Id { get; set; }
         public string Login { get; set; }
         [JsonProperty]
@@ -24,5 +30,6 @@ namespace ExchangeSystem.Requests.Objects
         public string Token { get; set; }
         [JsonProperty]
         public AdminStatus AdminStatus { get; set; }
+        public User User { get; set; }
     }
 }

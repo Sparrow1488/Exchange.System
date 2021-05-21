@@ -1,4 +1,6 @@
-﻿namespace ExchangeSystem.Requests.Objects.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ExchangeSystem.Requests.Objects.Entities
 {
     public class User
     {
@@ -6,12 +8,18 @@
         {
             Passport = passport;
         }
+        public User(string name)
+        {
+            Name = name;
+        }
         public User() { }
-        public string Id { get; set; }
+        [Key]
+        public int Id { get; set; }
         public string Name { get; set; }
-        public string LastName { get; }
-        public string ParentName { get; }
-        public int Room { get; }
-        public UserPassport Passport { get; private set; }
+        public string LastName { get; set; }
+        public string ParentName { get; set; }
+        public int? Room { get; set; }
+        public int PassportId { get; set; }
+        public virtual UserPassport Passport { get; set; }
     }
 }

@@ -1,11 +1,15 @@
 ﻿using ExchangeServer.MVC.Controllers;
+using ExchangeServer.MVC.Models;
 using ExchangeServer.MVC.Routers;
 using ExchangeServer.Protocols.Receivers;
 using ExchangeServer.SQLDataBase;
 using ExchangeSystem.Requests.Objects;
 using ExchangeSystem.Requests.Objects.Entities;
 using ExchangeSystem.Requests.Packages.Default;
+using ExchangeSystemCore.Requests.Objects.Entities;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -53,27 +57,14 @@ namespace SendDataTests
             Console.WriteLine(message);
             Console.ResetColor();
         }
-
-
-        //private static void TestUsersContext()
-        //{
-        //    using (AccountsDbContext context = new AccountsDbContext())
-        //    {
-        //        var newPas = new UserPassport("asd", "1234");
-        //        context.Passports.Add(newPas) ;
-        //        context.SaveChanges();
-        //        var pas = context.Passports.FirstOrDefault();
-        //        Console.WriteLine(pas);
-        //    }
-        //}
         private static void Test12Context()
         {
-            using (UsersDbContext context = new UsersDbContext())
+            using (LettersDbContext context = new LettersDbContext())
             {
-                var user = new User(new UserPassport("Sparrow", "asd") { AdminStatus = AdminStatus.Admin }) { Name = "Валентин", LastName = "Жма"};
-                context.Users.Add(user);
+                var news = new Letter() { Text = "УРА ЭНТИТИ!!!", SenderId = 1, DateCreate = DateTime.Now, Sources = new List<Source>() { new Source() { SenderId = 1, Extension = ".png", DateCreate = DateTime.Now} } };
+                context.Letters.Add(news);
                 context.SaveChanges();
-                var pas = context.Users.FirstOrDefault();
+                var pas = context.Letters.FirstOrDefault();
                 Console.WriteLine(pas);
             }
         }

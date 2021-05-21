@@ -26,17 +26,17 @@ namespace ExchangeServer.MVC.Controllers
             Console.WriteLine("Received user passport. Pas: {0}, Log: {1}", userPassport.Password, 
                                                                                                                                                 userPassport.Login);
             UserModel userModel = new UserModel();
-            var findByLogin = userModel.ReceivePassportBy(userPassport.Login);
+            var findByLogin = userModel.ReceivePassportBy(userPassport.Login, userPassport.Password);
             if (findByLogin?.Password == userPassport?.Password)
                 PrepareResponsePackage(true);
             else
                 PrepareResponsePackage(false);
-                ResponderSelector responderSelector = new ResponderSelector();
-                Responder = responderSelector.SelectResponder(encryptType);
-                if (connectedClient.Connected)
-                    Responder.SendResponse(connectedClient, _responsePackage);
-                else
-                    throw new ConnectionException("Клиент не был подключен");
+            ResponderSelector responderSelector = new ResponderSelector();
+            Responder = responderSelector.SelectResponder(encryptType);
+            if (connectedClient.Connected)
+                Responder.SendResponse(connectedClient, _responsePackage);
+            else
+                throw new ConnectionException("Клиент не был подключен");
         }
         public void PrepareResponsePackage(bool authSuccess)
         {
