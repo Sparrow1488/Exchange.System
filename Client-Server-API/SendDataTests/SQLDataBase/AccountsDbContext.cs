@@ -6,8 +6,8 @@ namespace ExchangeServer.SQLDataBase
 {
     public class AccountsDbContext : DbContext
     {
-        protected AccountsDbContext() : base("DbConnectionString") { }
-        public DbSet<User> Users { get; set; }
+        public AccountsDbContext() : base("DbConnectionString") { }
         public DbSet<UserPassport> Passports { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

@@ -16,14 +16,13 @@ namespace ExchangeSystem.Requests.Objects
             Password = password;
             Token = token;
         }
-        [Key]
-        public int Id { get; } = -1;
-        public string Login { get; } = string.Empty;
+        public int Id { get; set; }
+        public string Login { get; set; }
         [JsonProperty]
-        public string Password { get; } = string.Empty;
+        public string Password { get; set; }
         [JsonProperty]
-        public string Token { get; } = string.Empty;
+        public string Token { get; set; }
         [JsonProperty]
-        public AdminStatus AdminStatus { get; } = AdminStatus.User;
+        public AdminStatus AdminStatus { get; set; }
     }
 }

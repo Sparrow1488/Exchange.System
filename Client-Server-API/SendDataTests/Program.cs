@@ -6,6 +6,7 @@ using ExchangeSystem.Requests.Objects;
 using ExchangeSystem.Requests.Objects.Entities;
 using ExchangeSystem.Requests.Packages.Default;
 using System;
+using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
@@ -15,7 +16,7 @@ namespace SendDataTests
     {
         private static async Task Main(string[] args)
         {
-
+            Test12Context();
             ClientReceiver receiver = new ClientReceiver("127.0.0.1", 80);
             receiver.StartReceive();
             while (true)
@@ -31,6 +32,7 @@ namespace SendDataTests
                 catch { PrintError("ERROR"); }
             }
         }
+
         private static async  Task ServerProcessing(TcpClient client)
         {
             Router router = new Router();
@@ -53,13 +55,27 @@ namespace SendDataTests
         }
 
 
-        private static void TestUsersContext()
+        //private static void TestUsersContext()
+        //{
+        //    using (AccountsDbContext context = new AccountsDbContext())
+        //    {
+        //        var newPas = new UserPassport("asd", "1234");
+        //        context.Passports.Add(newPas) ;
+        //        context.SaveChanges();
+        //        var pas = context.Passports.FirstOrDefault();
+        //        Console.WriteLine(pas);
+        //    }
+        //}
+        private static void Test12Context()
         {
-            using (AccountsDbContext context = new AccountsDbContext())
+            using (UsersDbContext context = new UsersDbContext())
             {
-                context.Users.Add(new User(new UserPassport("Sparrow", "1234")));
+                var user = new User(new UserPassport("Sparrow", "asd") { AdminStatus = AdminStatus.Admin }) { Name = "Валентин", LastName = "Жма"};
+                context.Users.Add(user);
                 context.SaveChanges();
+                var pas = context.Users.FirstOrDefault();
+                Console.WriteLine(pas);
             }
         }
-     }
+    }
 }

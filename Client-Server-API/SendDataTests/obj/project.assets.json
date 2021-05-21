@@ -289,17 +289,17 @@
           }
         }
       },
-      "ExchangeSystem/1.0.0": {
+      "ExchangeSystemCore/1.0.0": {
         "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
+        "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
           "Newtonsoft.Json": "13.0.1"
         },
         "compile": {
-          "bin/placeholder/ExchangeSystem.dll": {}
+          "bin/placeholder/ExchangeSystemCore.dll": {}
         },
         "runtime": {
-          "bin/placeholder/ExchangeSystem.dll": {}
+          "bin/placeholder/ExchangeSystemCore.dll": {}
         }
       }
     }
@@ -1067,16 +1067,16 @@
         "version.txt"
       ]
     },
-    "ExchangeSystem/1.0.0": {
+    "ExchangeSystemCore/1.0.0": {
       "type": "project",
-      "path": "../ExchangeSystem/ExchangeSystem.csproj",
-      "msbuildProject": "../ExchangeSystem/ExchangeSystem.csproj"
+      "path": "../ExchangeSystemCore/ExchangeSystemCore.csproj",
+      "msbuildProject": "../ExchangeSystemCore/ExchangeSystemCore.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "EntityFramework >= 6.4.4",
-      "ExchangeSystem >= 1.0.0",
+      "ExchangeSystemCore >= 1.0.0",
       "Newtonsoft.Json >= 13.0.1"
     ]
   },
@@ -1107,8 +1107,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\2\\open-close_exchange_system\\Client-Server-API\\ExchangeSystem\\ExchangeSystem.csproj": {
-              "projectPath": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\2\\open-close_exchange_system\\Client-Server-API\\ExchangeSystem\\ExchangeSystem.csproj"
+            "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\2\\open-close_exchange_system\\Client-Server-API\\ExchangeSystemCore\\ExchangeSystemCore.csproj": {
+              "projectPath": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\2\\open-close_exchange_system\\Client-Server-API\\ExchangeSystemCore\\ExchangeSystemCore.csproj"
             }
           }
         }

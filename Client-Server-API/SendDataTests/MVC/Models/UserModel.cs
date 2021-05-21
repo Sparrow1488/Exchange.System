@@ -14,8 +14,6 @@ namespace ExchangeServer.MVC.Models
         }
         private void CreateUserCollection()
         {
-            _userPassports.Add(new UserPassport("Sparrow", "1488"));
-            _userPassports.Add(new UserPassport("Nigger", "228"));
         }
         public UserPassport ReceivePassportBy(string login, string password)
         {
