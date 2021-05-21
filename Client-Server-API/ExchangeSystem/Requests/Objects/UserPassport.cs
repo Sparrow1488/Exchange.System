@@ -1,7 +1,5 @@
 ﻿using ExchangeSystem.Requests.Objects.Entities;
 using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ExchangeSystem.Requests.Objects
 {
@@ -20,8 +18,6 @@ namespace ExchangeSystem.Requests.Objects
             Token = token;
         }
         public UserPassport() { }
-        [Key]
-        [ForeignKey("User")]
         public int Id { get; set; }
         public string Login { get; set; }
         [JsonProperty]

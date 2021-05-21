@@ -1,9 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ExchangeSystem.Requests.Objects.Entities
+﻿namespace ExchangeSystem.Requests.Objects.Entities
 {
     public class User
     {
+        public User(User user)
+        {
+            Id = user.Id;
+            Name = user.Name;
+            LastName = user.LastName;
+            ParentName = user.ParentName;
+            Room = user.Room;
+            PassportId = user.PassportId;
+        }
         public User(UserPassport passport)
         {
             Passport = passport;
@@ -13,7 +20,6 @@ namespace ExchangeSystem.Requests.Objects.Entities
             Name = name;
         }
         public User() { }
-        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }

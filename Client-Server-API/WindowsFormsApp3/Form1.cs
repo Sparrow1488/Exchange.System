@@ -1,4 +1,5 @@
 ﻿using ExchangeSystem.Requests.Objects;
+using ExchangeSystem.Requests.Objects.Entities;
 using ExchangeSystem.Requests.Packages.Default;
 using ExchangeSystem.Requests.Sendlers;
 using ExchangeSystem.Requests.Sendlers.Close;
@@ -38,18 +39,19 @@ namespace WindowsFormsApp3
         }
         private async Task DefaultRequest()
         {
-            try
-            {
+            //try
+            //{
                 ConnectionSettings connectionSettings = new ConnectionSettings("127.0.0.1", 80);
-                var passport = new UserPassport("Sparrow", "asd");
+                var passport = new UserPassport("Sparrow", "1488");
                 var pack = new Authorization(passport);
                 var sendler = new RequestSendler(connectionSettings);
                 var response = await sendler.SendRequest(pack);
+                var authUser = (User)response.ResponseData;
 
-                string responseReport = string.Format("(Status: {0}, Error: {1}, Data(message): {2})\n", response.Status, response.ErrorMessage, (string)response.ResponseData);
-                textBox1.Text += responseReport;
-            }
-            catch { textBox1.Text += "BAD" + " "; }
+            string responseReport = string.Format("(Status: {0}, Error: {1}, Data(message): {2})\n", response.Status, response.ErrorMessage, authUser.LastName);
+            textBox1.Text += responseReport;
+            //}
+            //catch { textBox1.Text += "BAD" + " "; }
         }
     }
 }

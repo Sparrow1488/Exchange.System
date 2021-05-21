@@ -8,8 +8,6 @@ using ExchangeSystem.Requests.Objects.Entities;
 using ExchangeSystem.Requests.Packages.Default;
 using ExchangeSystemCore.Requests.Objects.Entities;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -20,7 +18,7 @@ namespace SendDataTests
     {
         private static async Task Main(string[] args)
         {
-            Test12Context();
+            AddLetterInDB();
             ClientReceiver receiver = new ClientReceiver("127.0.0.1", 80);
             receiver.StartReceive();
             while (true)
@@ -57,16 +55,24 @@ namespace SendDataTests
             Console.WriteLine(message);
             Console.ResetColor();
         }
-        private static void Test12Context()
+        private static void AddUserInDB()
         {
-            using (LettersDbContext context = new LettersDbContext())
+            using (UsersDbContext context = new UsersDbContext())
             {
-                var news = new Letter() { Text = "УРА ЭНТИТИ!!!", SenderId = 1, DateCreate = DateTime.Now, Sources = new List<Source>() { new Source() { SenderId = 1, Extension = ".png", DateCreate = DateTime.Now} } };
-                context.Letters.Add(news);
+                var user = new User(new UserPassport("Sparrow", "1488")) { Name = "Валентин", LastName = "Геркулесович", ParentName = "Жмышен"};
+                context.Users.Add(user);
                 context.SaveChanges();
-                var pas = context.Letters.FirstOrDefault();
+                var pas = context.Users.FirstOrDefault();
                 Console.WriteLine(pas);
             }
+        }
+        private static void AddLetterInDB()
+        {
+            var model = new LetterModel();
+            //var res = model.Add(new Letter() { Title = "Энтити крутой кста", Text = "*Крутой текст*", SenderId = 1, DateCreate = DateTime.Now});
+            var all = model.GetAllOrDefault();
+            var userModel = new UserModel();
+            var get = userModel.ReceivePassportBy("Sparrow", "1488");
         }
     }
 }

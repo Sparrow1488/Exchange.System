@@ -1,16 +1,12 @@
 ﻿using ExchangeServer.SQLDataBase;
 using ExchangeSystem.Requests.Objects;
 using ExchangeSystem.Requests.Objects.Entities;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace ExchangeServer.MVC.Models
 {
     public class UserModel
     {
-        public UserModel()
-        {
-        }
         /// <summary>
         /// Получает паспорт по логину и паролю
         /// </summary>
@@ -35,6 +31,21 @@ namespace ExchangeServer.MVC.Models
             {
                 var findPassport = db.Passports.Where(pass => pass.Token == token).FirstOrDefault();
                 return findPassport;
+            }
+        }
+        /// <summary>
+        /// Получает User по его паспорту
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns>User or Null</returns>
+        public User ReceiveUserBy(UserPassport passport)
+        {
+            using (UsersDbContext db = new UsersDbContext())
+            {
+                var findUser = db.Users.Where(user => user.Passport.Login == passport.Login &&
+                                                                                                user.Passport.Password == passport.Password)
+                                                              .FirstOrDefault();
+                return findUser;
             }
         }
         /// <summary>

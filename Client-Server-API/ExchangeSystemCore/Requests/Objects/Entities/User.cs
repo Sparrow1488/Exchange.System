@@ -4,6 +4,15 @@ namespace ExchangeSystem.Requests.Objects.Entities
 {
     public class User
     {
+        public User(User user)
+        {
+            Id = user.Id;
+            Name = user.Name;
+            LastName = user.LastName;
+            ParentName = user.ParentName;
+            Room = user.Room;
+            PassportId = user.PassportId;
+        }
         public User(UserPassport passport)
         {
             Passport = passport;
