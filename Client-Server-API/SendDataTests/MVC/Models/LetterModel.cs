@@ -1,5 +1,5 @@
 ﻿using ExchangeServer.SQLDataBase;
-using ExchangeSystemCore.Requests.Objects.Entities;
+using ExchangeSystem.Requests.Objects.Entities;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;

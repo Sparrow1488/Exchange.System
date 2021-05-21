@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ExchangeSystemCore.Requests.Objects.Entities
+namespace ExchangeSystem.Requests.Objects.Entities
 {
     public class Source : IRequestObject
     {

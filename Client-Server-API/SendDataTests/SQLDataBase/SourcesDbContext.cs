@@ -1,4 +1,4 @@
-﻿using ExchangeSystemCore.Requests.Objects.Entities;
+﻿using ExchangeSystem.Requests.Objects.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

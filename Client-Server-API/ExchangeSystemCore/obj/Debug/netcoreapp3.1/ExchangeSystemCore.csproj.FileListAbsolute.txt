@@ -8,4 +8,3 @@ C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\2\open-close_exchange_system\Client-Server
 C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\2\open-close_exchange_system\Client-Server-API\ExchangeSystemCore\bin\Debug\netcoreapp3.1\ExchangeSystem.pdb
 C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\2\open-close_exchange_system\Client-Server-API\ExchangeSystemCore\obj\Debug\netcoreapp3.1\ExchangeSystem.dll
 C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\2\open-close_exchange_system\Client-Server-API\ExchangeSystemCore\obj\Debug\netcoreapp3.1\ExchangeSystem.pdb
-C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\2\open-close_exchange_system\Client-Server-API\ExchangeSystemCore\obj\Debug\netcoreapp3.1\ExchangeSystemCore.csprojAssemblyReference.cache

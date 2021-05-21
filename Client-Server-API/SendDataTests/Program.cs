@@ -6,7 +6,6 @@ using ExchangeServer.SQLDataBase;
 using ExchangeSystem.Requests.Objects;
 using ExchangeSystem.Requests.Objects.Entities;
 using ExchangeSystem.Requests.Packages.Default;
-using ExchangeSystemCore.Requests.Objects.Entities;
 using System;
 using System.Linq;
 using System.Net.Sockets;

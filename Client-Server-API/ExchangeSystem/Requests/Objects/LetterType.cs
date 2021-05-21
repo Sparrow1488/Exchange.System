@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ExchangeSystemCore.Requests.Objects
+namespace ExchangeSystem.Requests.Objects
 {
     public enum LetterType
     {

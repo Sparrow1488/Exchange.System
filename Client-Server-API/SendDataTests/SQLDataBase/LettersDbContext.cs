@@ -1,4 +1,4 @@
-﻿using ExchangeSystemCore.Requests.Objects.Entities;
+﻿using ExchangeSystem.Requests.Objects.Entities;
 using System.Data.Entity;
 
 namespace ExchangeServer.SQLDataBase
