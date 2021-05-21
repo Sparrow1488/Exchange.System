@@ -26,7 +26,7 @@ namespace ExchangeServer.MVC.Controllers
             Console.WriteLine("Received user passport. Pas: {0}, Log: {1}", userPassport.Password, 
                                                                                                                                                 userPassport.Login);
             UserModel userModel = new UserModel();
-            var findByLogin = userModel.Receive(userPassport.Login);
+            var findByLogin = userModel.ReceivePassportBy(userPassport.Login);
             if (findByLogin?.Password == userPassport?.Password)
                 PrepareResponsePackage(true);
             else

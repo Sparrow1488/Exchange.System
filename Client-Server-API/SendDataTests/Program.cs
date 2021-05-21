@@ -1,6 +1,9 @@
 ﻿using ExchangeServer.MVC.Controllers;
 using ExchangeServer.MVC.Routers;
 using ExchangeServer.Protocols.Receivers;
+using ExchangeServer.SQLDataBase;
+using ExchangeSystem.Requests.Objects;
+using ExchangeSystem.Requests.Objects.Entities;
 using ExchangeSystem.Requests.Packages.Default;
 using System;
 using System.Net.Sockets;
@@ -12,6 +15,7 @@ namespace SendDataTests
     {
         private static async Task Main(string[] args)
         {
+
             ClientReceiver receiver = new ClientReceiver("127.0.0.1", 80);
             receiver.StartReceive();
             while (true)
@@ -46,6 +50,16 @@ namespace SendDataTests
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(message);
             Console.ResetColor();
+        }
+
+
+        private static void TestUsersContext()
+        {
+            using (AccountsDbContext context = new AccountsDbContext())
+            {
+                context.Users.Add(new User(new UserPassport("Sparrow", "1234")));
+                context.SaveChanges();
+            }
         }
      }
 }

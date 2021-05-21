@@ -1,7 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ExchangeSystem.Requests.Objects
 {
@@ -19,10 +16,14 @@ namespace ExchangeSystem.Requests.Objects
             Password = password;
             Token = token;
         }
+        [Key]
+        public int Id { get; } = -1;
         public string Login { get; } = string.Empty;
         [JsonProperty]
         public string Password { get; } = string.Empty;
+        [JsonProperty]
         public string Token { get; } = string.Empty;
-        public int UserId { get; } = -1;
+        [JsonProperty]
+        public AdminStatus AdminStatus { get; } = AdminStatus.User;
     }
 }
