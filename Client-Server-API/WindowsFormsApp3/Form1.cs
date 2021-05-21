@@ -22,7 +22,7 @@ namespace WindowsFormsApp3
             try
             {
                 ConnectionSettings connectionSettings = new ConnectionSettings("127.0.0.1", 80);
-                var letter = new Letter() { Title = "Рандомный заголовок", Text = "Большого ума текст", Type = LetterType.Offer};
+                var letter = new Letter() { Title = "Рандомный заголовок", Text = "Большого ума текст", Type = LetterType.Complaint};
                 var pack = new NewLetter(letter);
                 var aesRsaSender = new RequestSendler(connectionSettings);
                 var response = await aesRsaSender.SendRequest(pack);

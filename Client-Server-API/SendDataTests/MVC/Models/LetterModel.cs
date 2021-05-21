@@ -1,7 +1,5 @@
 ﻿using ExchangeServer.SQLDataBase;
 using ExchangeSystem.Requests.Objects.Entities;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace ExchangeServer.MVC.Models
@@ -26,13 +24,21 @@ namespace ExchangeServer.MVC.Models
             }
             catch { return false; }
         }
+        /// <summary>
+        /// Получить все письма из БД. Если писем нет, то вернуть Null
+        /// </summary>
+        /// <returns>Letter[] or Null</returns>
         public Letter[] GetAllOrDefault()
         {
+            try
+            {
                 using (LettersDbContext db = new LettersDbContext())
                 {
                     var letters = db.Letters.Where(letter => letter.Id >= 0).ToArray();
                     return letters;
                 }
+            }
+            catch { return null; }
         }
     }
 }
