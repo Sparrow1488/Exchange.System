@@ -4,6 +4,8 @@
     {
         Authorization,
         NewMessage,
-        GetMessages
+        GetMessages,
+        NewPublication,
+        GetPublication
     }
 }
