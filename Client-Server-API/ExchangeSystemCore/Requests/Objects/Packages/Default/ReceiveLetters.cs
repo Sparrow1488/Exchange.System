@@ -8,7 +8,7 @@ namespace ExchangeSystem.Requests.Objects.Packages.Default
     {
         public ReceiveLetters(Letter requestObject) : base(requestObject)
         {
-            RequestType = RequestTypes.GetMessages;
+            RequestType = RequestTypes.GetPublication;
         }
     }
 }

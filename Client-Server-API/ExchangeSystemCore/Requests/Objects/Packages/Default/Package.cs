@@ -15,6 +15,7 @@ namespace ExchangeSystem.Requests.Packages.Default
         {
             RequestObject = requestObject;
         }
+        public Package() { }
         [JsonProperty]
         public RequestTypes RequestType { get; protected set; }
         [JsonProperty]
