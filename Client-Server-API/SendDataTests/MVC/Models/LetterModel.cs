@@ -27,7 +27,7 @@ namespace ExchangeServer.MVC.Models
         /// <summary>
         /// Получить все письма из БД. Если писем нет, то вернуть Null
         /// </summary>
-        /// <returns>Letter[] or Null</returns>
+        /// <returns>Letter[i > 0] - если есть письма; Letter[0] - если в БД нет писем; Null - возникла ошибка в БД</returns>
         public Letter[] GetAllOrDefault()
         {
             try
@@ -35,6 +35,8 @@ namespace ExchangeServer.MVC.Models
                 using (LettersDbContext db = new LettersDbContext())
                 {
                     var letters = db.Letters.Where(letter => letter.Id >= 0).ToArray();
+                    if (letters == null)
+                        return new Letter[0];
                     return letters;
                 }
             }
