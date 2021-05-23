@@ -26,6 +26,6 @@
         public string ParentName { get; set; }
         public int? Room { get; set; }
         public int PassportId { get; set; }
-        public virtual UserPassport Passport { get; set; }
+        public UserPassport Passport { get; set; }
     }
 }

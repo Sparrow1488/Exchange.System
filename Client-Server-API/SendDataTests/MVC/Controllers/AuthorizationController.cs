@@ -41,10 +41,10 @@ namespace ExchangeServer.MVC.Controllers
                     PrepareResponsePackage(true, validUser);
                 else
                     PrepareResponsePackage(false, validUser);
-                SendResponse();
             }
             else
                 PrepareResponsePackage(false, null);
+            SendResponse();
         }
         public void PrepareResponsePackage(bool authSuccess, User authUser)
         {
