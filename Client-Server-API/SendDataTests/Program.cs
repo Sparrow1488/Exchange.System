@@ -67,11 +67,12 @@ namespace SendDataTests
         }
         private static void AddLetterInDB()
         {
-            var model = new LetterModel();
-            //var res = model.Add(new Letter() { Title = "Энтити крутой кста", Text = "*Крутой текст*", SenderId = 1, DateCreate = DateTime.Now});
-            var all = model.GetAllOrDefault();
-            var userModel = new UserModel();
-            var get = userModel.ReceivePassportBy("Sparrow", "1488");
+            using (LettersDbContext db = new LettersDbContext())
+            {
+                //var all = db.Publications.Add(new Publication() { Title = "1111111111!!!!!!TestSource", Text = "123", SenderId = 2, DateCreate = DateTime.Now, Sources = new Source[] { new Source() { Extension = ".p22ng", SenderId = 2, DateCreate = DateTime.Now } } });
+                db.Letters.Add(new Letter() { Title = "1212", DateCreate = DateTime.Now, Sources = new Source[] { new Source() { Extension = ".png", SenderId = 2, DateCreate = DateTime.Now } } });
+                db.SaveChanges();
+            }
         }
     }
 }

@@ -14,6 +14,6 @@ namespace ExchangeSystem.Requests.Objects.Entities
         public string Text { get; set; }
         public ICollection<Source> Sources { get; set; }
         public int? SenderId { get; set; }
-        public DateTime DateCreate { get; set; } // дико обязательно юзать
+        public DateTime DateCreate { get; set; }           // дико обязательно юзать
     }
 }

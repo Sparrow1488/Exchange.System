@@ -1,5 +1,4 @@
-﻿using ExchangeSystem.Requests.Objects;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace ExchangeSystem.Requests.Objects.Entities
@@ -12,5 +11,7 @@ namespace ExchangeSystem.Requests.Objects.Entities
         public int? SenderId { get; set; }
         public string Extension { get; set; }
         public DateTime DateCreate { get; set; }
+        public Letter Letter { get; set; }
+        public Publication Publication { get; set; }
     }
 }

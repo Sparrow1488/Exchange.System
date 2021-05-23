@@ -1,8 +1,5 @@
 ﻿using ExchangeSystem.Requests.Objects.Entities;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Text;
 
 namespace ExchangeServer.SQLDataBase
 {
