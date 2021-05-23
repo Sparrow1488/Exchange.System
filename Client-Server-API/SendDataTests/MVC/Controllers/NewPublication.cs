@@ -1,5 +1,7 @@
-﻿using ExchangeServer.MVC.Models;
+﻿using ExchangeServer.LocalDataBase;
+using ExchangeServer.MVC.Models;
 using ExchangeServer.Protocols.Responders;
+using ExchangeSystem.Requests.Objects;
 using ExchangeSystem.Requests.Objects.Entities;
 using ExchangeSystem.Requests.Packages;
 using ExchangeSystem.Requests.Packages.Default;
@@ -29,13 +31,19 @@ namespace ExchangeServer.MVC.Controllers
                 PrepareResponse(false, "Вы не можете вызывать данную команду без токена авторизации");
             else
             {
-                PublicationModel publicationModel = new PublicationModel();
-                var userPublication = userPack.RequestObject as Publication;
-                var success = publicationModel.Add(Validation(userPublication));
-                if (success)
-                    PrepareResponse(true, "");
+                var isAdmin = CheckUserForAdminStatus(token);
+                if (isAdmin)
+                {
+                    PublicationModel publicationModel = new PublicationModel();
+                    var userPublication = userPack.RequestObject as Publication;
+                    var success = publicationModel.Add(Validation(userPublication));
+                    if (success)
+                        PrepareResponse(true, "");
+                    else
+                        PrepareResponse(false, "Ошибка размещения публикации. Обратитесь к системному администратору или повторите свою попытку");
+                }
                 else
-                    PrepareResponse(false, "Ошибка размещения публикации. Обратитесь к системному администратору или повторите свою попытку");
+                    PrepareResponse(false, "Ваш статус не позволяет Вам размещать новые публикации в системе");
             }
             SendResponse();
          }
@@ -55,6 +63,14 @@ namespace ExchangeServer.MVC.Controllers
         {
             post.DateCreate = DateTime.Now;
             return post;
+        }
+        private bool CheckUserForAdminStatus(string token)
+        {
+            var status = ServerLocalDb.CheckStatus(token);
+            if (status == AdminStatus.Admin)
+                return true;
+            else
+                return false;
         }
     }
 }

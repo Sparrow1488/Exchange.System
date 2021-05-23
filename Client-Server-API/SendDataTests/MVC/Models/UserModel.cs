@@ -20,16 +20,11 @@ namespace ExchangeServer.MVC.Models
                 return findPassport;
             }
         }
-        /// <summary>
-        /// Получает паспорт по токену
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns>UserPassport or Null</returns>
-        public UserPassport ReceivePassportBy(string token)
+        public UserPassport ReceivePassportBy(User user)
         {
             using (UsersDbContext db = new UsersDbContext())
             {
-                var findPassport = db.Passports.Where(pass => pass.Token == token).FirstOrDefault();
+                var findPassport = db.Passports.Where(passport => passport.User == user).FirstOrDefault();
                 return findPassport;
             }
         }

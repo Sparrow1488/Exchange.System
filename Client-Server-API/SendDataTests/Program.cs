@@ -17,7 +17,6 @@ namespace SendDataTests
     {
         private static async Task Main(string[] args)
         {
-            AddLetterInDB();
             ClientReceiver receiver = new ClientReceiver("127.0.0.1", 80);
             receiver.StartReceive();
             while (true)
@@ -29,6 +28,7 @@ namespace SendDataTests
                     Console.WriteLine("Client was connected");
 
                     await ServerProcessing(client);
+                    Task.Delay(150).Wait(); // давайте не будем перегружать ЦП
                 }
                 catch { PrintError("ERROR"); }
             }
@@ -58,7 +58,7 @@ namespace SendDataTests
         {
             using (UsersDbContext context = new UsersDbContext())
             {
-                var user = new User(new UserPassport("Sparrow", "1488")) { Name = "Валентин", LastName = "Геркулесович", ParentName = "Жмышен"};
+                var user = new User(new UserPassport("asd", "1234") { AdminStatus = AdminStatus.Admin}) { Name = "Валентин", LastName = "Геркулесович", ParentName = "Жмышен"};
                 context.Users.Add(user);
                 context.SaveChanges();
                 var pas = context.Users.FirstOrDefault();
@@ -67,10 +67,10 @@ namespace SendDataTests
         }
         private static void AddLetterInDB()
         {
-            using (LettersDbContext db = new LettersDbContext())
+            using (PublicationsDbContext db = new PublicationsDbContext())
             {
-                //var all = db.Publications.Add(new Publication() { Title = "1111111111!!!!!!TestSource", Text = "123", SenderId = 2, DateCreate = DateTime.Now, Sources = new Source[] { new Source() { Extension = ".p22ng", SenderId = 2, DateCreate = DateTime.Now } } });
-                db.Letters.Add(new Letter() { Title = "1212", DateCreate = DateTime.Now, Sources = new Source[] { new Source() { Extension = ".png", SenderId = 2, DateCreate = DateTime.Now } } });
+                var all = db.Publications.Add(new Publication() { Title = "УРА, ПРИВЯЗКА РОБИТ)0)", Text = "РУССКИЕ ВПЕРЕД ОЛЕ ОЛЕ ОЛЕ ОЛЕЕЕЕЕЕЕЕ", SenderId = 2, DateCreate = DateTime.Now, Sources = new Source[] { new Source() { Extension = ".p22ng", SenderId = 2, DateCreate = DateTime.Now } } });
+                //db.Letters.Add(new Letter() { Title = "1212", DateCreate = DateTime.Now, Sources = new Source[] { new Source() { Extension = ".png", SenderId = 2, DateCreate = DateTime.Now } } });
                 db.SaveChanges();
             }
         }

@@ -1,4 +1,5 @@
-﻿using ExchangeServer.MVC.Exceptions.NetworkExceptions;
+﻿using ExchangeServer.LocalDataBase;
+using ExchangeServer.MVC.Exceptions.NetworkExceptions;
 using ExchangeServer.MVC.Models;
 using ExchangeServer.Protocols.Responders;
 using ExchangeSystem.Requests.Objects;
@@ -18,9 +19,12 @@ namespace ExchangeServer.MVC.Controllers
         protected override Responder Responder { get; set; }
         protected override IResponderSelector ResponderSelector { get; set; }
         private ResponsePackage _responsePackage;
+        private string _authToken = string.Empty;
+        private EncryptType _encrypt;
 
         public override void ProcessRequest(TcpClient connectedClient, IPackage package, EncryptType encryptType)
         {
+            _encrypt = encryptType;
             _client = connectedClient;
             var receivedPack = package as Package;
             var userPassport = receivedPack.RequestObject as UserPassport;
@@ -28,25 +32,39 @@ namespace ExchangeServer.MVC.Controllers
                                                                                                                                                 userPassport.Login);
             UserModel userModel = new UserModel();
             var findUser = userModel.ReceiveUserBy(userPassport);
-            var validUser = new User(findUser); // сделал такую дикость, потому что не понял как изменить автосгенерированный тип EF.User на мой, нормальный
-            validUser.Passport = userPassport;
             if (findUser != null)
-                PrepareResponsePackage(true, validUser);
+            {
+                var findPassport = userModel.ReceivePassportBy(userPassport.Login, userPassport.Password);
+                var validUser = new User(findUser); // сделал такую дикость, потому что не понял как изменить автосгенерированный тип EF.User на мой, нормальный
+                validUser.Passport = findPassport;
+                if (validUser != null)
+                    PrepareResponsePackage(true, validUser);
+                else
+                    PrepareResponsePackage(false, validUser);
+                SendResponse();
+            }
             else
-                PrepareResponsePackage(false, validUser);
-            ResponderSelector responderSelector = new ResponderSelector();
-            Responder = responderSelector.SelectResponder(encryptType);
-            if (connectedClient.Connected)
-                Responder.SendResponse(connectedClient, _responsePackage);
-            else
-                throw new ConnectionException("Клиент не был подключен");
+                PrepareResponsePackage(false, null);
         }
         public void PrepareResponsePackage(bool authSuccess, User authUser)
         {
-            if(authSuccess)
+            if (authSuccess)
+            {
+                _authToken = ServerLocalDb.AddNew(authUser.Passport);
+                authUser.Passport.Token = _authToken;
                 _responsePackage = new ResponsePackage(authUser, ResponseStatus.Ok);
+            }
             else
                 _responsePackage = new ResponsePackage(string.Empty, ResponseStatus.Exception, "Ошибка авторизации");
+        }
+        private void SendResponse()
+        {
+            ResponderSelector responderSelector = new ResponderSelector();
+            Responder = responderSelector.SelectResponder(_encrypt);
+            if (_client.Connected)
+                Responder.SendResponse(_client, _responsePackage);
+            else
+                throw new ConnectionException("Клиент не был подключен");
         }
     }
 }
