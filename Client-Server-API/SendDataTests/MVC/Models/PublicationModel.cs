@@ -31,7 +31,7 @@ namespace ExchangeServer.MVC.Models
                     if (publications == null)
                         return new Publication[0];
                     else
-                        return publications.ToArray();
+                        return publications.OrderByDescending(post => post.DateCreate).ToArray();
                 }
             }
             catch { return null; }

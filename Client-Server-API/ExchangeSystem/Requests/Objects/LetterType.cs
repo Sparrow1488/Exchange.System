@@ -6,8 +6,8 @@ namespace ExchangeSystem.Requests.Objects
 {
     public enum LetterType
     {
-        Complaint,
-        Question,
-        Offer
+        Жалоба,
+        Вопрос,
+        Предложение
     }
 }
