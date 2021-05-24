@@ -3,6 +3,7 @@
     public enum RequestTypes
     {
         Authorization,
+        TokenAuthorization,
         NewMessage,
         GetMessages,
         NewPublication,

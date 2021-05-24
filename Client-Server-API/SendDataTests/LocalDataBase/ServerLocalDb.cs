@@ -38,6 +38,7 @@ namespace ExchangeServer.LocalDataBase
         }
         private static KeyValuePair<UserPassport, string>[] FindBy(string token)
         {
+
             var findPairs = AuthTokens.Where(pair => pair.Value == token).ToArray();
             return findPairs;
         }
@@ -45,7 +46,7 @@ namespace ExchangeServer.LocalDataBase
         /// Ищет в AuthTokens пасспорт авторизованного по токену пользователя
         /// </summary>
         /// <returns>Null, если не найдет</returns>
-        private static UserPassport FindPassportBy(string token)
+        public static UserPassport FindPassportBy(string token)
         {
             var findPairs = FindBy(token);
             if (findPairs.Length > 0)

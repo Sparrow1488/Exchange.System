@@ -53,3 +53,4 @@ C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\2\open-close_exchange_system\Client-Server
 C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\2\open-close_exchange_system\Client-Server-API\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.csproj.CopyComplete
 C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\2\open-close_exchange_system\Client-Server-API\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.dll
 C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\2\open-close_exchange_system\Client-Server-API\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.pdb
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\2\open-close_exchange_system\Client-Server-API\ExchangeSystem\obj\Debug\netstandard2.0\ExchangeSystem.csprojAssemblyReference.cache

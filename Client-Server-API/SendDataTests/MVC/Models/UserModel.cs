@@ -1,4 +1,5 @@
-﻿using ExchangeServer.SQLDataBase;
+﻿using ExchangeServer.LocalDataBase;
+using ExchangeServer.SQLDataBase;
 using ExchangeSystem.Requests.Objects;
 using ExchangeSystem.Requests.Objects.Entities;
 using System.Linq;
@@ -28,6 +29,11 @@ namespace ExchangeServer.MVC.Models
                 return findPassport;
             }
         }
+        public UserPassport ReceivePassportBy(string token)
+        {
+            var findPassport = ServerLocalDb.FindPassportBy(token);
+            return findPassport;
+        }
         /// <summary>
         /// Получает User по его паспорту
         /// </summary>
@@ -55,6 +61,20 @@ namespace ExchangeServer.MVC.Models
                 var findUser = db.Users.Where(pass => pass.Id == id).FirstOrDefault();
                 return findUser;
             }
+        }
+        public User ReceiveUserBy(string token)
+        {
+            var findPassport = ReceivePassportBy(token);
+            if(findPassport != null)
+            {
+                using (UsersDbContext db = new UsersDbContext())
+                {
+                    var findUser = db.Users.Where(user => user.Passport.Login == findPassport.Login && user.Passport.Password == findPassport.Password).FirstOrDefault();
+                    findUser.Passport = findPassport;
+                    return findUser;
+                }
+            }
+            return null;
         }
     }
 }
