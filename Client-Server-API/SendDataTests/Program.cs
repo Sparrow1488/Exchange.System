@@ -18,6 +18,7 @@ namespace SendDataTests
     {
         private static async Task Main(string[] args)
         {
+            AddLetterInDB();
             ClientReceiver receiver = new ClientReceiver("127.0.0.1", 80);
             receiver.StartReceive();
             while (true)
@@ -68,7 +69,9 @@ namespace SendDataTests
         }
         private static void AddLetterInDB()
         {
-            
+            //var model = new LetterModel();
+            //var sources = new Source[] { new Source() { Extension = ".mp4", SenderId = 2, DateCreate = DateTime.Now }, new Source() { Extension = ".mp190", SenderId = 2, DateCreate = DateTime.Now } };
+            //var res = model.Add(new Letter() { Text = "Добрейший вечерочек с двумя вложениями", Title = "Вечерочка", Sources = sources, DateCreate = DateTime.Now }) ;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ExchangeServer.SQLDataBase;
 using ExchangeSystem.Requests.Objects.Entities;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ExchangeServer.MVC.Models
@@ -34,10 +35,20 @@ namespace ExchangeServer.MVC.Models
             {
                 using (LettersDbContext db = new LettersDbContext())
                 {
-                    var letters = db.Letters.Where(letter => letter.Id >= 0).ToArray();
-                    if (letters == null)
+                    var fromDbLetters = db.Letters.Where(letter => letter.Id >= 0).ToList();
+                    if (fromDbLetters == null || fromDbLetters.Count == 0)
                         return new Letter[0];
-                    return letters;
+                    var letters = new List<Letter>();
+                    foreach (var letter in fromDbLetters)
+                    {
+                        using (SourcesDbContext sources = new SourcesDbContext())
+                        {
+                            var findSource = sources.Sources.Where(src => src.Letter.Id == letter.Id).ToArray();
+                            letter.Sources = findSource;
+                            letters.Add(letter);
+                        }
+                    }
+                    return letters.ToArray();
                 }
             }
             catch { return null; }
