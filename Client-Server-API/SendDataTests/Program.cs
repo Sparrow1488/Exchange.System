@@ -7,6 +7,7 @@ using ExchangeSystem.Requests.Objects;
 using ExchangeSystem.Requests.Objects.Entities;
 using ExchangeSystem.Requests.Packages.Default;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -67,12 +68,7 @@ namespace SendDataTests
         }
         private static void AddLetterInDB()
         {
-            using (PublicationsDbContext db = new PublicationsDbContext())
-            {
-                var all = db.Publications.Add(new Publication() { Title = "УРА, ПРИВЯЗКА РОБИТ)0)", Text = "РУССКИЕ ВПЕРЕД ОЛЕ ОЛЕ ОЛЕ ОЛЕЕЕЕЕЕЕЕ", SenderId = 2, DateCreate = DateTime.Now, Sources = new Source[] { new Source() { Extension = ".p22ng", SenderId = 2, DateCreate = DateTime.Now } } });
-                //db.Letters.Add(new Letter() { Title = "1212", DateCreate = DateTime.Now, Sources = new Source[] { new Source() { Extension = ".png", SenderId = 2, DateCreate = DateTime.Now } } });
-                db.SaveChanges();
-            }
+            
         }
     }
 }

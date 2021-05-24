@@ -1,5 +1,6 @@
 ﻿using ExchangeServer.SQLDataBase;
 using ExchangeSystem.Requests.Objects.Entities;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ExchangeServer.MVC.Models
@@ -16,11 +17,21 @@ namespace ExchangeServer.MVC.Models
             {
                 using (PublicationsDbContext db = new PublicationsDbContext())
                 {
-                    var publications = db.Publications.Where(post => post.Id > -1).ToArray();
+                    List<Publication> publications = new List<Publication>();
+                    var allDbPosts = db.Publications.Where(post => post.Id >= 0).ToArray();
+                    foreach (var post in allDbPosts)
+                    {
+                        using (SourcesDbContext sources = new SourcesDbContext())
+                        {
+                            var findSource = sources.Sources.Where(src => src.Publication.Id == post.Id).ToArray();
+                            post.Sources = findSource;
+                            publications.Add(post);
+                        }
+                    }
                     if (publications == null)
                         return new Publication[0];
                     else
-                        return publications;
+                        return publications.ToArray();
                 }
             }
             catch { return null; }
