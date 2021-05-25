@@ -10,5 +10,7 @@ namespace ExchangeSystem.Requests.Objects.Entities
         public int? SenderId { get; set; }
         public string Extension { get; set; }
         public DateTime DateCreate { get; set; }
+        public Publication Publication { get; set; }
+        public Letter Letter { get; set; }
     }
 }

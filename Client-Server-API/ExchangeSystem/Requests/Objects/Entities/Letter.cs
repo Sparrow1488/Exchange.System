@@ -13,5 +13,7 @@ namespace ExchangeSystem.Requests.Objects.Entities
         public ICollection<Source> Sources { get; set; }
         public int? SenderId { get; set; }
         public DateTime DateCreate { get; set; } // дико обязательно юзать
+
+        public int[] sourcesId = new int[0];
     }
 }

@@ -76,5 +76,18 @@ namespace ExchangeServer.MVC.Models
             }
             return null;
         }
+        public bool Add(User newUser)
+        {
+            try
+            {
+                using (UsersDbContext db = new UsersDbContext())
+                {
+                    db.Users.Add(newUser);
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch { return false; }
+        }
     }
 }

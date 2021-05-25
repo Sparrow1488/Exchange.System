@@ -7,6 +7,7 @@
         NewMessage,
         GetMessages,
         NewPublication,
-        GetPublication
+        GetPublication,
+        GetSource
     }
 }

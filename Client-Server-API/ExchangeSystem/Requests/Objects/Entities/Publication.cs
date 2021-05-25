@@ -13,5 +13,7 @@ namespace ExchangeSystem.Requests.Objects.Entities
         public int? SenderId { get; set; }
         public NewsType Type { get; set; }
         public DateTime DateCreate { get; set; }
+
+        public int[] sourcesId = new int[0];
     }
 }

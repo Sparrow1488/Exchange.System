@@ -62,7 +62,7 @@ namespace ExchangeSystem.Requests.Sendlers.Open
         }
         private async Task ReceiveResponse()
         {
-            byte[] receivedBuffer = await _networkHelper.ReadDataAsync(_stream, 8400);
+            byte[] receivedBuffer = await _networkHelper.ReadDataAsync(_stream, 18000000);
             string jsonResponse = _networkHelper.Encoding.GetString(receivedBuffer);
             _responsePackage = (ResponsePackage)JsonConvert.DeserializeObject(jsonResponse, new JsonSerializerSettings
             {

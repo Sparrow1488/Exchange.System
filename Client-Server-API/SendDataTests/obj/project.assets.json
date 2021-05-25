@@ -291,7 +291,7 @@
       },
       "ExchangeSystem/1.0.0": {
         "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
+        "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
           "Newtonsoft.Json": "13.0.1"
         },
@@ -1069,8 +1069,8 @@
     },
     "ExchangeSystem/1.0.0": {
       "type": "project",
-      "path": "../ExchangeSystemCore/ExchangeSystemCore.csproj",
-      "msbuildProject": "../ExchangeSystemCore/ExchangeSystemCore.csproj"
+      "path": "../ExchangeSystem/ExchangeSystem.csproj",
+      "msbuildProject": "../ExchangeSystem/ExchangeSystem.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -1107,8 +1107,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\2\\open-close_exchange_system\\Client-Server-API\\ExchangeSystemCore\\ExchangeSystemCore.csproj": {
-              "projectPath": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\2\\open-close_exchange_system\\Client-Server-API\\ExchangeSystemCore\\ExchangeSystemCore.csproj"
+            "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\2\\open-close_exchange_system\\Client-Server-API\\ExchangeSystem\\ExchangeSystem.csproj": {
+              "projectPath": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\2\\open-close_exchange_system\\Client-Server-API\\ExchangeSystem\\ExchangeSystem.csproj"
             }
           }
         }

@@ -23,7 +23,7 @@ namespace ExchangeServer.Protocols
         }
         private async Task<IPackage> ReceiveRequest()
         {
-            var receivedRequest = await _networkHelper.ReadDataAsync(_stream, 2048);
+            var receivedRequest = await _networkHelper.ReadDataAsync(_stream, 25000000);
             var jsonPackage = _networkHelper.Encoding.GetString(receivedRequest);
             IPackage receivedPack = (IPackage)JsonConvert.DeserializeObject(jsonPackage, new JsonSerializerSettings
             {

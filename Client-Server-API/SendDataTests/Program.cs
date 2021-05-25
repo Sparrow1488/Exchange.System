@@ -69,9 +69,10 @@ namespace SendDataTests
         }
         private static void AddLetterInDB()
         {
-            //var model = new LetterModel();
-            //var sources = new Source[] { new Source() { Extension = ".mp4", SenderId = 2, DateCreate = DateTime.Now }, new Source() { Extension = ".mp190", SenderId = 2, DateCreate = DateTime.Now } };
-            //var res = model.Add(new Letter() { Text = "Добрейший вечерочек с двумя вложениями", Title = "Вечерочка", Sources = sources, DateCreate = DateTime.Now }) ;
+            var model = new UserModel();
+            var sources = new Source[] { new Source() { Extension = ".mp4", SenderId = 2, DateCreate = DateTime.Now }, new Source() { Extension = ".mp190", SenderId = 2, DateCreate = DateTime.Now } };
+            //var res = model.Add(new Publication() { Text = "Добрейший вечерочек с двумя вложениями", Title = "Вечерочка", Sources = sources, DateCreate = DateTime.Now });
+            var res = model.Add(new User(new UserPassport("asd", "1234") { AdminStatus = AdminStatus.Admin}) { Name = "Валентин", LastName = "Геркулесович", ParentName = "Жма"});
         }
     }
 }

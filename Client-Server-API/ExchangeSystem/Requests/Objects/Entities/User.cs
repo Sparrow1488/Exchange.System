@@ -9,7 +9,6 @@
             LastName = user.LastName;
             ParentName = user.ParentName;
             Room = user.Room;
-            PassportId = user.PassportId;
         }
         public User(UserPassport passport)
         {
@@ -25,7 +24,6 @@
         public string LastName { get; set; }
         public string ParentName { get; set; }
         public int? Room { get; set; }
-        public int PassportId { get; set; }
         public UserPassport Passport { get; set; }
     }
 }
