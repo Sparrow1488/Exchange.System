@@ -29,7 +29,7 @@ namespace ExchangeServer.MVC.Controllers
             var receivedPack = package as Package;
             var userPassport = receivedPack.RequestObject as UserPassport;
             Console.WriteLine("Received user passport. Pas: {0}, Log: {1}", userPassport.Password, 
-                                                                                                                                                userPassport.Login);
+                                                                                                                                      userPassport.Login);
             UserModel userModel = new UserModel();
             var findUser = userModel.ReceiveUserBy(userPassport);
             if (findUser != null)
