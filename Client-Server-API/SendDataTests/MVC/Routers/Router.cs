@@ -44,12 +44,6 @@ namespace ExchangeServer.MVC.Routers
 
             return _receivedPackage;
         }
-
-        private IProtocol LookForProtocol(EncryptType encryptType)
-        {
-            _selector = new ProtocolSelector();
-            return _selector.SelectProtocol(encryptType);
-        }
         /// <summary>
         /// Используйте этот метод после метода "IssueRequest()".
         /// </summary>
@@ -58,7 +52,11 @@ namespace ExchangeServer.MVC.Routers
         {
             return _encryptType;
         }
-
+        private IProtocol LookForProtocol(EncryptType encryptType)
+        {
+            _selector = new ProtocolSelector();
+            return _selector.SelectProtocol(encryptType);
+        }
         
     }
 }

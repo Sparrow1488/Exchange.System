@@ -20,7 +20,7 @@ namespace SendDataTests
         {
             AddLetterInDB();
             ClientReceiver receiver = new ClientReceiver("127.0.0.1", 80);
-            receiver.StartReceive();
+            receiver.Start();
             while (true)
             {
                 try

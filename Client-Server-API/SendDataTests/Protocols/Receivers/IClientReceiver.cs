@@ -5,5 +5,6 @@ namespace ExchangeServer.Protocols.Receivers
     public interface IClientReceiver
     {
         TcpClient AcceptClient();
+        void Start();
     }
 }
