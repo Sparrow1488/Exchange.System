@@ -53,12 +53,6 @@ namespace ExchangeServer.Protocols
             var finalyPack = AesRsaReceiver(pack);
             return finalyPack;
         }
-        
-        public override EncryptType GetPackageEncryptType()
-        {
-            return _ecnryptType;
-        }
-
         private IPackage AesRsaReceiver(ProtectedPackage protectedPackage)
         {
             if (protectedPackage?.Security?.EncryptType != EncryptType.AesRsa)

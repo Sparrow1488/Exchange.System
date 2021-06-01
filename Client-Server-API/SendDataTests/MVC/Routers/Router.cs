@@ -7,7 +7,6 @@ using ExchangeSystem.SecurityData;
 using Newtonsoft.Json;
 using System;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ExchangeServer.MVC.Routers
@@ -17,9 +16,15 @@ namespace ExchangeServer.MVC.Routers
         private TcpClient _client;
         private IProtocolSelector _selector;
         private IProtocol _selectedProtocol;
-        private IPackage _receivedPackage;
+        private Package _receivedPackage;
         private EncryptType _encryptType = EncryptType.None;
         private NetworkHelper _networkHelper = new NetworkHelper();
+
+        /// <summary>
+        /// Получает запрос от подключенного пользователя, выбирая необходимый протокол и декодера
+        /// </summary>
+        /// <param name="client">Подключенный клиент</param>
+        /// <returns>Пакет-запрос пользователя типа Package</returns>
         public async Task<IPackage> IssueRequestAsync(TcpClient client)
         {
             if (!client.Connected)
@@ -39,15 +44,14 @@ namespace ExchangeServer.MVC.Routers
             _encryptType = _requestInfo.EncryptType;
 
             _selectedProtocol = LookForProtocol(_requestInfo.EncryptType);
-            _receivedPackage = await _selectedProtocol.ReceivePackage(client);
-            _encryptType = _selectedProtocol.GetPackageEncryptType();
+            _receivedPackage = await _selectedProtocol.ReceivePackage(client) as Package;
+            _encryptType = _selectedProtocol.GetProtocolEncryptType();
 
             return _receivedPackage;
         }
         /// <summary>
         /// Используйте этот метод после метода "IssueRequest()".
         /// </summary>
-        /// <returns>Null, если у пакета отсутсвует защита</returns>
         public EncryptType GetPackageEncryptType()
         {
             return _encryptType;

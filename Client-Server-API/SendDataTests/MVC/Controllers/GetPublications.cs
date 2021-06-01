@@ -10,7 +10,7 @@ namespace ExchangeServer.MVC.Controllers
 {
     public class GetPublications : Controller
     {
-        public override RequestTypes RequestType { get; } = RequestTypes.GetPublication;
+        public override RequestType RequestType { get; } = RequestType.GetPublication;
 
         protected override Responder Responder { get; set; }
         protected override IResponderSelector ResponderSelector { get; set; } = new ResponderSelector();
@@ -18,7 +18,7 @@ namespace ExchangeServer.MVC.Controllers
         private TcpClient _client;
         private EncryptType _encrypt;
 
-        public override void ProcessRequest(TcpClient connectedClient, IPackage package, EncryptType encryptType)
+        public override void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType)
         {
             _client = connectedClient;
             _encrypt = encryptType;

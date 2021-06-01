@@ -12,13 +12,13 @@ namespace ExchangeServer.MVC.Controllers
 {
     public class GetLetters : Controller
     {
-        public override RequestTypes RequestType => RequestTypes.GetMessages;
+        public override RequestType RequestType => RequestType.GetMessages;
 
         protected override Responder Responder { get; set; }
         protected override IResponderSelector ResponderSelector { get; set; } = new ResponderSelector();
         private ResponsePackage _response;
 
-        public override void ProcessRequest(TcpClient connectedClient, IPackage package, EncryptType encryptType)
+        public override void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType)
         {
             var userPackage = (Package)package;
             var token = userPackage.UserToken;

@@ -10,7 +10,7 @@ namespace ExchangeServer.MVC.Controllers
     {
         protected abstract Responder Responder { get; set; }
         protected abstract IResponderSelector ResponderSelector { get; set; }
-        public abstract RequestTypes RequestType { get; }
-        public abstract void ProcessRequest(TcpClient connectedClient, IPackage package, EncryptType encryptType);
+        public abstract RequestType RequestType { get; }
+        public abstract void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType);
     }
 }

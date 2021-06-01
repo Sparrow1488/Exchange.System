@@ -1,6 +1,6 @@
 ﻿namespace ExchangeSystem.Requests.Packages
 {
-    public enum RequestTypes
+    public enum RequestType
     {
         Authorization,
         TokenAuthorization,

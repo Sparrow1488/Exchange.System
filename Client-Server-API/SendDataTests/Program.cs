@@ -7,7 +7,6 @@ using ExchangeSystem.Requests.Objects;
 using ExchangeSystem.Requests.Objects.Entities;
 using ExchangeSystem.Requests.Packages.Default;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -18,7 +17,7 @@ namespace SendDataTests
     {
         private static async Task Main(string[] args)
         {
-            AddLetterInDB();
+            //AddLetterInDB();
             ClientReceiver receiver = new ClientReceiver("127.0.0.1", 80);
             receiver.Start();
             while (true)
@@ -35,7 +34,6 @@ namespace SendDataTests
                 catch { PrintError("ERROR"); }
             }
         }
-
         private static async  Task ServerProcessing(TcpClient client)
         {
             Router router = new Router();
@@ -45,9 +43,9 @@ namespace SendDataTests
 
             ControllerSelector controllerSelector = new ControllerSelector();
             Controller controller = controllerSelector.SelectController(requestPackage.RequestType);
+            Console.WriteLine("Was received request object witch has type of " + requestPackage.RequestObject);
             controller.ProcessRequest(client, requestPackage, packageEncryptType);
 
-            Console.WriteLine(requestPackage.RequestObject);
             return;
         }
         private static void PrintError(string message)

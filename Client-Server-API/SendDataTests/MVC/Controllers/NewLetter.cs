@@ -12,7 +12,7 @@ namespace ExchangeServer.MVC.Controllers
 {
     public class NewLetter : Message
     {
-        public override RequestTypes RequestType => RequestTypes.NewMessage;
+        public override RequestType RequestType => RequestType.NewMessage;
         protected override Responder Responder { get; set; }
         protected override IResponderSelector ResponderSelector { get; set; }
         private Package _clientRequestObject;
@@ -20,7 +20,7 @@ namespace ExchangeServer.MVC.Controllers
         private EncryptType _encryptType = EncryptType.None;
         private ResponsePackage _responsePackage;
 
-        public override void ProcessRequest(TcpClient connectedClient, IPackage package, EncryptType encryptType)
+        public override void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType)
         {
             AssignValues(connectedClient, package, encryptType);
 

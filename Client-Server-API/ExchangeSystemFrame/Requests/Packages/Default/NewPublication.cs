@@ -8,7 +8,7 @@ namespace ExchangeSystem.Requests.Objects.Packages.Default
     {
         public NewPublication(Publication requestObject) : base(requestObject)
         {
-            RequestType = RequestTypes.NewPublication;
+            RequestType = RequestType.NewPublication;
         }
     }
 }

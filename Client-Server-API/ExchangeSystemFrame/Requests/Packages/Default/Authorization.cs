@@ -6,7 +6,7 @@ namespace ExchangeSystem.Requests.Packages.Default
     {
         public Authorization(UserPassport reqObj) : base(reqObj)
         {
-            RequestType = Packages.RequestTypes.Authorization;
+            RequestType = Packages.RequestType.Authorization;
         }
     }
 }

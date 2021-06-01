@@ -1,4 +1,3 @@
-C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\2\open-close_exchange_system\Client-Server-API\ExchangeSystemFrame\obj\Debug\ExchangeSystemFrame.csprojAssemblyReference.cache
 C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\2\open-close_exchange_system\Client-Server-API\ExchangeSystemFrame\obj\Debug\ExchangeSystemFrame.csproj.CoreCompileInputs.cache
 C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\2\open-close_exchange_system\Client-Server-API\ExchangeSystemFrame\bin\Debug\ExchangeSystemFrame.dll
 C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\2\open-close_exchange_system\Client-Server-API\ExchangeSystemFrame\bin\Debug\ExchangeSystemFrame.pdb

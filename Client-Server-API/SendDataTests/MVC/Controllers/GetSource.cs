@@ -11,7 +11,7 @@ namespace ExchangeServer.MVC.Controllers
 {
     public class GetSource : Controller
     {
-        public override RequestTypes RequestType => RequestTypes.GetSource;
+        public override RequestType RequestType => RequestType.GetSource;
 
         protected override Responder Responder { get; set; }
         protected override IResponderSelector ResponderSelector { get; set; } = new ResponderSelector();
@@ -19,7 +19,7 @@ namespace ExchangeServer.MVC.Controllers
         private ResponsePackage _response;
         private EncryptType _encrypt;
 
-        public override void ProcessRequest(TcpClient connectedClient, IPackage package, EncryptType encryptType)
+        public override void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType)
         {
             _client = connectedClient;
             _encrypt = encryptType;

@@ -9,7 +9,7 @@ namespace ExchangeSystem.Requests.Packages.Default
         /// </summary>
         public ReceiveSource(Publication requestObject) : base(requestObject)
         {
-            RequestType = RequestTypes.GetSource;
+            RequestType = RequestType.GetSource;
         }
     }
 }

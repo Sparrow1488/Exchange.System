@@ -12,10 +12,6 @@ namespace ExchangeServer.Protocols
         private NetworkHelper _networkHelper = new NetworkHelper();
         private NetworkStream _stream;
 
-        public override EncryptType GetPackageEncryptType()
-        {
-            return EncryptType;
-        }
         public override async Task<IPackage> ReceivePackage(TcpClient client)
         {
             _stream = client.GetStream();

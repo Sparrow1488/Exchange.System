@@ -15,14 +15,14 @@ namespace ExchangeServer.MVC.Controllers
     public class AuthorizationController : Controller
     {
         private TcpClient _client;
-        public override RequestTypes RequestType => RequestTypes.Authorization;
+        public override RequestType RequestType => RequestType.Authorization;
         protected override Responder Responder { get; set; }
         protected override IResponderSelector ResponderSelector { get; set; }
         private ResponsePackage _responsePackage;
         private string _authToken = string.Empty;
         private EncryptType _encrypt;
 
-        public override void ProcessRequest(TcpClient connectedClient, IPackage package, EncryptType encryptType)
+        public override void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType)
         {
             _encrypt = encryptType;
             _client = connectedClient;

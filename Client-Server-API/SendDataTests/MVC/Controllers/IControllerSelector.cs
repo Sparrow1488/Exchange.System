@@ -8,6 +8,6 @@ namespace ExchangeServer.MVC.Controllers
 {
     public interface IControllerSelector
     {
-        Controller SelectController(RequestTypes requestType);
+        Controller SelectController(RequestType requestType);
     }
 }
