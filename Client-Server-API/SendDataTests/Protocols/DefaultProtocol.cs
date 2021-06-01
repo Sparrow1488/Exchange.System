@@ -12,7 +12,10 @@ namespace ExchangeServer.Protocols
         private NetworkHelper _networkHelper = new NetworkHelper();
         private NetworkStream _stream;
 
-        public override async Task<IPackage> ReceivePackage(TcpClient client)
+        private ResponsePackage _response;
+        private byte[] _responseData;
+
+        public override async Task<IPackage> ReceivePackageAsync(TcpClient client)
         {
             _stream = client.GetStream();
             return await ReceiveRequest();
@@ -26,6 +29,25 @@ namespace ExchangeServer.Protocols
                 TypeNameHandling = TypeNameHandling.All,
             });
             return receivedPack;
+        }
+
+        public override async Task SendResponseAsync(TcpClient client, ResponsePackage response)
+        {
+            _stream = client.GetStream();
+            _response = response;
+            PrepareResponseData();
+            await SendResponse();
+        }
+
+
+        private void PrepareResponseData()
+        {
+            var jsonResponse = _response.ToJson();
+            _responseData = _networkHelper.Encoding.GetBytes(jsonResponse);
+        }
+        private async Task SendResponse()
+        {
+            await _networkHelper.WriteDataAsync(_stream, _responseData);
         }
     }
 }

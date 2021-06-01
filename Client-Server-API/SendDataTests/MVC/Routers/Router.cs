@@ -44,7 +44,7 @@ namespace ExchangeServer.MVC.Routers
             _encryptType = _requestInfo.EncryptType;
 
             _selectedProtocol = LookForProtocol(_requestInfo.EncryptType);
-            _receivedPackage = await _selectedProtocol.ReceivePackage(client) as Package;
+            _receivedPackage = await _selectedProtocol.ReceivePackageAsync(client) as Package;
             _encryptType = _selectedProtocol.GetProtocolEncryptType();
 
             return _receivedPackage;

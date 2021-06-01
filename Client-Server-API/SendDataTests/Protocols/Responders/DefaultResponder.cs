@@ -1,6 +1,5 @@
 ﻿using ExchangeSystem.Requests.Packages.Default;
 using ExchangeSystem.SecurityData;
-using System;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 

@@ -16,15 +16,20 @@ namespace ExchangeServer.Protocols
 {
     public class AesRsaProtocol : Protocol
     {
-        private byte[] _aesKey;
-        private byte[] _aesIV;
         private RSAParameters _privateKey;
         private RSAParameters _publicKey;
         private TcpClient _client;
         private EncryptType _ecnryptType;
+        private RSAParameters _clientPublicKey;
+        private NetworkStream _stream;
+        private ResponsePackage _responsePackage;
+        private string _jsonResponsePackage;
+        private ProtectedPackage _protectedPackage;
+        private int _responsePackageSize = 0;
+        private byte[] _responseData;
         public override EncryptType EncryptType { get; protected set; } = EncryptType.AesRsa;
 
-        public override async Task<IPackage> ReceivePackage(TcpClient client)
+        public override async Task<IPackage> ReceivePackageAsync(TcpClient client)
         {
             if (!client.Connected)
                 throw new ConnectionException();
@@ -50,10 +55,28 @@ namespace ExchangeServer.Protocols
                 TypeNameHandling = TypeNameHandling.All,
             });
 
-            var finalyPack = AesRsaReceiver(pack);
+            var finalyPack = AesRsaDecryptor(pack);
             return finalyPack;
         }
-        private IPackage AesRsaReceiver(ProtectedPackage protectedPackage)
+
+        public override async Task SendResponseAsync(TcpClient client, ResponsePackage response)
+        {
+            if (response == null)
+                throw new NullReferenceException("Похоже, вы передали null при отправке ответа");
+            _responsePackage = response;
+
+            _stream = client.GetStream();
+            await ReceiveClientKey();
+            PrepareResponsePackage();
+            EncryptAesRsaPackage(_responsePackage);
+            PrepareData();
+            Task.Delay(100).Wait(); // я не знаю почему, но без этого не работает корректная передача :/
+            await SendResponseSize();
+            Task.Delay(100).Wait();
+            await SendResponseData();
+        }
+
+        private IPackage AesRsaDecryptor(ProtectedPackage protectedPackage)
         {
             if (protectedPackage?.Security?.EncryptType != EncryptType.AesRsa)
                 throw new ProtocolTypeException();
@@ -77,5 +100,55 @@ namespace ExchangeServer.Protocols
             });
             return deryptPack;
         }
+
+        #region FOR RESPONSE
+        private string ToJson(object obj)
+        {
+            return JsonConvert.SerializeObject(obj, Formatting.Indented, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All
+            });
+        }
+
+        private async Task ReceiveClientKey()
+        {
+            byte[] clientKeyData = await new NetworkHelper().ReadDataAsync(_stream, 2100);
+            var xmlKey = new NetworkHelper().Encoding.GetString(clientKeyData);
+            _clientPublicKey = new RsaConverter().AsParameters(xmlKey);
+        }
+        private void PrepareResponsePackage()
+        {
+            _jsonResponsePackage = _responsePackage.ToJson();
+        }
+        private async Task SendResponseSize()
+        {
+            _responsePackageSize = _responseData.Length;
+            await new NetworkHelper().WriteDataAsync(_stream, new NetworkHelper().Encoding.GetBytes(_responsePackageSize.ToString()));
+        }
+        private void EncryptAesRsaPackage(IPackage package)
+        {
+            AesEncryptor aes = new AesEncryptor();
+            RsaEncryptor rsa = new RsaEncryptor();
+            byte[] aesEncryptPackage = aes.EncryptString(package.ToJson());
+            string encryptBase64Package = Convert.ToBase64String(aesEncryptPackage);
+
+            byte[] encryptAesKey = rsa.Encrypt(aes.Key, _clientPublicKey);
+            byte[] encryptAesIV = rsa.Encrypt(aes.IV, _clientPublicKey);
+            string encryptAesKeyAsBase64 = Convert.ToBase64String(encryptAesKey);
+            string encryptAesIVAsBase64 = Convert.ToBase64String(encryptAesIV);
+
+            Security security = new AesRsaSecurity(string.Empty, string.Empty, encryptAesKeyAsBase64, encryptAesIVAsBase64);
+            _protectedPackage = new ProtectedPackage(encryptBase64Package, security);
+        }
+        private void PrepareData()
+        {
+            _responseData = new NetworkHelper().Encoding.GetBytes(_protectedPackage.ToJson());
+        }
+        private async Task SendResponseData()
+        {
+            await new NetworkHelper().WriteDataAsync(_stream, _responseData);
+        }
+        #endregion
+
     }
 }

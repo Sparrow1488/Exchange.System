@@ -13,6 +13,8 @@ namespace ExchangeServer.Protocols
         {
             return EncryptType;
         }
-        public abstract Task<IPackage> ReceivePackage(TcpClient client);
+        public abstract Task<IPackage> ReceivePackageAsync(TcpClient client);
+
+        public abstract Task SendResponseAsync(TcpClient client, ResponsePackage response);
     }
 }

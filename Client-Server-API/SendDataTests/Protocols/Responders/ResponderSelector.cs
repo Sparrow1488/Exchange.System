@@ -1,7 +1,6 @@
 ﻿using ExchangeSystem.SecurityData;
 using System;
 using System.Linq;
-using System.Net.Sockets;
 using System.Reflection;
 
 namespace ExchangeServer.Protocols.Responders
