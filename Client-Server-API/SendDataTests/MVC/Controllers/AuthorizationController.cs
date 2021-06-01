@@ -36,7 +36,7 @@ namespace ExchangeServer.MVC.Controllers
             {
                 var findPassport = userModel.ReceivePassportBy(userPassport.Login, userPassport.Password);
                 var validUser = new User(findUser); // сделал такую дикость, потому что не понял как изменить автосгенерированный тип EF.User на мой, нормальный
-                validUser.Passport = findPassport;
+                validUser.UserPassport = findPassport;
                 if (validUser != null)
                     PrepareResponsePackage(true, validUser);
                 else
@@ -50,8 +50,8 @@ namespace ExchangeServer.MVC.Controllers
         {
             if (authSuccess)
             {
-                _authToken = ServerLocalDb.AddNew(authUser.Passport);
-                authUser.Passport.Token = _authToken;
+                _authToken = ServerLocalDb.AddNew(authUser.UserPassport);
+                authUser.UserPassport.Token = _authToken;
                 _responsePackage = new ResponsePackage(authUser, ResponseStatus.Ok);
             }
             else

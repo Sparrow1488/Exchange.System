@@ -43,8 +43,8 @@ namespace ExchangeServer.MVC.Models
         {
             using (UsersDbContext db = new UsersDbContext())
             {
-                var findUser = db.Users.Where(user => user.Passport.Login == passport.Login &&
-                                                                                                user.Passport.Password == passport.Password)
+                var findUser = db.Users.Where(user => user.UserPassport.Login == passport.Login &&
+                                                                                                user.UserPassport.Password == passport.Password)
                                                               .FirstOrDefault();
                 return findUser;
             }
@@ -69,8 +69,8 @@ namespace ExchangeServer.MVC.Models
             {
                 using (UsersDbContext db = new UsersDbContext())
                 {
-                    var findUser = db.Users.Where(user => user.Passport.Login == findPassport.Login && user.Passport.Password == findPassport.Password).FirstOrDefault();
-                    findUser.Passport = findPassport;
+                    var findUser = db.Users.Where(user => user.UserPassport.Login == findPassport.Login && user.UserPassport.Password == findPassport.Password).FirstOrDefault();
+                    findUser.UserPassport = findPassport;
                     return findUser;
                 }
             }
@@ -78,16 +78,16 @@ namespace ExchangeServer.MVC.Models
         }
         public bool Add(User newUser)
         {
-            try
-            {
+            //try
+            //{
                 using (UsersDbContext db = new UsersDbContext())
                 {
                     db.Users.Add(newUser);
                     db.SaveChanges();
                 }
                 return true;
-            }
-            catch { return false; }
+            //}
+            //catch { return false; }
         }
     }
 }

@@ -9,7 +9,7 @@
       "ExchangeServer/1.0.0": {
         "dependencies": {
           "EntityFramework": "6.4.4",
-          "ExchangeSystem": "1.0.0",
+          "ExchangeSystemFrame": "1.0.0",
           "Newtonsoft.Json": "13.0.1",
           "Encryptors": "1.0.0.0"
         },
@@ -233,12 +233,9 @@
           }
         }
       },
-      "ExchangeSystem/1.0.0": {
-        "dependencies": {
-          "Newtonsoft.Json": "13.0.1"
-        },
+      "ExchangeSystemFrame/1.0.0": {
         "runtime": {
-          "ExchangeSystem.dll": {}
+          "ExchangeSystemFrame.dll": {}
         }
       },
       "Encryptors/1.0.0.0": {
@@ -397,7 +394,7 @@
       "path": "system.windows.extensions/4.7.0",
       "hashPath": "system.windows.extensions.4.7.0.nupkg.sha512"
     },
-    "ExchangeSystem/1.0.0": {
+    "ExchangeSystemFrame/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
