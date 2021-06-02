@@ -8,3 +8,4 @@ C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\2\open-close_exchange_system\Client-Server
 C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\2\open-close_exchange_system\Client-Server-API\ExchangeSystemFrame\obj\Debug\ExchangeSystemFrame.dll
 C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\2\open-close_exchange_system\Client-Server-API\ExchangeSystemFrame\obj\Debug\ExchangeSystemFrame.pdb
 C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\2\open-close_exchange_system\Client-Server-API\ExchangeSystemFrame\bin\Debug\System.ComponentModel.Annotations.dll
+C:\Users\DOM\Desktop\ИЛЬЯ\HTML\C#\2\open-close_exchange_system\Client-Server-API\ExchangeSystemFrame\obj\Debug\ExchangeSystemFrame.csprojAssemblyReference.cache

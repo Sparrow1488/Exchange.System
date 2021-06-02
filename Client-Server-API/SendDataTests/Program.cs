@@ -10,7 +10,7 @@ using System;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-
+//Data Source=(local)\SQLEXPRESS;Initial Catalog=ExchangeSystemDb_1;Integrated Security=True
 namespace SendDataTests
 {
     public class Program
@@ -22,16 +22,16 @@ namespace SendDataTests
             receiver.Start();
             while (true)
             {
-                try
-                {
+                //try
+                //{
                     Console.WriteLine("Server waiting requests...");
                     var client = receiver.AcceptClient();
                     Console.WriteLine("Client was connected");
 
                     await ServerProcessing(client);
                     Task.Delay(150).Wait(); // давайте не будем перегружать ЦП
-                }
-                catch { PrintError("ERROR"); }
+                //}
+                //catch { PrintError("ERROR"); }
             }
         }
         private static async  Task ServerProcessing(TcpClient client)
@@ -67,10 +67,10 @@ namespace SendDataTests
         }
         private static void AddLetterInDB()
         {
-            var model = new UserModel();
+            var model = new PublicationModel();
             var sources = new Source[] { new Source() { Extension = ".mp4", SenderId = 2, DateCreate = DateTime.Now }, new Source() { Extension = ".mp190", SenderId = 2, DateCreate = DateTime.Now } };
             //var res = model.Add(new Publication() { Text = "Добрейший вечерочек с двумя вложениями", Title = "Вечерочка", Sources = sources, DateCreate = DateTime.Now });
-            var res = model.Add(new User() { Name = "Валентин", LastName = "Геркулесович", ParentName = "Жма", UserPassport = new UserPassport() { AdminStatus = AdminStatus.Admin} });
+            var res = model.Add(new Publication() { DateCreate = DateTime.Now, Text = "Че", Title = "Капче", Type = NewsType.Important});
         }
     }
 }

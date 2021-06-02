@@ -37,7 +37,7 @@ namespace ExchangeServer.MVC.Routers
 
             byte[] receivedData = await _networkHelper.ReadDataAsync(stream, 1024);
             string _requestInfoJson = _networkHelper.Encoding.GetString(receivedData);
-            var _requestInfo = (RequestInformator)JsonConvert.DeserializeObject(_requestInfoJson, new JsonSerializerSettings
+            var _requestInfo = (RequestInformator)JsonConvert.DeserializeObject(_requestInfoJson, typeof(RequestInformator), new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.All,
             });

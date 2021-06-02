@@ -78,16 +78,16 @@ namespace ExchangeServer.MVC.Models
         }
         public bool Add(User newUser)
         {
-            //try
-            //{
+            try
+            {
                 using (UsersDbContext db = new UsersDbContext())
                 {
                     db.Users.Add(newUser);
                     db.SaveChanges();
                 }
                 return true;
-            //}
-            //catch { return false; }
+            }
+            catch { return false; }
         }
     }
 }

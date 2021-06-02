@@ -64,7 +64,7 @@ namespace ExchangeSystem.Requests.Sendlers.Open
         {
             byte[] receivedBuffer = await _networkHelper.ReadDataAsync(_stream, 18000000);
             string jsonResponse = _networkHelper.Encoding.GetString(receivedBuffer);
-            _responsePackage = (ResponsePackage)JsonConvert.DeserializeObject(jsonResponse, new JsonSerializerSettings
+            _responsePackage = (ResponsePackage)JsonConvert.DeserializeObject(jsonResponse, typeof(ResponsePackage), new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.All,
             });
