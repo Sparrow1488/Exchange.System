@@ -1,6 +1,7 @@
 ﻿using ExchangeSystem.Requests.Packages.Default;
 using ExchangeSystem.SecurityData;
 using Newtonsoft.Json;
+using System;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
@@ -32,6 +33,8 @@ namespace ExchangeServer.Protocols
 
         public override async Task SendResponseAsync(TcpClient client, ResponsePackage response)
         {
+            if (response == null)
+                throw new ArgumentNullException($"Переданный {nameof(response)} является null");
             _stream = client.GetStream();
             _response = response;
             PrepareResponseData();

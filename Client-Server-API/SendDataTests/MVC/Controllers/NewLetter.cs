@@ -1,6 +1,7 @@
 ﻿using ExchangeServer.MVC.Exceptions.NetworkExceptions;
 using ExchangeServer.MVC.Models;
-using ExchangeServer.Protocols.Responders;
+using ExchangeServer.Protocols;
+using ExchangeServer.Protocols.Selectors;
 using ExchangeSystem.Requests.Objects.Entities;
 using ExchangeSystem.Requests.Packages;
 using ExchangeSystem.Requests.Packages.Default;
@@ -13,12 +14,9 @@ namespace ExchangeServer.MVC.Controllers
     public class NewLetter : Message
     {
         public override RequestType RequestType => RequestType.NewMessage;
-        protected override Responder Responder { get; set; }
-        protected override IResponderSelector ResponderSelector { get; set; }
+        protected override Protocol Protocol { get; set; }
+        protected override IProtocolSelector ProtocolSelector { get; set; }
         private Package _clientRequestObject;
-        private TcpClient _client;
-        private EncryptType _encryptType = EncryptType.None;
-        private ResponsePackage _responsePackage;
 
         public override void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType)
         {
@@ -31,19 +29,16 @@ namespace ExchangeServer.MVC.Controllers
                 LetterModel letterModel = new LetterModel();
                 bool wasAddSuccess = letterModel.Add(userLetter);
                 PrepareResponsePackage(wasAddSuccess);
-                ResponderSelector responderSelector = new ResponderSelector();
-                Responder = responderSelector.SelectResponder(_encryptType);
-                if (connectedClient.Connected)
-                    Responder.SendResponse(connectedClient, _responsePackage);
-                else
-                    throw new ConnectionException("Клиент не был подключен");
             }
+            else
+                PrepareResponsePackage(false);
+            SendResponse();
         }
         private void AssignValues(TcpClient client, IPackage package, EncryptType encryptType)
         {
-            _client = client;
+            base.Client = client;
             _clientRequestObject = (Package)package;
-            _encryptType = encryptType;
+            EncryptType = encryptType;
         }
         private void PrepareResponsePackage(bool addMessageSuccess)
         {
@@ -52,12 +47,12 @@ namespace ExchangeServer.MVC.Controllers
             if (addMessageSuccess)
             {
                 responseObject = "Сообщение доставлено";
-                _responsePackage = new ResponsePackage(responseObject, ResponseStatus.Ok);
+                Response = new ResponsePackage(responseObject, ResponseStatus.Ok);
             }
             else
             {
                 errorMessage = "Неизвестная ошибка";
-                _responsePackage = new ResponsePackage(null, ResponseStatus.Exception, errorMessage);
+                Response = new ResponsePackage("", ResponseStatus.Exception, errorMessage);
             }
         }
         private Letter Validation(Letter letter)

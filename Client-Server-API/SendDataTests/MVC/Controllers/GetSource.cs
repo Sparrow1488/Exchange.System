@@ -1,5 +1,6 @@
 ﻿using ExchangeServer.MVC.Models;
-using ExchangeServer.Protocols.Responders;
+using ExchangeServer.Protocols;
+using ExchangeServer.Protocols.Selectors;
 using ExchangeSystem.Requests.Objects.Entities;
 using ExchangeSystem.Requests.Packages;
 using ExchangeSystem.Requests.Packages.Default;
@@ -13,16 +14,13 @@ namespace ExchangeServer.MVC.Controllers
     {
         public override RequestType RequestType => RequestType.GetSource;
 
-        protected override Responder Responder { get; set; }
-        protected override IResponderSelector ResponderSelector { get; set; } = new ResponderSelector();
-        private TcpClient _client;
-        private ResponsePackage _response;
-        private EncryptType _encrypt;
+        protected override Protocol Protocol { get; set; }
+        protected override IProtocolSelector ProtocolSelector { get; set; } = new ProtocolSelector();
 
         public override void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType)
         {
-            _client = connectedClient;
-            _encrypt = encryptType;
+            Client = connectedClient;
+            EncryptType = encryptType;
             var userPack = package as Package;
             var testPubl = userPack.RequestObject as Publication;
             var collectionIds = testPubl.sourcesId;
@@ -39,17 +37,12 @@ namespace ExchangeServer.MVC.Controllers
                 PrepareResponse(false, new Source[0], "Переданы нулевые идентификационные номеру");
             SendResponse();
         }
-        private void SendResponse()
-        {
-            Responder = ResponderSelector.SelectResponder(_encrypt);
-            Responder.SendResponse(_client, _response);
-        }
         private void PrepareResponse(bool success, Source[] sources, string error)
         {
             if (success)
-                _response = new ResponsePackage(sources, ResponseStatus.Ok);
+                Response = new ResponsePackage(sources, ResponseStatus.Ok);
             else
-                _response = new ResponsePackage(string.Empty, ResponseStatus.Exception, error);
+                Response = new ResponsePackage(string.Empty, ResponseStatus.Exception, error);
         }
     }
 }

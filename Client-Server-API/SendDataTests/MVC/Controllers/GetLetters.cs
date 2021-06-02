@@ -1,6 +1,7 @@
 ﻿using ExchangeServer.LocalDataBase;
 using ExchangeServer.MVC.Models;
-using ExchangeServer.Protocols.Responders;
+using ExchangeServer.Protocols;
+using ExchangeServer.Protocols.Selectors;
 using ExchangeSystem.Requests.Objects;
 using ExchangeSystem.Requests.Objects.Entities;
 using ExchangeSystem.Requests.Packages;
@@ -13,13 +14,14 @@ namespace ExchangeServer.MVC.Controllers
     public class GetLetters : Controller
     {
         public override RequestType RequestType => RequestType.GetMessages;
+        protected override Protocol Protocol { get; set; }
+        protected override IProtocolSelector ProtocolSelector { get; set; } = new ProtocolSelector();
 
-        protected override Responder Responder { get; set; }
-        protected override IResponderSelector ResponderSelector { get; set; } = new ResponderSelector();
-        private ResponsePackage _response;
 
         public override void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType)
         {
+            Client = connectedClient;
+            EncryptType = encryptType;
             var userPackage = (Package)package;
             var token = userPackage.UserToken;
             if (string.IsNullOrWhiteSpace(token))
@@ -41,15 +43,14 @@ namespace ExchangeServer.MVC.Controllers
                 else
                     PrepareReponse(false, new Letter[0], "Недостаточно прав");
             }
-            Responder = ResponderSelector.SelectResponder(encryptType);
-            Responder.SendResponse(connectedClient, _response);
+            SendResponse();
         }
         private void PrepareReponse(bool success, Letter[] letters, string errorMessage)
         {
             if (success)
-                _response = new ResponsePackage(letters, ResponseStatus.Ok);
+                Response = new ResponsePackage(letters, ResponseStatus.Ok);
             else
-                _response = new ResponsePackage(string.Empty, ResponseStatus.Exception, errorMessage);
+                Response = new ResponsePackage(string.Empty, ResponseStatus.Exception, errorMessage);
         }
         private bool CheckUserForAdminStatus(string token)
         {

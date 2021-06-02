@@ -1,6 +1,7 @@
 ﻿using ExchangeServer.LocalDataBase;
 using ExchangeServer.MVC.Models;
-using ExchangeServer.Protocols.Responders;
+using ExchangeServer.Protocols;
+using ExchangeServer.Protocols.Selectors;
 using ExchangeSystem.Requests.Objects;
 using ExchangeSystem.Requests.Objects.Entities;
 using ExchangeSystem.Requests.Packages;
@@ -14,19 +15,15 @@ namespace ExchangeServer.MVC.Controllers
     public class NewPublication : Controller
     {
         public override RequestType RequestType => RequestType.NewPublication;
-
-        protected override Responder Responder { get; set; }
-        protected override IResponderSelector ResponderSelector { get; set; } = new ResponderSelector();
-        private ResponsePackage _response;
-        private EncryptType _encrypt;
-        private TcpClient _client;
+        protected override Protocol Protocol { get; set; }
+        protected override IProtocolSelector ProtocolSelector { get; set; } = new ProtocolSelector();
 
         public override void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType)
         {
             var userPack = package as Package;
             var token = userPack.UserToken;
-            _encrypt = encryptType;
-            _client = connectedClient;
+            EncryptType = encryptType;
+            Client = connectedClient;
             if (string.IsNullOrWhiteSpace(token))
                 PrepareResponse(false, "Вы не можете вызывать данную команду без токена авторизации");
             else
@@ -50,14 +47,9 @@ namespace ExchangeServer.MVC.Controllers
         private void PrepareResponse(bool success, string errorMessage)
         {
             if (success)
-                _response = new ResponsePackage("Публикация успешно размещена", ResponseStatus.Ok);
+                Response = new ResponsePackage("Публикация успешно размещена", ResponseStatus.Ok);
             else
-                _response = new ResponsePackage("", ResponseStatus.Exception, errorMessage);
-        }
-        private void SendResponse()
-        {
-            Responder = ResponderSelector.SelectResponder(_encrypt);
-            Responder.SendResponse(_client, _response);
+                Response = new ResponsePackage("", ResponseStatus.Exception, errorMessage);
         }
         private Publication Validation(Publication post)
         {

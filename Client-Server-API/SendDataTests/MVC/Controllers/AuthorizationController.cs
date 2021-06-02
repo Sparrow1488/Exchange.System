@@ -1,7 +1,8 @@
 ﻿using ExchangeServer.LocalDataBase;
 using ExchangeServer.MVC.Exceptions.NetworkExceptions;
 using ExchangeServer.MVC.Models;
-using ExchangeServer.Protocols.Responders;
+using ExchangeServer.Protocols;
+using ExchangeServer.Protocols.Selectors;
 using ExchangeSystem.Requests.Objects;
 using ExchangeSystem.Requests.Objects.Entities;
 using ExchangeSystem.Requests.Packages;
@@ -14,18 +15,16 @@ namespace ExchangeServer.MVC.Controllers
 {
     public class AuthorizationController : Controller
     {
-        private TcpClient _client;
         public override RequestType RequestType => RequestType.Authorization;
-        protected override Responder Responder { get; set; }
-        protected override IResponderSelector ResponderSelector { get; set; }
-        private ResponsePackage _responsePackage;
+        protected override Protocol Protocol { get; set; }
+        protected override IProtocolSelector ProtocolSelector { get; set; } = new ProtocolSelector();
+
         private string _authToken = string.Empty;
-        private EncryptType _encrypt;
 
         public override void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType)
         {
-            _encrypt = encryptType;
-            _client = connectedClient;
+            EncryptType = encryptType;
+            Client = connectedClient;
             var receivedPack = package as Package;
             var userPassport = receivedPack.RequestObject as UserPassport;
             Console.WriteLine("Received user passport. Pas: {0}, Log: {1}", userPassport.Password, 
@@ -52,19 +51,10 @@ namespace ExchangeServer.MVC.Controllers
             {
                 _authToken = ServerLocalDb.AddNew(authUser.UserPassport);
                 authUser.UserPassport.Token = _authToken;
-                _responsePackage = new ResponsePackage(authUser, ResponseStatus.Ok);
+                Response = new ResponsePackage(authUser, ResponseStatus.Ok);
             }
             else
-                _responsePackage = new ResponsePackage(string.Empty, ResponseStatus.Exception, "Ошибка авторизации");
-        }
-        private void SendResponse()
-        {
-            ResponderSelector responderSelector = new ResponderSelector();
-            Responder = responderSelector.SelectResponder(_encrypt);
-            if (_client.Connected)
-                Responder.SendResponse(_client, _responsePackage);
-            else
-                throw new ConnectionException("Клиент не был подключен");
+                Response = new ResponsePackage(string.Empty, ResponseStatus.Exception, "Ошибка авторизации");
         }
     }
 }

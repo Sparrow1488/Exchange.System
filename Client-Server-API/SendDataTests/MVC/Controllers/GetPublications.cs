@@ -1,5 +1,6 @@
 ﻿using ExchangeServer.MVC.Models;
-using ExchangeServer.Protocols.Responders;
+using ExchangeServer.Protocols;
+using ExchangeServer.Protocols.Selectors;
 using ExchangeSystem.Requests.Objects.Entities;
 using ExchangeSystem.Requests.Packages;
 using ExchangeSystem.Requests.Packages.Default;
@@ -12,16 +13,13 @@ namespace ExchangeServer.MVC.Controllers
     {
         public override RequestType RequestType { get; } = RequestType.GetPublication;
 
-        protected override Responder Responder { get; set; }
-        protected override IResponderSelector ResponderSelector { get; set; } = new ResponderSelector();
-        private ResponsePackage _response;
-        private TcpClient _client;
-        private EncryptType _encrypt;
+        protected override Protocol Protocol { get; set; }
+        protected override IProtocolSelector ProtocolSelector { get; set; } = new ProtocolSelector();
 
         public override void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType)
         {
-            _client = connectedClient;
-            _encrypt = encryptType;
+            Client = connectedClient;
+            EncryptType = encryptType;
             var userPackage = package as Package;
             PublicationModel publicationModel = new PublicationModel();
             var publications = publicationModel.GetAllOrDefault();
@@ -37,14 +35,9 @@ namespace ExchangeServer.MVC.Controllers
         private void PrepareResponse(bool success, Publication[] posts, string errorMessage)
         {
             if (success)
-                _response = new ResponsePackage(posts, ResponseStatus.Ok, "");
+                Response = new ResponsePackage(posts, ResponseStatus.Ok, "");
             else
-                _response = new ResponsePackage(string.Empty, ResponseStatus.Exception, errorMessage);
-        }
-        private void SendResponse()
-        {
-            Responder = ResponderSelector.SelectResponder(_encrypt);
-            Responder.SendResponse(_client, _response);
+                Response = new ResponsePackage(string.Empty, ResponseStatus.Exception, errorMessage);
         }
     }
 }
