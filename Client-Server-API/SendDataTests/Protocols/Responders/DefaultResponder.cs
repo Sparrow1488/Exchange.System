@@ -9,7 +9,7 @@ namespace ExchangeServer.Protocols.Responders
     {
         public override EncryptType EncryptType => EncryptType.None;
         private NetworkStream _stream;
-        private NetworkHelper _networkHelper = new NetworkHelper();
+        private NetworkChannel _networkHelper = new NetworkChannel();
         private ResponsePackage _response;
         private byte[] _responseData;
 
@@ -27,7 +27,7 @@ namespace ExchangeServer.Protocols.Responders
         }
         private async Task SendResponse()
         {
-            await _networkHelper.WriteDataAsync(_stream, _responseData);
+            await _networkHelper.WriteAsync(_stream, _responseData);
         }
     }
 }

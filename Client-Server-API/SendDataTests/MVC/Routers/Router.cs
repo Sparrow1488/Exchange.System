@@ -18,7 +18,7 @@ namespace ExchangeServer.MVC.Routers
         private IProtocol _selectedProtocol;
         private Package _receivedPackage;
         private EncryptType _encryptType = EncryptType.None;
-        private NetworkHelper _networkHelper = new NetworkHelper();
+        private NetworkChannel _networkChannel = new NetworkChannel();
 
         /// <summary>
         /// Получает запрос от подключенного пользователя, выбирая необходимый протокол и декодера
@@ -35,8 +35,7 @@ namespace ExchangeServer.MVC.Routers
             _client = client;
             var stream = _client.GetStream();
 
-            byte[] receivedData = await _networkHelper.ReadDataAsync(stream, 1024);
-            string _requestInfoJson = _networkHelper.Encoding.GetString(receivedData);
+            string _requestInfoJson = await _networkChannel.ReadAsync(stream);
             var _requestInfo = (RequestInformator)JsonConvert.DeserializeObject(_requestInfoJson, typeof(RequestInformator), new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.All,

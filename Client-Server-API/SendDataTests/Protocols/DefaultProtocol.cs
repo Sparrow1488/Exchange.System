@@ -9,7 +9,7 @@ namespace ExchangeServer.Protocols
     public class DefaultProtocol : Protocol
     {
         public override EncryptType EncryptType { get; protected set; } = EncryptType.None;
-        private NetworkHelper _networkHelper = new NetworkHelper();
+        private NetworkChannel _networkHelper = new NetworkChannel();
         private NetworkStream _stream;
 
         private ResponsePackage _response;
@@ -22,8 +22,7 @@ namespace ExchangeServer.Protocols
         }
         private async Task<IPackage> ReceiveRequest()
         {
-            var receivedRequest = await _networkHelper.ReadDataAsync(_stream, 25000000);
-            var jsonPackage = _networkHelper.Encoding.GetString(receivedRequest);
+            var jsonPackage = await _networkHelper.ReadAsync(_stream);
             IPackage receivedPack = (IPackage)JsonConvert.DeserializeObject(jsonPackage, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.All,
@@ -47,7 +46,7 @@ namespace ExchangeServer.Protocols
         }
         private async Task SendResponse()
         {
-            await _networkHelper.WriteDataAsync(_stream, _responseData);
+            await _networkHelper.WriteAsync(_stream, _responseData);
         }
     }
 }

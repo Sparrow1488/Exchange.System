@@ -22,6 +22,7 @@ namespace ExchangeServer.Protocols.Responders
         private ProtectedPackage _protectedPackage;
         private int _responsePackageSize = 0;
         private byte[] _responseData;
+        private NetworkChannel _networkChannel = new NetworkChannel();
 
         public override async Task SendResponse(TcpClient toClient, ResponsePackage response)
         {
@@ -49,8 +50,9 @@ namespace ExchangeServer.Protocols.Responders
 
         private async Task ReceiveClientKey()
         {
-            byte[] clientKeyData = await new NetworkHelper().ReadDataAsync(_stream, 2100);
-            var xmlKey = new NetworkHelper().Encoding.GetString(clientKeyData);
+            _networkChannel.BufferSize = 2100;
+            byte[] clientKeyData = await _networkChannel.ReadDataAsync(_stream);
+            var xmlKey = new NetworkChannel().Encoding.GetString(clientKeyData);
             _clientPublicKey = new RsaConverter().AsParameters(xmlKey);
         }
         private void PrepareResponsePackage()
@@ -60,7 +62,7 @@ namespace ExchangeServer.Protocols.Responders
         private async Task SendResponseSize()
         {
             _responsePackageSize = _responseData.Length;
-            await new NetworkHelper().WriteDataAsync(_stream, new NetworkHelper().Encoding.GetBytes(_responsePackageSize.ToString()));
+            await new NetworkChannel().WriteAsync(_stream, new NetworkChannel().Encoding.GetBytes(_responsePackageSize.ToString()));
         }
         private void EncryptAesRsaPackage(IPackage package)
         {
@@ -79,11 +81,11 @@ namespace ExchangeServer.Protocols.Responders
         }
         private void PrepareData()
         {
-            _responseData = new NetworkHelper().Encoding.GetBytes(_protectedPackage.ToJson());
+            _responseData = new NetworkChannel().Encoding.GetBytes(_protectedPackage.ToJson());
         }
         private async Task SendResponseData()
         {
-            await new NetworkHelper().WriteDataAsync(_stream, _responseData);
+            await new NetworkChannel().WriteAsync(_stream, _responseData);
         }
     }
 }

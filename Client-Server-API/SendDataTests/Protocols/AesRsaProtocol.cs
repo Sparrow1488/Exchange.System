@@ -27,6 +27,7 @@ namespace ExchangeServer.Protocols
         private ProtectedPackage _protectedPackage;
         private int _responsePackageSize = 0;
         private byte[] _responseData;
+        private NetworkChannel _networkChannel = new NetworkChannel(128);
         public override EncryptType EncryptType { get; protected set; } = EncryptType.AesRsa;
 
         public override async Task<IPackage> ReceivePackageAsync(TcpClient client)
@@ -40,16 +41,17 @@ namespace ExchangeServer.Protocols
             _privateKey = rsa.PrivateKey;
             RsaConverter converter = new RsaConverter();
             var publicXmlKey = converter.AsXML(rsa.PublicKey);
-            byte[] publicRsa = new NetworkHelper().Encoding.GetBytes(publicXmlKey);
-            await new NetworkHelper().WriteDataAsync(stream, publicRsa);
+            byte[] publicRsa = new NetworkChannel().Encoding.GetBytes(publicXmlKey);
+            await new NetworkChannel().WriteAsync(stream, publicRsa);
             stream.Flush();
-            byte[] _futureSecretPackageSize = await new NetworkHelper().ReadDataAsync(stream, 128);
-            string secretPackageSize = new NetworkHelper().Encoding.GetString(_futureSecretPackageSize); //TODO: херня с получением длины
+            byte[] _futureSecretPackageSize = await _networkChannel.ReadDataAsync(stream);
+            string secretPackageSize = _networkChannel.Encoding.GetString(_futureSecretPackageSize); //TODO: херня с получением длины
             bool can = Int32.TryParse(secretPackageSize, out int correctSecretPack);
             if (!can)
                 throw new Exception("Пришла хуета, а не размер пакета");
-            byte[] bufferForSecretPackage = await new NetworkHelper().ReadDataAsync(stream, correctSecretPack);
-            string _protectedJsonPackage = new NetworkHelper().Encoding.GetString(bufferForSecretPackage);
+            _networkChannel.BufferSize = correctSecretPack;
+            byte[] bufferForSecretPackage = await _networkChannel.ReadDataAsync(stream);
+            string _protectedJsonPackage = _networkChannel.Encoding.GetString(bufferForSecretPackage);
             ProtectedPackage pack = (ProtectedPackage)JsonConvert.DeserializeObject(_protectedJsonPackage, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.All,
@@ -112,8 +114,9 @@ namespace ExchangeServer.Protocols
 
         private async Task ReceiveClientKey()
         {
-            byte[] clientKeyData = await new NetworkHelper().ReadDataAsync(_stream, 2100);
-            var xmlKey = new NetworkHelper().Encoding.GetString(clientKeyData);
+            _networkChannel.BufferSize = 2100;
+            byte[] clientKeyData = await _networkChannel.ReadDataAsync(_stream);
+            var xmlKey = new NetworkChannel().Encoding.GetString(clientKeyData);
             _clientPublicKey = new RsaConverter().AsParameters(xmlKey);
         }
         private void PrepareResponsePackage()
@@ -123,7 +126,7 @@ namespace ExchangeServer.Protocols
         private async Task SendResponseSize()
         {
             _responsePackageSize = _responseData.Length;
-            await new NetworkHelper().WriteDataAsync(_stream, new NetworkHelper().Encoding.GetBytes(_responsePackageSize.ToString()));
+            await new NetworkChannel().WriteAsync(_stream, new NetworkChannel().Encoding.GetBytes(_responsePackageSize.ToString()));
         }
         private void EncryptAesRsaPackage(IPackage package)
         {
@@ -142,11 +145,11 @@ namespace ExchangeServer.Protocols
         }
         private void PrepareData()
         {
-            _responseData = new NetworkHelper().Encoding.GetBytes(_protectedPackage.ToJson());
+            _responseData = new NetworkChannel().Encoding.GetBytes(_protectedPackage.ToJson());
         }
         private async Task SendResponseData()
         {
-            await new NetworkHelper().WriteDataAsync(_stream, _responseData);
+            await new NetworkChannel().WriteAsync(_stream, _responseData);
         }
         #endregion
 
