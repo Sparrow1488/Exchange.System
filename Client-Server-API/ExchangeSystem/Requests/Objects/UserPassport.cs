@@ -1,7 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ExchangeSystem.Requests.Objects.Entities;
+using Newtonsoft.Json;
 
 namespace ExchangeSystem.Requests.Objects
 {
@@ -19,10 +17,15 @@ namespace ExchangeSystem.Requests.Objects
             Password = password;
             Token = token;
         }
-        public string Login { get; } = string.Empty;
+        public UserPassport() { }
+        public int Id { get; set; }
+        public string Login { get; set; }
         [JsonProperty]
-        public string Password { get; } = string.Empty;
-        public string Token { get; } = string.Empty;
-        public int UserId { get; } = -1;
+        public string Password { get; set; }
+        [JsonProperty]
+        public string Token { get; set; }
+        [JsonProperty]
+        public AdminStatus AdminStatus { get; set; }
+        public User User { get; set; }
     }
 }

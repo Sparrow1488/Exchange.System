@@ -7,11 +7,12 @@ namespace ExchangeServer.Protocols
 {
     public interface IProtocol
     {
-        Task<IPackage> ReceivePackage(TcpClient client);
+        Task<IPackage> ReceivePackageAsync(TcpClient client);
         /// <summary>
         /// Используйте этот метод после метода "ReceivePackage()". 
         /// </summary>
         /// <returns>Null, если у пакета отсутсвует защита</returns>
-        EncryptType GetPackageEncryptType();
+        EncryptType GetProtocolEncryptType();
+        Task SendResponseAsync(TcpClient client, ResponsePackage response);
     }
 }

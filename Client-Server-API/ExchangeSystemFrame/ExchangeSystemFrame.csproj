@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{774240A1-B4D0-4288-8871-5C32D8BE45FF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ExchangeSystem</RootNamespace>
+    <AssemblyName>ExchangeSystemFrame</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Encryptors">
+      <HintPath>..\Encryptors.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\Objects\AdminStatus.cs" />
+    <Compile Include="Requests\Objects\Entities\Letter.cs" />
+    <Compile Include="Requests\Objects\Entities\Publication.cs" />
+    <Compile Include="Requests\Objects\Entities\Source.cs" />
+    <Compile Include="Requests\Objects\Entities\User.cs" />
+    <Compile Include="Requests\Objects\IRequestObject.cs" />
+    <Compile Include="Requests\Objects\LetterType.cs" />
+    <Compile Include="Requests\Objects\Message.cs" />
+    <Compile Include="Requests\Objects\NewsType.cs" />
+    <Compile Include="Requests\Objects\UserPassport.cs" />
+    <Compile Include="Requests\Packages\Default\Authorization.cs" />
+    <Compile Include="Requests\Packages\Default\IPackage.cs" />
+    <Compile Include="Requests\Packages\Default\NewLetter.cs" />
+    <Compile Include="Requests\Packages\Default\NewPublication.cs" />
+    <Compile Include="Requests\Packages\Default\Package.cs" />
+    <Compile Include="Requests\Packages\Default\ReceiveLetters.cs" />
+    <Compile Include="Requests\Packages\Default\ReceivePublications.cs" />
+    <Compile Include="Requests\Packages\Default\ReceiveSource.cs" />
+    <Compile Include="Requests\Packages\Default\ResponsePackage.cs" />
+    <Compile Include="Requests\Packages\Default\ResponseStatus.cs" />
+    <Compile Include="Requests\Packages\Default\TokenAuthorization.cs" />
+    <Compile Include="Requests\Packages\Informator.cs" />
+    <Compile Include="Requests\Packages\Protected\IProtectedPackage.cs" />
+    <Compile Include="Requests\Packages\Protected\ProtectedPackage.cs" />
+    <Compile Include="Requests\Packages\RequestInformator.cs" />
+    <Compile Include="Requests\Packages\RequestType.cs" />
+    <Compile Include="Requests\Sendlers\Close\AesRsaSendler.cs" />
+    <Compile Include="Requests\Sendlers\Close\EncryptRequestSendler.cs" />
+    <Compile Include="Requests\Sendlers\ConnectionSettings.cs" />
+    <Compile Include="Requests\Sendlers\NetworkHelper.cs" />
+    <Compile Include="Requests\Sendlers\Open\IRequestSendler.cs" />
+    <Compile Include="Requests\Sendlers\Open\RequestSendler.cs" />
+    <Compile Include="SecurityData\AesRsaSecurity.cs" />
+    <Compile Include="SecurityData\EncryptType.cs" />
+    <Compile Include="SecurityData\Security.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,4 +1,5 @@
-﻿using ExchangeServer.Protocols.Responders;
+﻿using ExchangeServer.Protocols;
+using ExchangeServer.Protocols.Selectors;
 using ExchangeSystem.Requests.Packages;
 using ExchangeSystem.Requests.Packages.Default;
 using ExchangeSystem.SecurityData;
@@ -8,10 +9,10 @@ namespace ExchangeServer.MVC.Controllers
 {
     public abstract class Message : Controller
     {
-        public override abstract RequestTypes RequestType { get; }
-        protected override abstract Responder Responder { get; set; }
-        protected override abstract IResponderSelector ResponderSelector { get; set; }
+        public override abstract RequestType RequestType { get; }
+        protected abstract override Protocol Protocol { get; set; }
+        protected abstract override IProtocolSelector ProtocolSelector { get; set; }
 
-        public override abstract void ProcessRequest(TcpClient connectedClient, IPackage package, EncryptType encryptType);
+        public override abstract void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType);
     }
 }
