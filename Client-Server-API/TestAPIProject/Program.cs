@@ -54,7 +54,7 @@ namespace TestAPIProject
         static async Task  SendRequest()
         {
             var message = new Message("Чеб такого написать чтоп пш пш по приколу");
-            var pack = new NewMessage(message);
+            var pack = new NewLetter(message);
             var aesRsaSender = new AesRsaSendler(connectionSettings);
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();

@@ -4,6 +4,6 @@ namespace ExchangeServer.Protocols.Selectors
 {
     public interface IProtocolSelector
     {
-        IProtocol SelectProtocol(EncryptType encryptType);
+        Protocol SelectProtocol(EncryptType encryptType);
     }
 }

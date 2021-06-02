@@ -6,11 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ExchangeSystem\ExchangeSystem.csproj" />
+    <ProjectReference Include="..\ExchangeSystemFrame\ExchangeSystemFrame.csproj" />
   </ItemGroup>
 
   <ItemGroup>

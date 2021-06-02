@@ -1,6 +1,6 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Sockets;
-using System.Threading.Tasks;
 
 namespace ExchangeServer.Protocols.Receivers
 {
@@ -8,10 +8,13 @@ namespace ExchangeServer.Protocols.Receivers
     {
         public ClientReceiver(string hostName, int portListen)
         {
-            _listener = new TcpListener(IPAddress.Parse(hostName), portListen);
+            var successParse = IPAddress.TryParse(hostName, out IPAddress hostAddress);
+            if (!successParse)
+                throw new ArgumentException($"Не удалось превратить '{hostName}' в IPAddress");
+            _listener = new TcpListener(hostAddress, portListen);
         }
         private TcpListener _listener;
-        public void StartReceive()
+        public void Start()
         {
             _listener.Start();
         }

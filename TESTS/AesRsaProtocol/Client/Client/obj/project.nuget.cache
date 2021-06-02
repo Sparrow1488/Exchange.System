@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "b7/w18jVTR/9uvFayJFaTLSd43IhODEKDgTjr+kr0cgNdrd62HyjUmWhPDy4ICO9E6mg2TJvTmJxB1Oo65p3fQ==",
+  "dgSpecHash": "So5Pj0ltxs/wiVALBEtVPPgTah2yNYhmeZwUiejTueWVkpu5PgjW04h7BCN5MNYLYP7mSWuxF9lbeeeMnDSGDw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\DOM\\Desktop\\ИЛЬЯ\\HTML\\C#\\open-close_exchange_system\\TESTS\\AesRsaProtocol\\Client\\Client\\Client.csproj",
+  "projectFilePath": "C:\\Users\\Dom\\Desktop\\Репозитории\\open-close_exchange_system\\TESTS\\AesRsaProtocol\\Client\\Client\\Client.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

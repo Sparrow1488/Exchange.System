@@ -11,7 +11,7 @@ namespace ExchangeServer.MVC.Controllers
 {
     public class ControllerSelector : IControllerSelector
     {
-        public Controller SelectController(RequestTypes RequestType)
+        public Controller SelectController(RequestType RequestType)
         {
             Type parent = typeof(Controller);
             Type[] findTypes = Assembly.GetExecutingAssembly()
