@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.Server\\ExchangeServer.csproj": {}
+    "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.Server\\Exchange.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.Server\\ExchangeServer.csproj": {
+    "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.Server\\Exchange.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.Server\\ExchangeServer.csproj",
-        "projectName": "ExchangeServer",
-        "projectPath": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.Server\\ExchangeServer.csproj",
+        "projectUniqueName": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.Server\\Exchange.Server.csproj",
+        "projectName": "Exchange.Server",
+        "projectPath": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.Server\\Exchange.Server.csproj",
         "packagesPath": "C:\\Users\\Dom\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.Server\\obj\\",
         "projectStyle": "PackageReference",
@@ -28,8 +28,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\ExchangeSystemFrame\\ExchangeSystemFrame.csproj": {
-                "projectPath": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\ExchangeSystemFrame\\ExchangeSystemFrame.csproj"
+              "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.System\\Exchange.System.csproj": {
+                "projectPath": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.System\\Exchange.System.csproj"
               }
             }
           }
@@ -72,11 +72,11 @@
         }
       }
     },
-    "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\ExchangeSystemFrame\\ExchangeSystemFrame.csproj": {
+    "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.System\\Exchange.System.csproj": {
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\ExchangeSystemFrame\\ExchangeSystemFrame.csproj",
-        "projectName": "ExchangeSystemFrame",
-        "projectPath": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\ExchangeSystemFrame\\ExchangeSystemFrame.csproj"
+        "projectUniqueName": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.System\\Exchange.System.csproj",
+        "projectName": "Exchange.System",
+        "projectPath": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.System\\Exchange.System.csproj"
       },
       "frameworks": {
         "net472": {}

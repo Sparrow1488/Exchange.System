@@ -1,7 +1,7 @@
-﻿using ExchangeSystem.Requests.Objects;
+﻿using Exchange.System.Requests.Objects;
 using Newtonsoft.Json;
 
-namespace ExchangeSystem.Requests.Packages.Default
+namespace Exchange.System.Requests.Packages.Default
 {
     public abstract class Package : IPackage
     {

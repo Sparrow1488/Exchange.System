@@ -289,13 +289,13 @@
           }
         }
       },
-      "ExchangeSystemFrame/1.0.0": {
+      "Exchange.System/1.0.0": {
         "type": "project",
         "compile": {
-          "bin/placeholder/ExchangeSystemFrame.dll": {}
+          "bin/placeholder/Exchange.System.dll": {}
         },
         "runtime": {
-          "bin/placeholder/ExchangeSystemFrame.dll": {}
+          "bin/placeholder/Exchange.System.dll": {}
         }
       }
     }
@@ -1063,16 +1063,16 @@
         "version.txt"
       ]
     },
-    "ExchangeSystemFrame/1.0.0": {
+    "Exchange.System/1.0.0": {
       "type": "project",
-      "path": "../ExchangeSystemFrame/ExchangeSystemFrame.csproj",
-      "msbuildProject": "../ExchangeSystemFrame/ExchangeSystemFrame.csproj"
+      "path": "../Exchange.System/Exchange.System.csproj",
+      "msbuildProject": "../Exchange.System/Exchange.System.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "EntityFramework >= 6.4.4",
-      "ExchangeSystemFrame >= 1.0.0",
+      "Exchange.System >= 1.0.0",
       "Newtonsoft.Json >= 13.0.1"
     ]
   },
@@ -1082,11 +1082,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\SendDataTests\\ExchangeServer.csproj",
-      "projectName": "ExchangeServer",
-      "projectPath": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\SendDataTests\\ExchangeServer.csproj",
+      "projectUniqueName": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.Server\\Exchange.Server.csproj",
+      "projectName": "Exchange.Server",
+      "projectPath": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.Server\\Exchange.Server.csproj",
       "packagesPath": "C:\\Users\\Dom\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\SendDataTests\\obj\\",
+      "outputPath": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.Server\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Dom\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1103,8 +1103,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\ExchangeSystemFrame\\ExchangeSystemFrame.csproj": {
-              "projectPath": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\ExchangeSystemFrame\\ExchangeSystemFrame.csproj"
+            "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.System\\Exchange.System.csproj": {
+              "projectPath": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.System\\Exchange.System.csproj"
             }
           }
         }

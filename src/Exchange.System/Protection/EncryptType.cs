@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ExchangeSystem.SecurityData
+namespace Exchange.System.Protection
 {
     public enum EncryptType
     {

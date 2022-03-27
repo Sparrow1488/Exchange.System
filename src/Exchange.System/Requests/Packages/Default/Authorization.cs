@@ -1,6 +1,6 @@
-﻿using ExchangeSystem.Requests.Objects;
+﻿using Exchange.System.Requests.Objects;
 
-namespace ExchangeSystem.Requests.Packages.Default
+namespace Exchange.System.Requests.Packages.Default
 {
     public class Authorization : Package
     {

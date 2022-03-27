@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ExchangeSystemFrame\ExchangeSystemFrame.csproj" />
+    <ProjectReference Include="..\Exchange.System\Exchange.System.csproj" />
   </ItemGroup>
 
   <ItemGroup>

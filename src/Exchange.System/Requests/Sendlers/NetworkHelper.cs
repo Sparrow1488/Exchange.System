@@ -2,7 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExchangeSystem.Requests.Sendlers
+namespace Exchange.System.Requests.Sendlers
 {
     public class NetworkHelper
     {

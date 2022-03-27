@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DE/eQ7XHG+Rbgibq0YlSyiBrRQRq9ZqH8XOGfmKceJbMPwPfggLziRBTJh/VV5JXwxPlKhlwt42iRpn7mImGfw==",
+  "dgSpecHash": "CKlv007w+S36DsvDk+rvLDCofPPqRvh75tZgpBlZZRNWS/jLcDayoq1SyxsFdbmdN28BUrSRwib9dxQUwFkYNw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\SendDataTests\\ExchangeServer.csproj",
+  "projectFilePath": "C:\\Users\\Dom\\Desktop\\GitRepositories\\open-close_exchange_system\\src\\Exchange.Server\\Exchange.Server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dom\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\Dom\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

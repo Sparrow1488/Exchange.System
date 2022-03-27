@@ -1,7 +1,7 @@
-﻿using ExchangeSystem.Requests.Objects;
+﻿using Exchange.System.Requests.Objects;
 using System;
 
-namespace ExchangeSystem.Requests.Objects.Entities
+namespace Exchange.System.Requests.Objects.Entities
 {
     public class Source : IRequestObject
     {

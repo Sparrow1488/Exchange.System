@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ExchangeSystem.Requests.Packages.Default
+namespace Exchange.System.Requests.Packages.Default
 {
     public interface IPackage
     {

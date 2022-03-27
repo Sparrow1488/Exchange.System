@@ -1,0 +1,4 @@
+C:\Users\Dom\Desktop\GitRepositories\open-close_exchange_system\src\Exchange.System\obj\Debug\Exchange.System.csprojAssemblyReference.cache
+C:\Users\Dom\Desktop\GitRepositories\open-close_exchange_system\src\Exchange.System\obj\Debug\Exchange.System.csproj.CoreCompileInputs.cache
+C:\Users\Dom\Desktop\GitRepositories\open-close_exchange_system\src\Exchange.System\obj\Debug\ExchangeSystemFrame.dll
+C:\Users\Dom\Desktop\GitRepositories\open-close_exchange_system\src\Exchange.System\obj\Debug\ExchangeSystemFrame.pdb

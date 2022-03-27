@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ExchangeSystem.Requests.Objects
+namespace Exchange.System.Requests.Objects
 {
     public class Message : IRequestObject
     {

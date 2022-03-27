@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ExchangeSystem.SecurityData
+namespace Exchange.System.Protection
 {
     public class AesRsaSecurity : Security
     {

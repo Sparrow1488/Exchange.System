@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ExchangeSystem.Requests.Packages.Default
+namespace Exchange.System.Requests.Packages.Default
 {
     public enum ResponseStatus
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ExchangeSystem.Requests.Objects
+namespace Exchange.System.Requests.Objects
 {
     public enum AdminStatus
     {

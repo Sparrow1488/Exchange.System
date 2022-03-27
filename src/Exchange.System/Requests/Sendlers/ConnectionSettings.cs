@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ExchangeSystem.Requests.Sendlers
+namespace Exchange.System.Requests.Sendlers
 {
     public class ConnectionSettings
     {

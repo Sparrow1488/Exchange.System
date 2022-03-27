@@ -1,4 +1,4 @@
-﻿namespace ExchangeSystem.Requests.Packages
+﻿namespace Exchange.System.Requests.Packages
 {
     public enum RequestType
     {

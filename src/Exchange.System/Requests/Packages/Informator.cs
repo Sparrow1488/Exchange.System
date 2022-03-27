@@ -1,6 +1,6 @@
-﻿using ExchangeSystem.SecurityData;
+﻿using Exchange.System.Protection;
 
-namespace ExchangeSystem.Requests.Packages
+namespace Exchange.System.Requests.Packages
 {
     public class Informator : RequestInformator
     {

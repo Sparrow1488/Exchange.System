@@ -1,11 +1,11 @@
-﻿using ExchangeSystem.Requests.Packages;
-using ExchangeSystem.Requests.Packages.Default;
+﻿using Exchange.System.Requests.Packages;
+using Exchange.System.Requests.Packages.Default;
 using Newtonsoft.Json;
 using System;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace ExchangeSystem.Requests.Sendlers.Open
+namespace Exchange.System.Requests.Sendlers.Open
 {
     public class RequestSendler : IRequestSendler
     {
@@ -18,7 +18,7 @@ namespace ExchangeSystem.Requests.Sendlers.Open
         private NetworkHelper _networkHelper = new NetworkHelper();
         private NetworkStream _stream;
         private TcpClient _client;
-        private Informator _informator = new Informator(SecurityData.EncryptType.None);
+        private Informator _informator = new Informator(Protection.EncryptType.None);
         private byte[] _requestData;
         private ResponsePackage _responsePackage;
 

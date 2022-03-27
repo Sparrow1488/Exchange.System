@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ExchangeSystem.Requests.Objects.Entities
+namespace Exchange.System.Requests.Objects.Entities
 {
     public class User
     {

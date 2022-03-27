@@ -1,9 +1,9 @@
 ﻿using Encryptors.Aes;
 using Encryptors.Rsa;
-using ExchangeSystem.Requests.Packages;
-using ExchangeSystem.Requests.Packages.Default;
-using ExchangeSystem.Requests.Packages.Protected;
-using ExchangeSystem.SecurityData;
+using Exchange.System.Requests.Packages;
+using Exchange.System.Requests.Packages.Default;
+using Exchange.System.Requests.Packages.Protected;
+using Exchange.System.Protection;
 using Newtonsoft.Json;
 using System;
 using System.Net.Sockets;
@@ -11,7 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExchangeSystem.Requests.Sendlers.Close
+namespace Exchange.System.Requests.Sendlers.Close
 {
     public class AesRsaSendler : EncryptRequestSendler
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ExchangeSystem.Requests.Packages.Protected
+namespace Exchange.System.Requests.Packages.Protected
 {
     public interface IProtectedPackage
     {

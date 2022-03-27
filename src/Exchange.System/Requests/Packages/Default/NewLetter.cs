@@ -1,7 +1,7 @@
-﻿using ExchangeSystem.Requests.Objects;
-using ExchangeSystem.Requests.Objects.Entities;
+﻿using Exchange.System.Requests.Objects;
+using Exchange.System.Requests.Objects.Entities;
 
-namespace ExchangeSystem.Requests.Packages.Default
+namespace Exchange.System.Requests.Packages.Default
 {
     public class NewLetter : Package
     {

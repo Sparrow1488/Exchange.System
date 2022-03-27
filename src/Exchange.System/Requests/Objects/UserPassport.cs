@@ -1,8 +1,8 @@
-﻿using ExchangeSystem.Requests.Objects.Entities;
+﻿using Exchange.System.Requests.Objects.Entities;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ExchangeSystem.Requests.Objects
+namespace Exchange.System.Requests.Objects
 {
     public class UserPassport : IRequestObject
     {

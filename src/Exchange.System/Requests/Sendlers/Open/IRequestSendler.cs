@@ -1,7 +1,7 @@
-﻿using ExchangeSystem.Requests.Packages.Default;
+﻿using Exchange.System.Requests.Packages.Default;
 using System.Threading.Tasks;
 
-namespace ExchangeSystem.Requests.Sendlers.Open
+namespace Exchange.System.Requests.Sendlers.Open
 {
     public interface IRequestSendler
     {

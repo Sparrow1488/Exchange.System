@@ -1,4 +1,4 @@
-﻿namespace ExchangeSystem.SecurityData
+﻿namespace Exchange.System.Protection
 {
     public abstract class Security
     {

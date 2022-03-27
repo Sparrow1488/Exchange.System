@@ -84,9 +84,9 @@
     <Compile Include="Requests\Sendlers\NetworkHelper.cs" />
     <Compile Include="Requests\Sendlers\Open\IRequestSendler.cs" />
     <Compile Include="Requests\Sendlers\Open\RequestSendler.cs" />
-    <Compile Include="SecurityData\AesRsaSecurity.cs" />
-    <Compile Include="SecurityData\EncryptType.cs" />
-    <Compile Include="SecurityData\Security.cs" />
+    <Compile Include="Security\AesRsaSecurity.cs" />
+    <Compile Include="Security\EncryptType.cs" />
+    <Compile Include="Security\Security.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
