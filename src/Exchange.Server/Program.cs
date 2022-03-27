@@ -3,14 +3,13 @@ using Exchange.Server.Models;
 using Exchange.Server.Protocols.Receivers;
 using Exchange.Server.Routers;
 using Exchange.Server.SQLDataBase;
-using Exchange.System.Requests.Objects;
+using Exchange.System.Entities;
+using Exchange.System.Enums;
 using Exchange.System.Packages.Default;
 using System;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-using Exchange.System.Entities;
-using Exchange.System.Enums;
 
 namespace Exchange.Server
 {
@@ -19,7 +18,7 @@ namespace Exchange.Server
         private static async Task Main()
         {
             //AddLetterInDB();
-            ClientReceiver receiver = new ClientReceiver("127.0.0.1", 80);
+            ClientReceiver receiver = ClientReceiver.Create("127.0.0.1", 80);
             receiver.Start();
             while (true)
             {
@@ -30,7 +29,7 @@ namespace Exchange.Server
                     Console.WriteLine("Client was connected");
 
                     await ServerProcessing(client);
-                    Task.Delay(150).Wait(); // давайте не будем перегружать ЦП
+                    await Task.Delay(150); // давайте не будем перегружать ЦП
                 //}
                 //catch { PrintError("ERROR"); }
             }

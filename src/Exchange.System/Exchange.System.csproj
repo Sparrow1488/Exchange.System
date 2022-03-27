@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\Ex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Enums\AdminStatus.cs" />
     <Compile Include="Entities\Letter.cs" />
