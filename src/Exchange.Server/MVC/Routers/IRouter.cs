@@ -1,9 +1,9 @@
-﻿using ExchangeSystem.Requests.Packages.Default;
-using ExchangeSystem.SecurityData;
+﻿using Exchange.System.Requests.Packages.Default;
+using Exchange.System.Protection;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace ExchangeServer.MVC.Routers
+namespace Exchange.Server.MVC.Routers
 {
     public interface IRouter
     {

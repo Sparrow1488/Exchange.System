@@ -1,5 +1,5 @@
-﻿using ExchangeSystem.Requests.Packages;
-using ExchangeSystem.Requests.Packages.Default;
+﻿using Exchange.System.Requests.Packages;
+using Exchange.System.Requests.Packages.Default;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 
-namespace ExchangeServer.MVC.Controllers
+namespace Exchange.Server.MVC.Controllers
 {
     public class ControllerSelector : IControllerSelector
     {

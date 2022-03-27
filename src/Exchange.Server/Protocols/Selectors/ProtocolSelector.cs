@@ -1,9 +1,9 @@
-﻿using ExchangeSystem.SecurityData;
+﻿using Exchange.System.Protection;
 using System;
 using System.Linq;
 using System.Reflection;
 
-namespace ExchangeServer.Protocols.Selectors
+namespace Exchange.Server.Protocols.Selectors
 {
     public class ProtocolSelector : IProtocolSelector
     {

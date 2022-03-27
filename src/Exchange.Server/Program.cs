@@ -1,16 +1,16 @@
-﻿using ExchangeServer.MVC.Controllers;
-using ExchangeServer.MVC.Models;
-using ExchangeServer.MVC.Routers;
-using ExchangeServer.Protocols.Receivers;
-using ExchangeServer.SQLDataBase;
-using ExchangeSystem.Requests.Objects;
-using ExchangeSystem.Requests.Objects.Entities;
-using ExchangeSystem.Requests.Packages.Default;
+﻿using Exchange.Server.MVC.Controllers;
+using Exchange.Server.MVC.Models;
+using Exchange.Server.MVC.Routers;
+using Exchange.Server.Protocols.Receivers;
+using Exchange.Server.SQLDataBase;
+using Exchange.System.Requests.Objects;
+using Exchange.System.Requests.Objects.Entities;
+using Exchange.System.Requests.Packages.Default;
 using System;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-//Data Source=(local)\SQLEXPRESS;Initial Catalog=ExchangeSystemDb_1;Integrated Security=True
+//Data Source=(local)\SQLEXPRESS;Initial Catalog=Exchange.SystemDb_1;Integrated Security=True
 namespace SendDataTests
 {
     public class Program

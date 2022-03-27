@@ -1,10 +1,10 @@
-﻿using ExchangeServer.LocalDataBase;
-using ExchangeServer.SQLDataBase;
-using ExchangeSystem.Requests.Objects;
-using ExchangeSystem.Requests.Objects.Entities;
+﻿using Exchange.Server.LocalDataBase;
+using Exchange.Server.SQLDataBase;
+using Exchange.System.Requests.Objects;
+using Exchange.System.Requests.Objects.Entities;
 using System.Linq;
 
-namespace ExchangeServer.MVC.Models
+namespace Exchange.Server.MVC.Models
 {
     public class UserModel
     {

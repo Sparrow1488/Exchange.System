@@ -1,15 +1,15 @@
-﻿using ExchangeServer.MVC.Exceptions.NetworkExceptions;
-using ExchangeServer.Protocols;
-using ExchangeServer.Protocols.Selectors;
-using ExchangeSystem.Requests.Packages;
-using ExchangeSystem.Requests.Packages.Default;
-using ExchangeSystem.SecurityData;
+﻿using Exchange.Server.MVC.Exceptions.NetworkExceptions;
+using Exchange.Server.Protocols;
+using Exchange.Server.Protocols.Selectors;
+using Exchange.System.Requests.Packages;
+using Exchange.System.Requests.Packages.Default;
+using Exchange.System.Protection;
 using Newtonsoft.Json;
 using System;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace ExchangeServer.MVC.Routers
+namespace Exchange.Server.MVC.Routers
 {
     public class Router : IRouter
     {

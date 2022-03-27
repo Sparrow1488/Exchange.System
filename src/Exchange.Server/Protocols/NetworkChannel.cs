@@ -3,7 +3,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExchangeServer.Protocols
+namespace Exchange.Server.Protocols
 {
     public class NetworkChannel : INetworkChannelWriter, INetworkChannelReader
     {

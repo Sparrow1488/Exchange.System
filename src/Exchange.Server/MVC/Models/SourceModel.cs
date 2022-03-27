@@ -1,11 +1,11 @@
-﻿using ExchangeServer.SQLDataBase;
-using ExchangeSystem.Requests.Objects.Entities;
+﻿using Exchange.Server.SQLDataBase;
+using Exchange.System.Requests.Objects.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ExchangeServer.MVC.Models
+namespace Exchange.Server.MVC.Models
 {
     public class SourceModel
     {

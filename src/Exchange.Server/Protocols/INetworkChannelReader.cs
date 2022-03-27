@@ -1,7 +1,7 @@
 ﻿using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace ExchangeServer.Protocols
+namespace Exchange.Server.Protocols
 {
     public interface INetworkChannelReader
     {

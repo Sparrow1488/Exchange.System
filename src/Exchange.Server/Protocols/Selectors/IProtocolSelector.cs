@@ -1,6 +1,6 @@
-﻿using ExchangeSystem.SecurityData;
+﻿using Exchange.System.Protection;
 
-namespace ExchangeServer.Protocols.Selectors
+namespace Exchange.Server.Protocols.Selectors
 {
     public interface IProtocolSelector
     {

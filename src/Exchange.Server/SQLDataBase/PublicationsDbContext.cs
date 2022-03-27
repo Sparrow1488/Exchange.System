@@ -1,7 +1,7 @@
-﻿using ExchangeSystem.Requests.Objects.Entities;
+﻿using Exchange.System.Requests.Objects.Entities;
 using System.Data.Entity;
 
-namespace ExchangeServer.SQLDataBase
+namespace Exchange.Server.SQLDataBase
 {
     public class PublicationsDbContext : DbContext
     {

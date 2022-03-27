@@ -1,11 +1,11 @@
-﻿using ExchangeSystem.Requests.Packages.Default;
-using ExchangeSystem.SecurityData;
+﻿using Exchange.System.Requests.Packages.Default;
+using Exchange.System.Protection;
 using Newtonsoft.Json;
 using System;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace ExchangeServer.Protocols
+namespace Exchange.Server.Protocols
 {
     public class DefaultProtocol : Protocol
     {

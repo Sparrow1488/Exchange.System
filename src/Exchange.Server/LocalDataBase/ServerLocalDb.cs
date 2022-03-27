@@ -1,11 +1,11 @@
-﻿using ExchangeSystem.Requests.Objects;
-using ExchangeSystem.Requests.Objects.Entities;
+﻿using Exchange.System.Requests.Objects;
+using Exchange.System.Requests.Objects.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ExchangeServer.LocalDataBase
+namespace Exchange.Server.LocalDataBase
 {
     public static class ServerLocalDb
     {

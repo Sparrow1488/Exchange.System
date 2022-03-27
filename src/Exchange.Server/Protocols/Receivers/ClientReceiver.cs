@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 
-namespace ExchangeServer.Protocols.Receivers
+namespace Exchange.Server.Protocols.Receivers
 {
     public class ClientReceiver : IClientReceiver
     {

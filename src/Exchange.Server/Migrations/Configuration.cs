@@ -1,18 +1,16 @@
-﻿namespace ExchangeServer.Migrations
-{
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
+﻿using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ExchangeServer.SQLDataBase.LettersDbContext>
+namespace Exchange.Server.Migrations
+{
+
+    internal sealed class Configuration : DbMigrationsConfiguration<Exchange.Server.SQLDataBase.LettersDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(ExchangeServer.SQLDataBase.LettersDbContext context)
+        protected override void Seed(Exchange.Server.SQLDataBase.LettersDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

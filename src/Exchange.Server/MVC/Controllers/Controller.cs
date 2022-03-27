@@ -1,12 +1,12 @@
-﻿using ExchangeServer.MVC.Exceptions.NetworkExceptions;
-using ExchangeServer.Protocols;
-using ExchangeServer.Protocols.Selectors;
-using ExchangeSystem.Requests.Packages;
-using ExchangeSystem.Requests.Packages.Default;
-using ExchangeSystem.SecurityData;
+﻿using Exchange.Server.MVC.Exceptions.NetworkExceptions;
+using Exchange.Server.Protocols;
+using Exchange.Server.Protocols.Selectors;
+using Exchange.System.Requests.Packages;
+using Exchange.System.Requests.Packages.Default;
+using Exchange.System.Protection;
 using System.Net.Sockets;
 
-namespace ExchangeServer.MVC.Controllers
+namespace Exchange.Server.MVC.Controllers
 {
     public abstract class Controller
     {
