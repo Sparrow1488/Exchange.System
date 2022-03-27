@@ -7,7 +7,7 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 
-namespace Exchange.Server.MVC.Controllers
+namespace Exchange.Server .Controllers
 {
     public class ControllerSelector : IControllerSelector
     {

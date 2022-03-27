@@ -1,5 +1,5 @@
-﻿using Exchange.Server.MVC.Exceptions.NetworkExceptions;
-using Exchange.Server.MVC.Models;
+﻿using Exchange.Server .Exceptions.NetworkExceptions;
+using Exchange.Server .Models;
 using Exchange.Server.Protocols;
 using Exchange.Server.Protocols.Selectors;
 using Exchange.System.Requests.Objects.Entities;
@@ -9,7 +9,7 @@ using Exchange.System.Protection;
 using System;
 using System.Net.Sockets;
 
-namespace Exchange.Server.MVC.Controllers
+namespace Exchange.Server .Controllers
 {
     public class NewLetter : Message
     {

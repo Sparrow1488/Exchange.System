@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Exchange.Server.MVC.Exceptions.NetworkExceptions
+namespace Exchange.Server .Exceptions.NetworkExceptions
 {
     public class ConnectionException : Exception
     {

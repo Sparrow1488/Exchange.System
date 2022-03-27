@@ -1,4 +1,4 @@
-﻿using Exchange.Server.MVC.Exceptions.NetworkExceptions;
+﻿using Exchange.Server .Exceptions.NetworkExceptions;
 using Exchange.Server.Protocols;
 using Exchange.Server.Protocols.Selectors;
 using Exchange.System.Requests.Packages;
@@ -9,7 +9,7 @@ using System;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace Exchange.Server.MVC.Routers
+namespace Exchange.Server.Routers
 {
     public class Router : IRouter
     {

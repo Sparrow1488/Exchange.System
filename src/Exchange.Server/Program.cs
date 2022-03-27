@@ -1,7 +1,7 @@
-﻿using Exchange.Server.MVC.Controllers;
-using Exchange.Server.MVC.Models;
-using Exchange.Server.MVC.Routers;
+﻿using Exchange.Server.Controllers;
+using Exchange.Server.Models;
 using Exchange.Server.Protocols.Receivers;
+using Exchange.Server.Routers;
 using Exchange.Server.SQLDataBase;
 using Exchange.System.Requests.Objects;
 using Exchange.System.Requests.Objects.Entities;
@@ -10,12 +10,12 @@ using System;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-//Data Source=(local)\SQLEXPRESS;Initial Catalog=Exchange.SystemDb_1;Integrated Security=True
-namespace SendDataTests
+
+namespace Exchange.Server
 {
-    public class Program
+    internal sealed class Program
     {
-        private static async Task Main(string[] args)
+        private static async Task Main()
         {
             //AddLetterInDB();
             ClientReceiver receiver = new ClientReceiver("127.0.0.1", 80);
@@ -34,6 +34,7 @@ namespace SendDataTests
                 //catch { PrintError("ERROR"); }
             }
         }
+
         private static async  Task ServerProcessing(TcpClient client)
         {
             Router router = new Router();
@@ -48,12 +49,14 @@ namespace SendDataTests
 
             return;
         }
+
         private static void PrintError(string message)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(message);
             Console.ResetColor();
         }
+
         private static void AddUserInDB()
         {
             using (UsersDbContext context = new UsersDbContext())
@@ -65,6 +68,7 @@ namespace SendDataTests
                 Console.WriteLine(pas);
             }
         }
+
         private static void AddLetterInDB()
         {
             var model = new PublicationModel();

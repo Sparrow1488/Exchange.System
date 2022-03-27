@@ -3,7 +3,7 @@ using Exchange.System.Requests.Objects.Entities;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Exchange.Server.MVC.Models
+namespace Exchange.Server.Models
 {
     public class LetterModel
     {

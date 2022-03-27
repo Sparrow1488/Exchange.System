@@ -1,5 +1,5 @@
 ﻿using Exchange.Server.LocalDataBase;
-using Exchange.Server.MVC.Models;
+using Exchange.Server .Models;
 using Exchange.Server.Protocols;
 using Exchange.Server.Protocols.Selectors;
 using Exchange.System.Requests.Objects;
@@ -9,7 +9,7 @@ using Exchange.System.Requests.Packages.Default;
 using Exchange.System.Protection;
 using System.Net.Sockets;
 
-namespace Exchange.Server.MVC.Controllers
+namespace Exchange.Server .Controllers
 {
     public class GetLetters : Controller
     {

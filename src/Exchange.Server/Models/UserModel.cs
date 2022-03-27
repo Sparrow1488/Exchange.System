@@ -4,7 +4,7 @@ using Exchange.System.Requests.Objects;
 using Exchange.System.Requests.Objects.Entities;
 using System.Linq;
 
-namespace Exchange.Server.MVC.Models
+namespace Exchange.Server.Models
 {
     public class UserModel
     {

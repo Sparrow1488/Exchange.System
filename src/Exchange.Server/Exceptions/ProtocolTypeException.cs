@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Exchange.Server.MVC.Exceptions
+namespace Exchange.Server .Exceptions
 {
     public class ProtocolTypeException : Exception
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Exchange.Server.MVC.Views
+namespace Exchange.Server.Views
 {
     public abstract class View
     {

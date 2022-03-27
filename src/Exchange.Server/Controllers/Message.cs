@@ -5,7 +5,7 @@ using Exchange.System.Requests.Packages.Default;
 using Exchange.System.Protection;
 using System.Net.Sockets;
 
-namespace Exchange.Server.MVC.Controllers
+namespace Exchange.Server .Controllers
 {
     public abstract class Message : Controller
     {

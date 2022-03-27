@@ -1,7 +1,7 @@
 ﻿using Encryptors.Aes;
 using Encryptors.Rsa;
-using Exchange.Server.MVC.Exceptions;
-using Exchange.Server.MVC.Exceptions.NetworkExceptions;
+using Exchange.Server .Exceptions;
+using Exchange.Server .Exceptions.NetworkExceptions;
 using Exchange.System.Requests.Packages.Default;
 using Exchange.System.Requests.Packages.Protected;
 using Exchange.System.Protection;

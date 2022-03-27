@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Exchange.Server.MVC.Controllers
+namespace Exchange.Server .Controllers
 {
     public interface IControllerSelector
     {

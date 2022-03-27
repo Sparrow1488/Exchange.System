@@ -3,7 +3,7 @@ using Exchange.System.Protection;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace Exchange.Server.MVC.Routers
+namespace Exchange.Server.Routers
 {
     public interface IRouter
     {
