@@ -1,8 +1,8 @@
-﻿using Exchange.Server .Exceptions.NetworkExceptions;
+﻿using Exchange.Server.Exceptions.NetworkExceptions;
 using Exchange.Server.Protocols;
 using Exchange.Server.Protocols.Selectors;
-using Exchange.System.Requests.Packages;
-using Exchange.System.Requests.Packages.Default;
+using Exchange.System.Packages;
+using Exchange.System.Packages.Default;
 using Exchange.System.Protection;
 using Newtonsoft.Json;
 using System;

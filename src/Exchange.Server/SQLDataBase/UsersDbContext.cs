@@ -1,9 +1,5 @@
-﻿using Exchange.System.Requests.Objects;
-using Exchange.System.Requests.Objects.Entities;
-using System;
-using System.Collections.Generic;
+﻿using Exchange.System.Entities;
 using System.Data.Entity;
-using System.Text;
 
 namespace Exchange.Server.SQLDataBase
 {

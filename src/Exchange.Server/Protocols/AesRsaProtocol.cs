@@ -1,15 +1,14 @@
 ﻿using Encryptors.Aes;
 using Encryptors.Rsa;
-using Exchange.Server .Exceptions;
-using Exchange.Server .Exceptions.NetworkExceptions;
-using Exchange.System.Requests.Packages.Default;
-using Exchange.System.Requests.Packages.Protected;
+using Exchange.Server.Exceptions;
+using Exchange.Server.Exceptions.NetworkExceptions;
+using Exchange.System.Packages.Default;
+using Exchange.System.Packages.Protected;
 using Exchange.System.Protection;
 using Newtonsoft.Json;
 using System;
 using System.Net.Sockets;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Exchange.Server.Protocols

@@ -1,4 +1,5 @@
-﻿using Exchange.System.Requests.Objects;
+﻿using Exchange.System.Entities;
+using Exchange.System.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

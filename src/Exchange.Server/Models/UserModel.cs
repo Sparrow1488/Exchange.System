@@ -1,7 +1,7 @@
 ﻿using Exchange.Server.LocalDataBase;
 using Exchange.Server.SQLDataBase;
+using Exchange.System.Entities;
 using Exchange.System.Requests.Objects;
-using Exchange.System.Requests.Objects.Entities;
 using System.Linq;
 
 namespace Exchange.Server.Models
