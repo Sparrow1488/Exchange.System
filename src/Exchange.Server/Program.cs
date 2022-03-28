@@ -1,77 +1,72 @@
 ﻿using Exchange.Server.Controllers;
-using Exchange.Server.Models;
 using Exchange.Server.Protocols.Receivers;
 using Exchange.Server.Routers;
-using Exchange.Server.SQLDataBase;
-using Exchange.System.Entities;
-using Exchange.System.Enums;
 using Exchange.System.Packages.Default;
 using System;
-using System.Linq;
-using System.Net.Sockets;
 using System.Threading.Tasks;
 
 namespace Exchange.Server
 {
     internal sealed class Program
     {
+        private Program() =>
+            _router = new Router();
+
+        public const string Host = "127.0.0.1";
+        public const int Port = 80;
+
+        private static IRouter _router;
+        
         private static async Task Main()
         {
-            using (ClientReceiver receiver = ClientReceiver.Create("127.0.0.1", 80))
+            using (ClientReceiver receiver = ClientReceiver.Create(Host, Port))
             {
                 receiver.Start();
+                Console.WriteLine("Server started on ");
                 while (true)
                 {
-                    Console.WriteLine("Server waiting requests...");
+                    Console.WriteLine("Server waiting requests");
                     var client = receiver.AcceptClient();
                     Console.WriteLine("Client was connected");
 
-                    await ServerProcessing(client);
-                    await Task.Delay(150); // давайте не будем перегружать ЦП
+                    _router.AddInQueue(client); // задел на многопоточную обработку
+                    await ProcessRouterQueueAsync();
+                    await Task.Delay(150);
                 }
             }
         }
 
-        private static async  Task ServerProcessing(TcpClient client)
+        private static async Task ProcessRouterQueueAsync()
         {
-            Router router = new Router();
-            var requestPackage = await router.IssueRequestAsync(client) as Package;
-            var packageEncryptType = router.GetPackageEncryptType();
-            Console.WriteLine("Received package has '{0}' request type and encrypt type '{1}'", requestPackage.RequestType, packageEncryptType);
-
-            ControllerSelector controllerSelector = new ControllerSelector();
-            Controller controller = controllerSelector.SelectController(requestPackage.RequestType);
-            Console.WriteLine("Was received request object witch has type of " + requestPackage.RequestObject);
-            controller.ProcessRequest(client, requestPackage, packageEncryptType);
-
-            return;
+            if(_router.GetQueueLength() > 0)
+                await ProcessRequestByPackageTypeAsync();
+            else
+                Console.WriteLine("Queue is empty");
         }
 
-        private static void PrintError(string message)
+        private static async Task ProcessRequestByPackageTypeAsync()
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(message);
-            Console.ResetColor();
-        }
+            var requestPackage = await _router.ExtractRequestPackageAsync();
+            var packageEncryptType = _router.GetPackageEncryptType();
 
-        private static void AddUserInDB()
-        {
-            using (UsersDbContext context = new UsersDbContext())
+            if (requestPackage is Package requestPackageImp)
             {
-                var user = new User(new UserPassport("asd", "1234") { AdminStatus = AdminStatus.Admin}) { Name = "Валентин", LastName = "Геркулесович", ParentName = "Жмышен"};
-                context.Users.Add(user);
-                context.SaveChanges();
-                var pas = context.Users.FirstOrDefault();
-                Console.WriteLine(pas);
+                Console.WriteLine("Get => {0}; EncryptType => {1}",
+                    requestPackageImp.RequestType.ToString(),
+                        packageEncryptType.ToString());
+                ProcessRequestPackage(requestPackageImp);
+            }
+            else
+            {
+                Console.WriteLine("I don't know how to handle this package!");
             }
         }
 
-        private static void AddLetterInDB()
+        private static void ProcessRequestPackage(Package requestPackage)
         {
-            var model = new PublicationModel();
-            var sources = new Source[] { new Source() { Extension = ".mp4", SenderId = 2, DateCreate = DateTime.Now }, new Source() { Extension = ".mp190", SenderId = 2, DateCreate = DateTime.Now } };
-            //var res = model.Add(new Publication() { Text = "Добрейший вечерочек с двумя вложениями", Title = "Вечерочка", Sources = sources, DateCreate = DateTime.Now });
-            var res = model.Add(new Publication() { DateCreate = DateTime.Now, Text = "Че", Title = "Капче", Type = NewsType.Important});
+            ControllerSelector controllerSelector = new ControllerSelector();
+            Controller controller = controllerSelector.SelectController(requestPackage.RequestType);
+            // controller.ProcessRequest(client, requestPackage, packageEncryptType);
         }
     }
 }

@@ -7,7 +7,9 @@ namespace Exchange.Server.Routers
 {
     public interface IRouter
     {
-        Task<IPackage> IssueRequestAsync(TcpClient client);
-        EncryptType GetPackageEncryptType();
+        void AddInQueue(TcpClient clientToProccess);
+        int GetQueueLength();
+        Task<IPackage> ExtractRequestPackageAsync();
+        EncryptType GetPackageEncryptType(); // TODO: refactoring - delete
     }
 }
