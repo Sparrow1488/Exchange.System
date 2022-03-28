@@ -17,16 +17,18 @@ namespace Exchange.Server
     {
         private static async Task Main()
         {
-            ClientReceiver receiver = ClientReceiver.Create("127.0.0.1", 80);
-            receiver.Start();
-            while (true)
+            using (ClientReceiver receiver = ClientReceiver.Create("127.0.0.1", 80))
             {
-                Console.WriteLine("Server waiting requests...");
-                var client = receiver.AcceptClient();
-                Console.WriteLine("Client was connected");
+                receiver.Start();
+                while (true)
+                {
+                    Console.WriteLine("Server waiting requests...");
+                    var client = receiver.AcceptClient();
+                    Console.WriteLine("Client was connected");
 
-                await ServerProcessing(client);
-                await Task.Delay(150); // давайте не будем перегружать ЦП
+                    await ServerProcessing(client);
+                    await Task.Delay(150); // давайте не будем перегружать ЦП
+                }
             }
         }
 
