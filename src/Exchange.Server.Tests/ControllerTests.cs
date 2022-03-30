@@ -1,7 +1,7 @@
 using Exchange.Server.Controllers;
 using Exchange.Server.Primitives;
 using Exchange.System.Entities;
-using Exchange.System.Packages.Default;
+using Exchange.System.Packages.Primitives;
 using Exchange.System.Protection;
 using ExchangeSystem.Packages;
 using NUnit.Framework;

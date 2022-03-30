@@ -1,10 +1,9 @@
 ﻿using Exchange.System.Packages;
-using Exchange.System.Packages.Default;
-using Exchange.System.Packages.Protected;
+using Exchange.System.Packages.Primitives;
 using System;
 using System.Threading.Tasks;
 
-namespace Exchange.System.Requests.Sendlers.Close
+namespace Exchange.System.Sendlers
 {
     public abstract class EncryptRequestSendler
     {

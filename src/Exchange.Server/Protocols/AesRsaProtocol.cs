@@ -2,8 +2,8 @@
 using Encryptors.Rsa;
 using Exchange.Server.Exceptions;
 using Exchange.Server.Exceptions.NetworkExceptions;
-using Exchange.System.Packages.Default;
-using Exchange.System.Packages.Protected;
+using Exchange.System.Packages.Primitives;
+using Exchange.System.Packages;
 using Exchange.System.Protection;
 using Newtonsoft.Json;
 using System;

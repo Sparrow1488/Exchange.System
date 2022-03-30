@@ -927,7 +927,7 @@
       },
       "Exchange.System/1.0.0": {
         "runtime": {
-          "ExchangeSystemFrame.dll": {}
+          "Exchange.System.dll": {}
         }
       },
       "Encryptors/1.0.0.0": {

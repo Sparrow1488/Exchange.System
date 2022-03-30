@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Exchange.System.Enums;
+using Exchange.System.Packages.Primitives;
+using Newtonsoft.Json;
 using System;
 
-namespace Exchange.System.Packages.Default
+namespace Exchange.System.Packages
 {
     public class ResponsePackage : IPackage
     {
@@ -10,12 +12,7 @@ namespace Exchange.System.Packages.Default
             ResponseData = response;
             Status = status;
         }
-        /// <summary>
-        /// ErrorMessage не может быть null!!!
-        /// </summary>
-        /// <param name="response"></param>
-        /// <param name="errorMessage"></param>
-        /// <exception cref="ArgumentException">Если errorMessage == null</exception>
+
         [JsonConstructor]
         public ResponsePackage(object response, ResponseStatus status, string errorMessage)
         {
@@ -23,17 +20,18 @@ namespace Exchange.System.Packages.Default
             ErrorMessage = errorMessage;
             Status = status;
         }
+
         [JsonProperty("errorMessage")]
-        public string ErrorMessage 
-        { 
-            get { return _errorMessage; } 
-            set 
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set
             {
                 if (value != null)
                     _errorMessage = value;
                 else
                     throw new ArgumentException("Вы не можете использовать null в качестве значения для присвоения");
-            } 
+            }
         }
         private string _errorMessage = string.Empty;
         [JsonProperty("response")]

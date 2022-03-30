@@ -1,7 +1,7 @@
 ﻿using Exchange.System.Entities;
 using Exchange.System.Enums;
 
-namespace Exchange.System.Packages.Default
+namespace Exchange.System.Packages.Primitives
 {
     public class Authorization : Package
     {

@@ -2,12 +2,12 @@
 using Exchange.Server.Extensions;
 using Exchange.Server.Primitives;
 using Exchange.Server.Protocols.Selectors;
-using Exchange.System.Packages.Default;
+using Exchange.System.Packages;
+using Exchange.System.Packages.Primitives;
 using ExchangeSystem.Helpers;
 using ExchangeSystem.Packages;
 using System;
 using System.Threading.Tasks;
-using OldResponseStatus = Exchange.System.Packages.Default.ResponseStatus;
 using ResponseStatus = Exchange.System.Enums.ResponseStatus;
 
 namespace Exchange.Server.Controllers
@@ -38,7 +38,7 @@ namespace Exchange.Server.Controllers
             catch (Exception ex)
             {
                 var report = new ResponseReport(ex?.InnerException?.Message, ResponseStatus.Bad);
-                responsePack = new ResponsePackage(report, OldResponseStatus.Exception);
+                responsePack = new ResponsePackage(report, ResponseStatus.Bad);
             }
             return (T)responsePack ?? default;
         }

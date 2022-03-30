@@ -2,7 +2,7 @@
 using Exchange.System.Enums;
 using Newtonsoft.Json;
 
-namespace Exchange.System.Packages.Default
+namespace Exchange.System.Packages.Primitives
 {
     public abstract class Package : IPackage
     {
@@ -17,6 +17,7 @@ namespace Exchange.System.Packages.Default
             RequestObject = requestObject;
         }
         public Package() { }
+
         [JsonProperty]
         public ControllerType RequestType { get; protected set; }
         [JsonProperty]

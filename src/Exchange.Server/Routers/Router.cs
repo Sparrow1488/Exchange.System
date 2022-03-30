@@ -3,7 +3,7 @@ using Exchange.Server.Primitives;
 using Exchange.Server.Protocols;
 using Exchange.Server.Protocols.Selectors;
 using Exchange.System.Packages;
-using Exchange.System.Packages.Default;
+using Exchange.System.Packages.Primitives;
 using Exchange.System.Protection;
 using ExchangeSystem.Helpers;
 using Newtonsoft.Json;

@@ -1,4 +1,4 @@
-﻿using Exchange.System.Packages.Default;
+﻿using Exchange.System.Packages.Primitives;
 
 namespace Exchange.Server.Extensions
 {

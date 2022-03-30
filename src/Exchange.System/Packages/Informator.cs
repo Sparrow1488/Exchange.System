@@ -8,6 +8,5 @@ namespace Exchange.System.Packages
         {
             EncryptType = encryptType;
         }
-        
     }
 }

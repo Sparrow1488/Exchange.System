@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Exchange.System.Requests.Sendlers
+﻿namespace Exchange.System.Sendlers
 {
     public class ConnectionSettings
     {

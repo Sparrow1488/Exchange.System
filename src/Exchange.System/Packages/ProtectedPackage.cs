@@ -1,7 +1,7 @@
 ﻿using Exchange.System.Protection;
 using Newtonsoft.Json;
 
-namespace Exchange.System.Packages.Protected
+namespace Exchange.System.Packages
 {
     public class ProtectedPackage : IProtectedPackage
     {

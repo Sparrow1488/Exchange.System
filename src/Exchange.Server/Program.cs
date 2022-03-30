@@ -3,7 +3,7 @@ using Exchange.Server.Extensions;
 using Exchange.Server.Primitives;
 using Exchange.Server.Protocols.Receivers;
 using Exchange.Server.Routers;
-using Exchange.System.Packages.Default;
+using Exchange.System.Packages.Primitives;
 using System;
 using System.Threading.Tasks;
 

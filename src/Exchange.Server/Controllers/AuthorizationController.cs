@@ -1,11 +1,11 @@
 ﻿using Exchange.Server.Extensions;
 using Exchange.System.Entities;
 using Exchange.System.Enums;
-using Exchange.System.Packages.Default;
+using Exchange.System.Packages;
+using Exchange.System.Packages.Primitives;
 using ExchangeSystem.Helpers;
 using ExchangeSystem.Packages;
 using System;
-using OldResponseStatus = Exchange.System.Packages.Default.ResponseStatus;
 
 namespace Exchange.Server.Controllers
 {
@@ -39,9 +39,9 @@ namespace Exchange.Server.Controllers
         }
 
         private ResponsePackage CreateSuccessAuthResponsePackage() =>
-            new ResponsePackage(new ResponseReport(AuthorizationStatus.Success.Message, AuthorizationStatus.Success), OldResponseStatus.Ok);
+            new ResponsePackage(new ResponseReport(AuthorizationStatus.Success.Message, AuthorizationStatus.Success), ResponseStatus.Ok);
 
         private ResponsePackage CreateFailedAuthResponsePackage() =>
-            new ResponsePackage(new ResponseReport(AuthorizationStatus.Failed.Message, AuthorizationStatus.Failed), OldResponseStatus.Exception);
+            new ResponsePackage(new ResponseReport(AuthorizationStatus.Failed.Message, AuthorizationStatus.Failed), ResponseStatus.Bad);
     }
 }
