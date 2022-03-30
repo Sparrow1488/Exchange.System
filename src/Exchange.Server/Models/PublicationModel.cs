@@ -1,4 +1,4 @@
-﻿using Exchange.Server.SQLDataBase;
+﻿using Exchange.Server.Database;
 using Exchange.System.Entities;
 using System.Collections.Generic;
 using System.Linq;

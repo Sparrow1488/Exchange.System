@@ -83,7 +83,7 @@
     <Compile Include="Sendlers\IRequestSendler.cs" />
     <Compile Include="Sendlers\RequestSendler.cs" />
     <Compile Include="Protection\AesRsaSecurity.cs" />
-    <Compile Include="Protection\EncryptType.cs" />
+    <Compile Include="Enums\EncryptType.cs" />
     <Compile Include="Protection\Security.cs" />
   </ItemGroup>
   <ItemGroup>

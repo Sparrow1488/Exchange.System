@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Exchange.Server.LocalDataBase
+namespace Exchange.Server.DataBase
 {
-    public static class ServerLocalDb
+    public static class LocalDatabase
     {
         /// <summary>
         /// Key - пасспорт пользователя; Value - его токен
