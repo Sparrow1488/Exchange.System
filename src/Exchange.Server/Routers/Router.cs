@@ -37,18 +37,16 @@ namespace Exchange.Server.Routers
             Ex.ThrowIfTrue<ConnectionException>(!client.Connected, "Client is not connected");
             RequestContext context = default;
 
-            using (var stream = client.GetStream())
-            {
-                string requestInfoStringify = await _networkChannel.ReadAsync(stream);
-                var requestInfo = JsonConvert.DeserializeObject<RequestInformator>(requestInfoStringify, _jsonSettings);
-                _selectedProtocol = LookForProtocol(requestInfo.EncryptType);
-                var requestPackage = await _selectedProtocol.ReceivePackageAsync(client) as Package;
-                var encryptType = _selectedProtocol.GetProtocolEncryptType();
-                context = RequestContext.ConfigureContext(context => 
-                                    context.SetContent(requestPackage)
-                                            .SetClient(client)
-                                             .SetEncription(encryptType));
-            }
+            var stream = client.GetStream();
+            string requestInfoStringify = await _networkChannel.ReadAsync(stream);
+            var requestInfo = JsonConvert.DeserializeObject<RequestInformator>(requestInfoStringify, _jsonSettings);
+            _selectedProtocol = LookForProtocol(requestInfo.EncryptType);
+            var requestPackage = await _selectedProtocol.ReceivePackageAsync(client) as Package;
+            var encryptType = _selectedProtocol.GetProtocolEncryptType();
+            context = RequestContext.ConfigureContext(context => 
+                                context.SetContent(requestPackage)
+                                        .SetClient(client)
+                                            .SetEncription(encryptType));
             return context;
         }
 

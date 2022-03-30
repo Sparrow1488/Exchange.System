@@ -13,6 +13,7 @@ namespace Exchange.System.Sendlers
         {
             ConnectionInfo = settings;
         }
+
         public IPackage RequestPackage { get; private set; }
         public ConnectionSettings ConnectionInfo { get; }
         private NetworkHelper _networkHelper = new NetworkHelper();

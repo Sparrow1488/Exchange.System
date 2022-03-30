@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "cMX60FbhaLoiM+OZU31E1B2wjFflfoSirlEx972x4d8sJEdvLpt+Xi6TOWbEpdHKQyOdwW79FaM41cwzyOdf4w==",
+  "dgSpecHash": "KEdRb95ApszzA3secOY1YeecCYqxN04kGe5i6t4lzDxu6Nn4kwG0ZURaFPeUiveWyqJMFT0Q44zfVczciZUTcA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Dom\\Desktop\\GitRepositories\\ExchangeSystem\\src\\Exchange.Sample.Client\\Exchange.Sample.Client.csproj",
   "expectedPackageFiles": [
@@ -32,6 +32,7 @@
     "C:\\Users\\Dom\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
     "C:\\Users\\Dom\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
     "C:\\Users\\Dom\\.nuget\\packages\\microsoft.win32.registry\\5.0.0\\microsoft.win32.registry.5.0.0.nupkg.sha512",
+    "C:\\Users\\Dom\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\Dom\\.nuget\\packages\\serilog\\2.10.0\\serilog.2.10.0.nupkg.sha512",
     "C:\\Users\\Dom\\.nuget\\packages\\serilog.extensions.hosting\\4.2.0\\serilog.extensions.hosting.4.2.0.nupkg.sha512",
     "C:\\Users\\Dom\\.nuget\\packages\\serilog.extensions.logging\\3.1.0\\serilog.extensions.logging.3.1.0.nupkg.sha512",

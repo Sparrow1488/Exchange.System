@@ -45,9 +45,9 @@ namespace Exchange.Server.Controllers
         
         private async Task SendResponseAsync()
         {
-            //Ex.ThrowIfTrue<ConnectionException>(() => !Context.Client.Connected, "Client was not connected!");
-            //var protocol = new ProtocolSelector().SelectProtocol(Context.EncryptType);
-            //await protocol.SendResponseAsync(Context.Client, Response);
+            Ex.ThrowIfTrue<ConnectionException>(() => !Context.Client.Connected, "Client was not connected!");
+            var protocol = new ProtocolSelector().SelectProtocol(Context.EncryptType);
+            await protocol.SendResponseAsync(Context.Client, Response);
         }
     }
 }

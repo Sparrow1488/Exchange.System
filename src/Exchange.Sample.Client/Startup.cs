@@ -4,6 +4,7 @@ using Exchange.System.Sendlers;
 using ExchangeSystem.Packages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace Exchange.Sample.Client
@@ -22,6 +23,7 @@ namespace Exchange.Sample.Client
         public async Task RunAsync()
         {
             _logger.LogInformation($"{nameof(Startup)} running");
+            await DelayAsync();
             var connectionSettings = CreateConnectionSettings();
             var sendler = new RequestSendler(connectionSettings);
             var responsePackage = await sendler.SendRequest(CreateAuthorizationPackage());
@@ -43,5 +45,8 @@ namespace Exchange.Sample.Client
             _logger.LogInformation("Authorization package created");
             return auth;
         }
+
+        private async Task DelayAsync() => await Task.Delay(TimeSpan.FromSeconds(3));
+
     }
 }

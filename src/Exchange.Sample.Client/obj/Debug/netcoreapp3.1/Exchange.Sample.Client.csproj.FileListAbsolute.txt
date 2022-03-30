@@ -1,4 +1,5 @@
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\Exchange.Sample.Client.exe
+C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\Exchange.Sample.Client.deps.json
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\Exchange.Sample.Client.runtimeconfig.json
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\Exchange.Sample.Client.runtimeconfig.dev.json
@@ -31,6 +32,7 @@ C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\b
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.ConfigurationExtensions.dll
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\Microsoft.Win32.Registry.dll
+C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\Serilog.dll
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\Serilog.Extensions.Hosting.dll
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\Serilog.Extensions.Logging.dll
@@ -50,10 +52,8 @@ C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\b
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\Exchange.System.dll
-C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\Encryptors.dll
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\Exchange.System.pdb
-C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\Newtonsoft.Json.xml
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\obj\Debug\netcoreapp3.1\Exchange.Sample.Client.csprojAssemblyReference.cache
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\obj\Debug\netcoreapp3.1\Exchange.Sample.Client.AssemblyInfoInputs.cache
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\obj\Debug\netcoreapp3.1\Exchange.Sample.Client.AssemblyInfo.cs
@@ -62,5 +62,3 @@ C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\o
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\obj\Debug\netcoreapp3.1\Exchange.Sample.Client.dll
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\obj\Debug\netcoreapp3.1\Exchange.Sample.Client.pdb
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\obj\Debug\netcoreapp3.1\Exchange.Sample.Client.genruntimeconfig.cache
-C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\Exchange.Sample.Client.dll.config
-C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\appsettings.json

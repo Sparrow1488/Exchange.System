@@ -11,13 +11,10 @@ namespace Exchange.Server
 {
     internal sealed class Program
     {
-        private Program() =>
-            _router = new Router();
-
         public const string Host = "127.0.0.1";
         public const int Port = 80;
 
-        private static IRouter _router;
+        private static IRouter _router = new Router();
         
         private static async Task Main()
         {
@@ -52,7 +49,7 @@ namespace Exchange.Server
 
             if (requestContext.Content is Package requestPackageImp)
             {
-                Console.WriteLine("Get => {0}; EncryptType => {1}",
+                Console.WriteLine("GET => {0}; EncryptType => {1}",
                     requestPackageImp.RequestType.ToString(),
                         requestContext.EncryptType.ToString());
                 await ProcessRequestAsync(requestContext);
