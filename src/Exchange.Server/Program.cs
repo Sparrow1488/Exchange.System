@@ -1,4 +1,6 @@
 ﻿using Exchange.Server.Controllers;
+using Exchange.Server.Extensions;
+using Exchange.Server.Primitives;
 using Exchange.Server.Protocols.Receivers;
 using Exchange.Server.Routers;
 using Exchange.System.Packages.Default;
@@ -46,15 +48,14 @@ namespace Exchange.Server
 
         private static async Task ProcessRequestByPackageTypeAsync()
         {
-            var requestPackage = await _router.ExtractRequestPackageAsync();
-            var packageEncryptType = _router.GetPackageEncryptType();
+            var requestContext = await _router.AcceptRequestAsync();
 
-            if (requestPackage is Package requestPackageImp)
+            if (requestContext.Content is Package requestPackageImp)
             {
                 Console.WriteLine("Get => {0}; EncryptType => {1}",
                     requestPackageImp.RequestType.ToString(),
-                        packageEncryptType.ToString());
-                ProcessRequestPackage(requestPackageImp);
+                        requestContext.EncryptType.ToString());
+                await ProcessRequestAsync(requestContext);
             }
             else
             {
@@ -62,11 +63,12 @@ namespace Exchange.Server
             }
         }
 
-        private static void ProcessRequestPackage(Package requestPackage)
+        private static async Task ProcessRequestAsync(RequestContext requestContext)
         {
             ControllerSelector controllerSelector = new ControllerSelector();
-            Controller controller = controllerSelector.SelectController(requestPackage.RequestType);
-            // controller.ProcessRequest(client, requestPackage, packageEncryptType);
+            Controller controller = controllerSelector.SelectController(
+                                        requestContext.Content.As<Package>().RequestType.ToString());
+            await controller.ProcessRequestAsync(requestContext);
         }
     }
 }

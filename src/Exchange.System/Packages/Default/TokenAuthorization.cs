@@ -8,7 +8,7 @@ namespace Exchange.System.Requests.Objects.Packages.Default
     {
         public TokenAuthorization(UserPassport requestObject) : base(requestObject)
         {
-            RequestType = RequestType.TokenAuthorization;
+            RequestType = ControllerType.TokenAuthorization;
         }
     }
 }

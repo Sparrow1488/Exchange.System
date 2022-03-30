@@ -7,7 +7,7 @@ namespace Exchange.System.Requests.Objects.Packages.Default
     {
         public ReceivePublications() : base()
         {
-            RequestType = RequestType.GetPublication;
+            RequestType = ControllerType.GetPublication;
         }
     }
 }

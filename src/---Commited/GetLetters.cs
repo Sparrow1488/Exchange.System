@@ -17,10 +17,8 @@ namespace Exchange.Server.Controllers
         protected override IProtocolSelector ProtocolSelector { get; set; } = new ProtocolSelector();
 
 
-        public override void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType)
+        public void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType)
         {
-            Client = connectedClient;
-            EncryptType = encryptType;
             var userPackage = (Package)package;
             var token = userPackage.UserToken;
             if (string.IsNullOrWhiteSpace(token))

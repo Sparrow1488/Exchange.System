@@ -1,6 +1,6 @@
 ﻿namespace Exchange.System.Enums
 {
-    public enum RequestType
+    public enum ControllerType
     {
         Authorization,
         TokenAuthorization,

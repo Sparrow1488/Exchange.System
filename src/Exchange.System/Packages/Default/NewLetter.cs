@@ -7,7 +7,7 @@ namespace Exchange.System.Packages.Default
     {
         public NewLetter(Letter requestObject) : base(requestObject)
         {
-            RequestType = RequestType.NewMessage;
+            RequestType = ControllerType.NewMessage;
         }
     }
 }

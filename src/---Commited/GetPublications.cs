@@ -16,10 +16,8 @@ namespace Exchange.Server.Controllers
         protected override Protocol Protocol { get; set; }
         protected override IProtocolSelector ProtocolSelector { get; set; } = new ProtocolSelector();
 
-        public override void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType)
+        public void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType)
         {
-            Client = connectedClient;
-            EncryptType = encryptType;
             var userPackage = package as Package;
             PublicationModel publicationModel = new PublicationModel();
             var publications = publicationModel.GetAllOrDefault();

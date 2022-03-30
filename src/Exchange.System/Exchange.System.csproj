@@ -78,7 +78,7 @@
     <Compile Include="Packages\Protected\IProtectedPackage.cs" />
     <Compile Include="Packages\Protected\ProtectedPackage.cs" />
     <Compile Include="Packages\RequestInformator.cs" />
-    <Compile Include="Enums\RequestType.cs" />
+    <Compile Include="Enums\ControllerType.cs" />
     <Compile Include="Sendlers\Close\AesRsaSendler.cs" />
     <Compile Include="Sendlers\Close\EncryptRequestSendler.cs" />
     <Compile Include="Sendlers\ConnectionSettings.cs" />

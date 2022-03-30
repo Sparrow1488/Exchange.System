@@ -17,7 +17,7 @@ namespace Exchange.Server.Controllers
         protected override IProtocolSelector ProtocolSelector { get; set; }
         private Package _clientRequestObject;
 
-        public override void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType)
+        public void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType)
         {
             AssignValues(connectedClient, package, encryptType);
 

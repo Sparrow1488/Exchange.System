@@ -9,12 +9,8 @@ namespace Exchange.Server.Protocols
     {
         public abstract EncryptType EncryptType { get; protected set; }
 
-        public EncryptType GetProtocolEncryptType()
-        {
-            return EncryptType;
-        }
+        public EncryptType GetProtocolEncryptType() => EncryptType;
         public abstract Task<IPackage> ReceivePackageAsync(TcpClient client);
-
         public abstract Task SendResponseAsync(TcpClient client, ResponsePackage response);
     }
 }
