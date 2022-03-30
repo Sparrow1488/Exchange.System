@@ -2,12 +2,13 @@
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
+using System.Threading.Tasks;
 
 namespace Exchange.Sample.Client
 {
     internal sealed class Program
     {
-        private static void Main()
+        private static async Task Main()
         {
             Console.Title = "Exchange.Sample.Client";
             Log.Logger = CreateLogger();
@@ -16,7 +17,7 @@ namespace Exchange.Sample.Client
                 services.AddTransient<Startup>();
             }).UseSerilog().Build();
             var startupPoint = ActivatorUtilities.CreateInstance<Startup>(hosting.Services);
-            startupPoint.Run();
+            await startupPoint.RunAsync();
             Log.Information("Client finished");
         }
 

@@ -62,3 +62,5 @@ C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\o
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\obj\Debug\netcoreapp3.1\Exchange.Sample.Client.dll
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\obj\Debug\netcoreapp3.1\Exchange.Sample.Client.pdb
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\obj\Debug\netcoreapp3.1\Exchange.Sample.Client.genruntimeconfig.cache
+C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\Exchange.Sample.Client.dll.config
+C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Sample.Client\bin\Debug\netcoreapp3.1\appsettings.json
