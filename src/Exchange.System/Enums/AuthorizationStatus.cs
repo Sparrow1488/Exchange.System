@@ -1,17 +1,10 @@
-﻿namespace ExchangeSystem.Enums
+﻿namespace Exchange.System.Enums
 {
-    public class AuthorizationStatus
+    public class AuthorizationStatus : ResponseStatus
     {
-        private AuthorizationStatus(string status, string message)
-        {
-            Status = status;
-            Message = message;
-        }
+        protected AuthorizationStatus(string status, string message) : base(status, message) { }
 
         public static readonly AuthorizationStatus Success = new AuthorizationStatus("Success", "Authorization success");
         public static readonly AuthorizationStatus Failed = new AuthorizationStatus("Failed", "Authorization is failed");
-
-        public string Status { get; }
-        public string Message { get; }
     }
 }

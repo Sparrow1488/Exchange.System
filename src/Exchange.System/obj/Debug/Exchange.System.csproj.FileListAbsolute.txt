@@ -27,3 +27,4 @@ C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.System\obj\Debu
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.System\obj\Debug\Exchange.System.csproj.CopyComplete
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.System\obj\Debug\ExchangeSystemFrame.dll
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.System\obj\Debug\ExchangeSystemFrame.pdb
+C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.System\obj\Debug\Exchange.System.csprojAssemblyReference.cache

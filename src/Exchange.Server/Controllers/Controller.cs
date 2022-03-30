@@ -7,6 +7,8 @@ using ExchangeSystem.Helpers;
 using ExchangeSystem.Packages;
 using System;
 using System.Threading.Tasks;
+using OldResponseStatus = Exchange.System.Packages.Default.ResponseStatus;
+using ResponseStatus = Exchange.System.Enums.ResponseStatus;
 
 namespace Exchange.Server.Controllers
 {
@@ -27,23 +29,25 @@ namespace Exchange.Server.Controllers
         private T ExecuteRequestMethod<T>()
             where T : ResponsePackage
         {
+            ResponsePackage responsePack;
             try
             {
                 string requestMethodName = Context.Content.As<Package>().RequestType.ToString();
-                var methodResponse = (T)GetType().GetMethod(requestMethodName).Invoke(this, null);
+                responsePack = (T)GetType().GetMethod(requestMethodName).Invoke(this, null);
             }
             catch (Exception ex)
             {
-                var report = new ResponseReport(ex.Message, false);
-                Response = new ResponsePackage();
+                var report = new ResponseReport(ex?.InnerException?.Message, ResponseStatus.Bad);
+                responsePack = new ResponsePackage(report, OldResponseStatus.Exception);
             }
+            return (T)responsePack ?? default;
         }
         
         private async Task SendResponseAsync()
         {
-            Ex.ThrowIfTrue<ConnectionException>(() => !Context.Client.Connected, "Client was not connected!");
-            var protocol = new ProtocolSelector().SelectProtocol(Context.EncryptType);
-            await protocol.SendResponseAsync(Context.Client, Response);
+            //Ex.ThrowIfTrue<ConnectionException>(() => !Context.Client.Connected, "Client was not connected!");
+            //var protocol = new ProtocolSelector().SelectProtocol(Context.EncryptType);
+            //await protocol.SendResponseAsync(Context.Client, Response);
         }
     }
 }

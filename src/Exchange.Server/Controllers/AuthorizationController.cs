@@ -1,11 +1,11 @@
 ﻿using Exchange.Server.Extensions;
 using Exchange.System.Entities;
+using Exchange.System.Enums;
 using Exchange.System.Packages.Default;
-using ExchangeSystem.Enums;
-using ExchangeSystem.Exceptions;
 using ExchangeSystem.Helpers;
 using ExchangeSystem.Packages;
 using System;
+using OldResponseStatus = Exchange.System.Packages.Default.ResponseStatus;
 
 namespace Exchange.Server.Controllers
 {
@@ -17,8 +17,8 @@ namespace Exchange.Server.Controllers
             var requestData = Context.Content.As<Package>().RequestObject;
             if (requestData is UserPassport userPassport)
             {
-                Ex.ThrowIfEmptyOrNull(userPassport.Login);
-                Ex.ThrowIfEmptyOrNull(userPassport.Password);
+                Ex.ThrowIfEmptyOrNull(userPassport.Login, "Login wasn't be null or empty!");
+                Ex.ThrowIfEmptyOrNull(userPassport.Password, "Password wasn't be null or empty!");
                 if (CompleteUserAuthorization(userPassport))
                     response = CreateSuccessAuthResponsePackage();
                 else response = CreateFailedAuthResponsePackage();
@@ -39,9 +39,9 @@ namespace Exchange.Server.Controllers
         }
 
         private ResponsePackage CreateSuccessAuthResponsePackage() =>
-            new ResponsePackage(new ResponseReport(AuthorizationStatus.Success.Message, AuthorizationStatus.Success), ResponseStatus.Ok);
+            new ResponsePackage(new ResponseReport(AuthorizationStatus.Success.Message, AuthorizationStatus.Success), OldResponseStatus.Ok);
 
         private ResponsePackage CreateFailedAuthResponsePackage() =>
-            new ResponsePackage(new ResponseReport(AuthorizationStatus.Failed.Message, AuthorizationStatus.Failed), ResponseStatus.Exception);
+            new ResponsePackage(new ResponseReport(AuthorizationStatus.Failed.Message, AuthorizationStatus.Failed), OldResponseStatus.Exception);
     }
 }

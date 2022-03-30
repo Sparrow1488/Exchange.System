@@ -7,7 +7,7 @@
     <ProjectGuid>{774240A1-B4D0-4288-8871-5C32D8BE45FF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ExchangeSystem</RootNamespace>
+    <RootNamespace>Exchange.System</RootNamespace>
     <AssemblyName>ExchangeSystemFrame</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -51,7 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\AuthorizationStatus.cs" />
+    <Compile Include="Enums\ResponseStatus.cs" />
+    <Compile Include="Exceptions\AuthorizationException.cs" />
     <Compile Include="Helpers\Ex.cs" />
+    <Compile Include="Packages\ResponseReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Enums\AdminStatus.cs" />
     <Compile Include="Entities\Letter.cs" />
