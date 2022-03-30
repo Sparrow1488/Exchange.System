@@ -1,4 +1,5 @@
 ﻿using Exchange.System.Entities;
+using Exchange.System.Enums;
 using Exchange.System.Packages.Primitives;
 using Exchange.System.Sendlers;
 using ExchangeSystem.Packages;
@@ -23,14 +24,22 @@ namespace Exchange.Sample.Client
         public async Task RunAsync()
         {
             _logger.LogInformation($"{nameof(Startup)} running");
-            await DelayAsync();
-            var connectionSettings = CreateConnectionSettings();
-            var sendler = new RequestSendler(connectionSettings);
-            var responsePackage = await sendler.SendRequest(CreateAuthorizationPackage());
-            if (responsePackage.ResponseData is ResponseReport report) 
+            for (int i = 0; i < 8; i++)
             {
-                _logger.LogInformation("Get response report success");
-                _logger.LogInformation($"STATUS => {report.Status.StatusName}; MESSAGE => {report.Message}");
+                var connectionSettings = CreateConnectionSettings();
+                var sendler = new RequestSendler(connectionSettings);
+                _logger.LogInformation("GET => " + ControllerType.Authorization.ToString());
+                var responsePackage = await sendler.SendRequest(CreateAuthorizationPackage());
+                if (responsePackage.ResponseData is ResponseReport report)
+                {
+                    _logger.LogInformation("Success");
+                    _logger.LogInformation($"STATUS => {report.Status.StatusName}; MESSAGE => {report.Message}");
+                }
+                else
+                {
+                    _logger.LogError("Error");
+                }
+                await DelayAsync();
             }
         }
 
@@ -46,7 +55,6 @@ namespace Exchange.Sample.Client
             return auth;
         }
 
-        private async Task DelayAsync() => await Task.Delay(TimeSpan.FromSeconds(3));
-
+        private async Task DelayAsync() => await Task.Delay(TimeSpan.FromSeconds(1));
     }
 }

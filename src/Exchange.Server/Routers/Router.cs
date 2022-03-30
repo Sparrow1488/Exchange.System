@@ -2,13 +2,14 @@
 using Exchange.Server.Primitives;
 using Exchange.Server.Protocols;
 using Exchange.Server.Protocols.Selectors;
+using Exchange.System.Helpers;
 using Exchange.System.Packages;
 using Exchange.System.Packages.Primitives;
 using Exchange.System.Protection;
 using ExchangeSystem.Helpers;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
@@ -39,11 +40,12 @@ namespace Exchange.Server.Routers
 
             var stream = client.GetStream();
             string requestInfoStringify = await _networkChannel.ReadAsync(stream);
+            Console.WriteLine(requestInfoStringify);
             var requestInfo = JsonConvert.DeserializeObject<RequestInformator>(requestInfoStringify, _jsonSettings);
             _selectedProtocol = LookForProtocol(requestInfo.EncryptType);
             var requestPackage = await _selectedProtocol.ReceivePackageAsync(client) as Package;
             var encryptType = _selectedProtocol.GetProtocolEncryptType();
-            context = RequestContext.ConfigureContext(context => 
+            context = RequestContext.ConfigureContext(context =>
                                 context.SetContent(requestPackage)
                                         .SetClient(client)
                                             .SetEncription(encryptType));

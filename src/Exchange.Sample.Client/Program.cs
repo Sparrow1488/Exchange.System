@@ -19,6 +19,7 @@ namespace Exchange.Sample.Client
             var startupPoint = ActivatorUtilities.CreateInstance<Startup>(hosting.Services);
             await startupPoint.RunAsync();
             Log.Information("Client finished");
+            await Task.Delay(TimeSpan.FromSeconds(3));
         }
 
         private static ILogger CreateLogger() =>

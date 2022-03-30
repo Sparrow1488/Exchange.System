@@ -4,19 +4,20 @@ using Newtonsoft.Json;
 
 namespace Exchange.System.Packages.Primitives
 {
-    public abstract class Package : IPackage
+    public class Package : IPackage
     {
+        public Package() { }
+
+        [JsonConstructor]
         public Package(ControllerType requestType, IRequestObject attachObject, string userToken)
         {
             RequestObject = attachObject;
             RequestType = requestType;
             UserToken = userToken;
         }
-        public Package(IRequestObject requestObject)
-        {
+
+        public Package(IRequestObject requestObject) =>
             RequestObject = requestObject;
-        }
-        public Package() { }
 
         [JsonProperty]
         public ControllerType RequestType { get; protected set; }
@@ -27,7 +28,7 @@ namespace Exchange.System.Packages.Primitives
 
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, Formatting.Indented, new JsonSerializerSettings
+            return JsonConvert.SerializeObject(this, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.All
             });

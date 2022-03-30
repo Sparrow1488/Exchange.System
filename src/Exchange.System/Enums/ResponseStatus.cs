@@ -19,5 +19,7 @@ namespace Exchange.System.Enums
         public static readonly ResponseStatus Ok = new ResponseStatus("Ok", "Good response");
         public static readonly ResponseStatus Bad = new ResponseStatus("Bad", "Bad response");
         public static readonly ResponseStatus UnhandleException = new ResponseStatus("UnhandleException", "UnhandleException on server");
+
+        public override string ToString() => StatusName ?? string.Empty;
     }
 }
