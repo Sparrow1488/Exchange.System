@@ -28,12 +28,22 @@ namespace Exchange.Server.Protocols
         public Response Response { get; protected set; }
         public Request Request { get; protected set; }
 
+        public override Task AcceptRequest() => AcceptRequestAsync();
+        public override Task SendResponse() => SendResponseAsync((TResponse)Response);
+        public override T GetRequest<T>() => Request as T;
+        public override T GetResponse<T>() => Response as T;
+
         public abstract Task<TRequest> AcceptRequestAsync();
         public abstract Task SendResponseAsync(TResponse response);
     }
 
-    public class NetworkProtocol
+    public abstract class NetworkProtocol
     {
-
+        public abstract Task AcceptRequest();
+        public abstract Task SendResponse();
+        public abstract T GetRequest<T>() 
+            where T : class;
+        public abstract T GetResponse<T>() 
+            where T : class;
     }
 }

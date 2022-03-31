@@ -8,6 +8,6 @@ namespace Exchange.Server.Routers
     {
         void AddInQueue(TcpClient clientToProccess);
         int GetQueueLength();
-        Task<RequestContext> OldAcceptRequestAsync();
+        Task<RequestContext> AcceptRequestAsync();
     }
 }

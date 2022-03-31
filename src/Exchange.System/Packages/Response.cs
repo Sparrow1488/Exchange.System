@@ -1,15 +1,25 @@
-﻿namespace Exchange.System.Packages
+﻿using ExchangeSystem.Packages;
+using Newtonsoft.Json;
+
+namespace Exchange.System.Packages
 {
     public class Response<T> : Response
     {
-        public Response(T content) =>
+        public Response(ResponseReport report) : base(report) { }
+
+        [JsonConstructor]
+        public Response(ResponseReport report, T content) : base(report) =>
             Content = content;
 
-        public T Content { get; set; }
+        [JsonProperty] public T Content { get; private set; }
     }
 
     public class Response
     {
+        [JsonConstructor]
+        public Response(ResponseReport report) =>
+            Report = report;
 
+        public ResponseReport Report { get; private set; }
     }
 }

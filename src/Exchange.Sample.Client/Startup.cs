@@ -1,9 +1,7 @@
 ﻿using Exchange.System.Entities;
 using Exchange.System.Enums;
 using Exchange.System.Packages;
-using Exchange.System.Packages.Primitives;
 using Exchange.System.Sendlers;
-using ExchangeSystem.Packages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -31,10 +29,11 @@ namespace Exchange.Sample.Client
                 var sendler = new NewRequestSendler(connectionSettings);
                 _logger.LogInformation("GET => " + "Authorization");
                 var response = await sendler.SendRequestAsync(CreateAuthorizationRequest());
-                if (response is Response<ResponseReport> correctResponse)
+                if (response is Response<Guid> correctResponse)
                 {
-                    _logger.LogInformation("Success");
-                    _logger.LogInformation($"MESSAGE => {correctResponse.Content.Message}");
+                    _logger.LogInformation("STATUS => " + correctResponse.Report.Status.ToString());
+                    _logger.LogInformation($"MESSAGE => {correctResponse.Report.Message}; " +
+                        $"GUID => {correctResponse.Content.ToString()}");
                 }
                 else
                 {
@@ -43,48 +42,15 @@ namespace Exchange.Sample.Client
                 await DelayAsync();
             }
         }
-
-        #region OLD
-
-        public async Task RunOldAsync()
-        {
-            _logger.LogInformation($"{nameof(Startup)} OLD running");
-            for (int i = 0; i < 20; i++)
-            {
-                var connectionSettings = CreateConnectionSettings();
-                var sendler = new NewRequestSendler(connectionSettings);
-                _logger.LogInformation("GET => " + ControllerType.Authorization.ToString());
-                var responsePackage = await sendler.SendRequest(CreateAuthorizationPackage());
-                if (responsePackage.ResponseData is ResponseReport report)
-                {
-                    _logger.LogInformation("Success");
-                    _logger.LogInformation($"STATUS => {report.Status.StatusName}; MESSAGE => {report.Message}");
-                }
-                else
-                {
-                    _logger.LogError("Error");
-                }
-                await DelayAsync();
-            }
-        }
-        #endregion
 
         private ConnectionSettings CreateConnectionSettings() =>
             new ConnectionSettings(_config.GetValue<string>("EndpointHost"), 
                                     _config.GetValue<int>("EndpointPort"));
 
-        private Package CreateAuthorizationPackage()
-        {
-            var passport = new UserPassport("asd", "1234");
-            var auth = new AuthorizationPackage(passport);
-            _logger.LogInformation("Authorization package created");
-            return auth;
-        }
-
         private Request CreateAuthorizationRequest()
         {
             var request = new Request<UserPassport>("Authorization", ProtectionType.Default);
-            request.Body = new RequestBody<UserPassport>(new UserPassport("asd", "1234"));
+            request.Body = new Body<UserPassport>(new UserPassport("asd", "1234"));
             return request;
         }
 

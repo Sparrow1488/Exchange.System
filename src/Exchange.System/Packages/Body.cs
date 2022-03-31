@@ -1,8 +1,8 @@
 ﻿namespace Exchange.System.Packages
 {
-    public class RequestBody<T>
+    public class Body<T>
     {
-        public RequestBody(T content)
+        public Body(T content)
         {
             Content = content;
         }

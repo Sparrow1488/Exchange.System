@@ -45,7 +45,7 @@ namespace Exchange.Server
 
         private static async Task ProcessRequestByPackageTypeAsync()
         {
-            var requestContext = await _router.NewAcceptRequestAsync();
+            var requestContext = await _router.AcceptRequestAsync();
 
             if (requestContext.Request is Request requestImp)
             {

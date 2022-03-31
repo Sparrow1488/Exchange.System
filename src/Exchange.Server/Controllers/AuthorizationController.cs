@@ -63,9 +63,9 @@ namespace Exchange.Server.Controllers
             new ResponsePackage(new ResponseReport(AuthorizationStatus.Failed.Message, AuthorizationStatus.Failed), ResponseStatus.Bad);
 
         private Response CreateSuccessAuthResponse() =>
-            new Response<ResponseReport>(new ResponseReport("Success authorization", AuthorizationStatus.Success));
+            new Response<Guid>(new ResponseReport("Success authorization", AuthorizationStatus.Success), Guid.NewGuid());
 
         private Response CreateFailedAuthResponse() =>
-            new Response<ResponseReport>(new ResponseReport("Failed authorization", AuthorizationStatus.Failed));
+            new Response<Guid>(new ResponseReport("Failed authorization", AuthorizationStatus.Failed));
     }
 }

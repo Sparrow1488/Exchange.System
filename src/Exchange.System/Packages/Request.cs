@@ -10,7 +10,7 @@ namespace Exchange.System.Packages
         [JsonConstructor]
         public Request(string query, ProtectionType protection) : base(query, protection) { }
 
-        [JsonProperty] public RequestBody<T> Body { get; set; }
+        [JsonProperty] public Body<T> Body { get; set; }
     }
 
     public class Request

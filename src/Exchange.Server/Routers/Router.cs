@@ -2,6 +2,7 @@
 using Exchange.Server.Primitives;
 using Exchange.Server.Protocols;
 using Exchange.Server.Protocols.Selectors;
+using Exchange.System.Enums;
 using Exchange.System.Helpers;
 using Exchange.System.Packages;
 using Exchange.System.Protection;
@@ -18,12 +19,10 @@ namespace Exchange.Server.Routers
     {
         private Queue<TcpClient> _queue = new Queue<TcpClient>();
 
-        private IProtocolSelector _protocolSelector = new ProtocolSelector();
         private NetworkChannel _networkChannel = new NetworkChannel();
         private JsonSerializerSettings _jsonSettings = new JsonSerializerSettings() {
             TypeNameHandling = TypeNameHandling.All
         };
-        private IProtocol _selectedProtocol;
 
         public void AddInQueue(TcpClient clientToProccess)
         {
@@ -31,7 +30,7 @@ namespace Exchange.Server.Routers
             _queue.Enqueue(clientToProccess);
         }
 
-        public async Task<RequestContext> NewAcceptRequestAsync()
+        public async Task<RequestContext> AcceptRequestAsync()
         {
             var client = _queue.Dequeue();
             Ex.ThrowIfTrue<ConnectionException>(!client.Connected, "Client is not connected");
@@ -41,8 +40,9 @@ namespace Exchange.Server.Routers
             string requestInfoStringify = await _networkChannel.ReadAsync(stream);
             Console.WriteLine(requestInfoStringify);
             var requestInfo = JsonConvert.DeserializeObject<RequestInformator>(requestInfoStringify, _jsonSettings);
-            var protocol = new NewDefaultProtocol(client);
-            var request = await protocol.AcceptRequestAsync();
+            var protocol = CreateProtocol(requestInfo.ProtectionType, client);
+            await protocol.AcceptRequest();
+            var request = protocol.GetRequest<Request>();
             context = RequestContext.ConfigureContext(context =>
                                 context.SetRequest(request)
                                         .SetClient(client)
@@ -50,28 +50,16 @@ namespace Exchange.Server.Routers
             return context;
         }
 
-        public async Task<RequestContext> OldAcceptRequestAsync()
-        {
-            var client = _queue.Dequeue();
-            Ex.ThrowIfTrue<ConnectionException>(!client.Connected, "Client is not connected");
-            RequestContext context = default;
-
-            var stream = client.GetStream();
-            string requestInfoStringify = await _networkChannel.ReadAsync(stream);
-            Console.WriteLine(requestInfoStringify);
-            var requestInfo = JsonConvert.DeserializeObject<RequestInformator>(requestInfoStringify, _jsonSettings);
-            _selectedProtocol = LookForProtocol(requestInfo.EncryptType);
-            var requestPackage = await _selectedProtocol.ReceivePackageAsync(client) as Package;
-            var encryptType = _selectedProtocol.GetProtocolEncryptType();
-            context = RequestContext.ConfigureContext(context =>
-                                context.SetContent(requestPackage)
-                                        .SetClient(client)
-                                            .SetEncription(encryptType));
-            return context;
-        }
-
         public int GetQueueLength() => _queue.Count;
-        private IProtocol LookForProtocol(EncryptType encryptType) =>
-            _protocolSelector.SelectProtocol(encryptType);
+
+        private NetworkProtocol CreateProtocol(ProtectionType protection, TcpClient tcpClient)
+        {
+            NetworkProtocol selectedProtocol = default;
+            if(protection.ToString() == ProtectionType.Default.ToString())
+                selectedProtocol = new NewDefaultProtocol(tcpClient);
+            if (protection == ProtectionType.AesRsa)
+                throw new NotImplementedException();
+            return selectedProtocol;
+        }
     }
 }
