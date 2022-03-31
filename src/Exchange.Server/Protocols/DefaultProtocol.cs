@@ -1,4 +1,6 @@
-﻿using Exchange.System.Packages.Default;
+﻿using Exchange.System.Helpers;
+using Exchange.System.Packages;
+using Exchange.System.Packages.Primitives;
 using Exchange.System.Protection;
 using Newtonsoft.Json;
 using System;
@@ -12,23 +14,24 @@ namespace Exchange.Server.Protocols
         public override EncryptType EncryptType { get; protected set; } = EncryptType.None;
         private NetworkChannel _networkHelper = new NetworkChannel();
         private NetworkStream _stream;
+        private JsonSerializerSettings _jsonSettings = new JsonSerializerSettings()
+        {
+            TypeNameHandling = TypeNameHandling.All
+        };
 
         private ResponsePackage _response;
         private byte[] _responseData;
 
-        public override async Task<IPackage> ReceivePackageAsync(TcpClient client)
+        public override async Task<Package> ReceivePackageAsync(TcpClient client)
         {
             _stream = client.GetStream();
-            return await ReceiveRequest();
+            return await ReceiveRequestAsync();
         }
-        private async Task<IPackage> ReceiveRequest()
+
+        private async Task<Package> ReceiveRequestAsync()
         {
             var jsonPackage = await _networkHelper.ReadAsync(_stream);
-            IPackage receivedPack = (IPackage)JsonConvert.DeserializeObject(jsonPackage, new JsonSerializerSettings
-            {
-                TypeNameHandling = TypeNameHandling.All,
-            });
-            return receivedPack;
+            return JsonConvert.DeserializeObject<Package>(jsonPackage, _jsonSettings);
         }
 
         public override async Task SendResponseAsync(TcpClient client, ResponsePackage response)
@@ -38,18 +41,13 @@ namespace Exchange.Server.Protocols
             _stream = client.GetStream();
             _response = response;
             PrepareResponseData();
-            await SendResponse();
+            await SendResponseAsync();
         }
 
+        private void PrepareResponseData() =>
+            _responseData = _networkHelper.Encoding.GetBytes(_response.ToJson());
 
-        private void PrepareResponseData()
-        {
-            var jsonResponse = _response.ToJson();
-            _responseData = _networkHelper.Encoding.GetBytes(jsonResponse);
-        }
-        private async Task SendResponse()
-        {
+        private async Task SendResponseAsync() =>
             await _networkHelper.WriteAsync(_stream, _responseData);
-        }
     }
 }

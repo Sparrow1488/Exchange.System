@@ -1,9 +1,7 @@
-﻿using Exchange.System.Enums;
-
-namespace Exchange.Server.Controllers
+﻿namespace Exchange.Server.Controllers
 {
     public interface IControllerSelector
     {
-        Controller SelectController(RequestType requestType);
+        Controller SelectController(string controllerName);
     }
 }

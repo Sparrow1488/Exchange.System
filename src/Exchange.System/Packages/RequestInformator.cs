@@ -1,9 +1,14 @@
 ﻿using Exchange.System.Protection;
+using Newtonsoft.Json;
 
 namespace Exchange.System.Packages
 {
-    public abstract class RequestInformator
+    public class RequestInformator
     {
+        [JsonConstructor]
+        public RequestInformator(EncryptType encryptType) =>
+            EncryptType = encryptType;
+
         public EncryptType EncryptType { get; protected set; }
     }
 }

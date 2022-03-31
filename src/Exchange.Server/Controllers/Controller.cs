@@ -1,31 +1,53 @@
-﻿using Exchange.Server .Exceptions.NetworkExceptions;
-using Exchange.Server.Protocols;
+﻿using Exchange.Server.Exceptions.NetworkExceptions;
+using Exchange.Server.Extensions;
+using Exchange.Server.Primitives;
 using Exchange.Server.Protocols.Selectors;
-using Exchange.System.Packages.Default;
-using Exchange.System.Protection;
-using System.Net.Sockets;
-using Exchange.System.Enums;
+using Exchange.System.Packages;
+using Exchange.System.Packages.Primitives;
+using ExchangeSystem.Helpers;
+using ExchangeSystem.Packages;
+using System;
+using System.Threading.Tasks;
+using ResponseStatus = Exchange.System.Enums.ResponseStatus;
 
-namespace Exchange.Server .Controllers
+namespace Exchange.Server.Controllers
 {
     public abstract class Controller
     {
-        protected abstract Protocol Protocol { get; set; }
-        protected abstract IProtocolSelector ProtocolSelector { get; set; }
-        public abstract RequestType RequestType { get; }
-        public EncryptType EncryptType { get; protected set; }
+        internal Controller() { }
 
-        protected TcpClient Client;
-        protected ResponsePackage Response;
+        public ResponsePackage Response { get; private set; }
+        public RequestContext Context { get; private set; }
 
-        public abstract void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType);
-        protected void SendResponse()
+        public async Task ProcessRequestAsync(RequestContext context)
         {
-            Protocol = ProtocolSelector.SelectProtocol(EncryptType);
-            if (Client.Connected)
-                Protocol.SendResponseAsync(Client, Response);
-            else
-                throw new ConnectionException("Клиент не был подключен");
+            Context = context;
+            Response = ExecuteRequestMethod<ResponsePackage>();
+            await SendResponseAsync();
+        }
+
+        private T ExecuteRequestMethod<T>()
+            where T : ResponsePackage
+        {
+            ResponsePackage responsePack;
+            try
+            {
+                string requestMethodName = Context.Content.As<Package>().RequestType.ToString();
+                responsePack = (T)GetType().GetMethod(requestMethodName).Invoke(this, null);
+            }
+            catch (Exception ex)
+            {
+                var report = new ResponseReport(ex?.InnerException?.Message, ResponseStatus.Bad);
+                responsePack = new ResponsePackage(report, ResponseStatus.Bad);
+            }
+            return (T)responsePack ?? default;
+        }
+        
+        private async Task SendResponseAsync()
+        {
+            Ex.ThrowIfTrue<ConnectionException>(() => !Context.Client.Connected, "Client was not connected!");
+            var protocol = new ProtocolSelector().SelectProtocol(Context.EncryptType);
+            await protocol.SendResponseAsync(Context.Client, Response);
         }
     }
 }

@@ -1,58 +1,47 @@
-﻿using Exchange.Server.LocalDataBase;
-using Exchange.Server.Models;
-using Exchange.Server.Protocols;
-using Exchange.Server.Protocols.Selectors;
+﻿using Exchange.Server.Extensions;
 using Exchange.System.Entities;
 using Exchange.System.Enums;
-using Exchange.System.Packages.Default;
-using Exchange.System.Protection;
+using Exchange.System.Packages;
+using Exchange.System.Packages.Primitives;
+using ExchangeSystem.Helpers;
+using ExchangeSystem.Packages;
 using System;
-using System.Net.Sockets;
 
 namespace Exchange.Server.Controllers
 {
     public class AuthorizationController : Controller
     {
-        public override RequestType RequestType => RequestType.Authorization;
-        protected override Protocol Protocol { get; set; }
-        protected override IProtocolSelector ProtocolSelector { get; set; } = new ProtocolSelector();
-
-        private string _authToken = string.Empty;
-
-        public override void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType)
+        public ResponsePackage Authorization()
         {
-            EncryptType = encryptType;
-            Client = connectedClient;
-            var receivedPack = package as Package;
-            var userPassport = receivedPack.RequestObject as UserPassport;
-            Console.WriteLine("Received user passport. Pas: {0}, Log: {1}", userPassport.Password, 
-                                                                                                                                      userPassport.Login);
-            UserModel userModel = new UserModel();
-            var findUser = userModel.ReceiveUserBy(userPassport);
-            if (findUser != null)
+            ResponsePackage response = default;
+            var requestData = Context.Content.As<Package>().RequestObject;
+            if (requestData is UserPassport userPassport)
             {
-                var findPassport = userModel.ReceivePassportBy(userPassport.Login, userPassport.Password);
-                var validUser = new User(findUser); // сделал такую дикость, потому что не понял как изменить автосгенерированный тип EF.User на мой, нормальный
-                validUser.UserPassport = findPassport;
-                if (validUser != null)
-                    PrepareResponsePackage(true, validUser);
-                else
-                    PrepareResponsePackage(false, validUser);
+                Ex.ThrowIfEmptyOrNull(userPassport.Login, "Login wasn't be null or empty!");
+                Ex.ThrowIfEmptyOrNull(userPassport.Password, "Password wasn't be null or empty!");
+                if (CompleteUserAuthorization(userPassport))
+                    response = CreateSuccessAuthResponsePackage();
+                else response = CreateFailedAuthResponsePackage();
             }
             else
-                PrepareResponsePackage(false, null);
-            SendResponse();
-        }
-        public void PrepareResponsePackage(bool authSuccess, User authUser)
-        {
-            if (authSuccess)
             {
-                _authToken = ServerLocalDb.AddNew(authUser.UserPassport);
-                authUser.UserPassport.Token = _authToken;
-                Response = new ResponsePackage(authUser, ResponseStatus.Ok);
+                throw new ArgumentException($"Input data is not a {nameof(UserPassport)}");
             }
-            else
-                Response = new ResponsePackage(string.Empty, ResponseStatus.Exception, "Ошибка авторизации");
+            return response;
         }
+
+        private bool CompleteUserAuthorization(UserPassport passport)
+        {
+            bool authSuccess = false;
+            if (passport.Login == "asd" && passport.Password == "1234")
+                authSuccess = true;
+            return authSuccess;
+        }
+
+        private ResponsePackage CreateSuccessAuthResponsePackage() =>
+            new ResponsePackage(new ResponseReport(AuthorizationStatus.Success.Message, AuthorizationStatus.Success), ResponseStatus.Ok);
+
+        private ResponsePackage CreateFailedAuthResponsePackage() =>
+            new ResponsePackage(new ResponseReport(AuthorizationStatus.Failed.Message, AuthorizationStatus.Failed), ResponseStatus.Bad);
     }
 }

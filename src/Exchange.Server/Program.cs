@@ -1,7 +1,10 @@
 ﻿using Exchange.Server.Controllers;
+using Exchange.Server.Extensions;
+using Exchange.Server.Primitives;
 using Exchange.Server.Protocols.Receivers;
 using Exchange.Server.Routers;
-using Exchange.System.Packages.Default;
+using Exchange.System.Packages;
+using Exchange.System.Packages.Primitives;
 using System;
 using System.Threading.Tasks;
 
@@ -9,13 +12,10 @@ namespace Exchange.Server
 {
     internal sealed class Program
     {
-        private Program() =>
-            _router = new Router();
-
         public const string Host = "127.0.0.1";
         public const int Port = 80;
 
-        private static IRouter _router;
+        private static IRouter _router = new Router();
         
         private static async Task Main()
         {
@@ -46,15 +46,14 @@ namespace Exchange.Server
 
         private static async Task ProcessRequestByPackageTypeAsync()
         {
-            var requestPackage = await _router.ExtractRequestPackageAsync();
-            var packageEncryptType = _router.GetPackageEncryptType();
+            var requestContext = await _router.AcceptRequestAsync();
 
-            if (requestPackage is Package requestPackageImp)
+            if (requestContext.Content is Package requestPackageImp)
             {
-                Console.WriteLine("Get => {0}; EncryptType => {1}",
+                Console.WriteLine("GET => {0}; EncryptType => {1}",
                     requestPackageImp.RequestType.ToString(),
-                        packageEncryptType.ToString());
-                ProcessRequestPackage(requestPackageImp);
+                        requestContext.EncryptType.ToString());
+                await ProcessRequestAsync(requestContext);
             }
             else
             {
@@ -62,11 +61,12 @@ namespace Exchange.Server
             }
         }
 
-        private static void ProcessRequestPackage(Package requestPackage)
+        private static async Task ProcessRequestAsync(RequestContext requestContext)
         {
             ControllerSelector controllerSelector = new ControllerSelector();
-            Controller controller = controllerSelector.SelectController(requestPackage.RequestType);
-            // controller.ProcessRequest(client, requestPackage, packageEncryptType);
+            Controller controller = controllerSelector.SelectController(
+                                        requestContext.Content.As<Package>().RequestType.ToString());
+            await controller.ProcessRequestAsync(requestContext);
         }
     }
 }

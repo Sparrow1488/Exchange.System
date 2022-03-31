@@ -2,8 +2,9 @@
 using Encryptors.Rsa;
 using Exchange.Server.Exceptions;
 using Exchange.Server.Exceptions.NetworkExceptions;
-using Exchange.System.Packages.Default;
-using Exchange.System.Packages.Protected;
+using Exchange.System.Helpers;
+using Exchange.System.Packages;
+using Exchange.System.Packages.Primitives;
 using Exchange.System.Protection;
 using Newtonsoft.Json;
 using System;
@@ -29,7 +30,7 @@ namespace Exchange.Server.Protocols
         private NetworkChannel _networkChannel = new NetworkChannel(128);
         public override EncryptType EncryptType { get; protected set; } = EncryptType.AesRsa;
 
-        public override async Task<IPackage> ReceivePackageAsync(TcpClient client)
+        public override async Task<Package> ReceivePackageAsync(TcpClient client)
         {
             if (!client.Connected)
                 throw new ConnectionException();
@@ -77,7 +78,7 @@ namespace Exchange.Server.Protocols
             await SendResponseData();
         }
 
-        private IPackage AesRsaDecryptor(ProtectedPackage protectedPackage)
+        private Package AesRsaDecryptor(ProtectedPackage protectedPackage)
         {
             if (protectedPackage?.Security?.EncryptType != EncryptType.AesRsa)
                 throw new ProtocolTypeException();
@@ -95,11 +96,11 @@ namespace Exchange.Server.Protocols
             AesEncryptor newAesRsa = new AesEncryptor(decryptAesKey, decryptAesIV);
 
             string jsonPack = newAesRsa.DecryptString(Convert.FromBase64String(protectedPackage.SecretPackage));
-            IPackage deryptPack = (IPackage)JsonConvert.DeserializeObject(jsonPack, new JsonSerializerSettings
+            Package decryptPack = (Package)JsonConvert.DeserializeObject(jsonPack, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.All,
             });
-            return deryptPack;
+            return decryptPack;
         }
 
         #region FOR RESPONSE
@@ -127,7 +128,7 @@ namespace Exchange.Server.Protocols
             _responsePackageSize = _responseData.Length;
             await new NetworkChannel().WriteAsync(_stream, new NetworkChannel().Encoding.GetBytes(_responsePackageSize.ToString()));
         }
-        private void EncryptAesRsaPackage(IPackage package)
+        private void EncryptAesRsaPackage(ResponsePackage package)
         {
             AesEncryptor aes = new AesEncryptor();
             RsaEncryptor rsa = new RsaEncryptor();

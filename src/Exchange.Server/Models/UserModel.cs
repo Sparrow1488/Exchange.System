@@ -1,7 +1,6 @@
-﻿using Exchange.Server.LocalDataBase;
-using Exchange.Server.SQLDataBase;
+﻿using Exchange.Server.DataBase;
+using Exchange.Server.Database;
 using Exchange.System.Entities;
-using Exchange.System.Requests.Objects;
 using System.Linq;
 
 namespace Exchange.Server.Models
@@ -31,7 +30,7 @@ namespace Exchange.Server.Models
         }
         public UserPassport ReceivePassportBy(string token)
         {
-            var findPassport = ServerLocalDb.FindPassportBy(token);
+            var findPassport = LocalDatabase.FindPassportBy(token);
             return findPassport;
         }
         /// <summary>

@@ -1,8 +1,9 @@
-﻿using System.Net.Sockets;
+﻿using System.IO;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Exchange.System.Requests.Sendlers
+namespace Exchange.System.Sendlers
 {
     public class NetworkHelper
     {
@@ -18,6 +19,7 @@ namespace Exchange.System.Requests.Sendlers
             stream.Flush();
             return receivedBuffer;
         }
+
         public byte[] ReadData(NetworkStream stream, int bufferSize)
         {
             byte[] receivedBuffer = new byte[bufferSize];
@@ -29,6 +31,7 @@ namespace Exchange.System.Requests.Sendlers
             stream.Flush();
             return receivedBuffer;
         }
+
         public async Task WriteDataAsync(NetworkStream stream, byte[] buffer)
         {
             stream.Flush();
@@ -38,6 +41,14 @@ namespace Exchange.System.Requests.Sendlers
             }
             while (stream.DataAvailable);
         }
+
+        public async Task WriteDataAsync(NetworkStream stream, string message)
+        {
+            var streamWriter = new StreamWriter(stream);
+            await streamWriter.WriteAsync(message);
+            while (stream.DataAvailable);
+        }
+
         public void WriteData(NetworkStream stream, byte[] buffer)
         {
             stream.Flush();
