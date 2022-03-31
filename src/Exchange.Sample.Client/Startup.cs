@@ -25,10 +25,32 @@ namespace Exchange.Sample.Client
         public async Task RunAsync()
         {
             _logger.LogInformation($"{nameof(Startup)} running");
+            for (int i = 0; i < 1; i++)
+            {
+                var connectionSettings = CreateConnectionSettings();
+                var sendler = new NewRequestSendler(connectionSettings);
+                _logger.LogInformation("GET => " + ControllerType.Authorization.ToString());
+                var response = await sendler.SendRequestAsync(CreateAuthorizationRequest());
+                if (response is Response<TestEntity> correctResponse)
+                {
+                    _logger.LogInformation("Success");
+                    _logger.LogInformation($"MESSAGE => {correctResponse.Content.Message}");
+                }
+                else
+                {
+                    _logger.LogError("Error");
+                }
+                await DelayAsync();
+            }
+        }
+
+        public async Task RunOldAsync()
+        {
+            _logger.LogInformation($"{nameof(Startup)} OLD running");
             for (int i = 0; i < 8; i++)
             {
                 var connectionSettings = CreateConnectionSettings();
-                var sendler = new RequestSendler(connectionSettings);
+                var sendler = new NewRequestSendler(connectionSettings);
                 _logger.LogInformation("GET => " + ControllerType.Authorization.ToString());
                 var responsePackage = await sendler.SendRequest(CreateAuthorizationPackage());
                 if (responsePackage.ResponseData is ResponseReport report)
@@ -54,6 +76,13 @@ namespace Exchange.Sample.Client
             var auth = new AuthorizationPackage(passport);
             _logger.LogInformation("Authorization package created");
             return auth;
+        }
+
+        private Request CreateAuthorizationRequest()
+        {
+            var request = new Request<TestEntity>("authorization", ProtectionType.Default);
+            request.Body = new RequestBody<TestEntity>(new TestEntity("Пароля не будет"));
+            return request;
         }
 
         private async Task DelayAsync() => await Task.Delay(TimeSpan.FromSeconds(1));

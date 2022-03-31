@@ -1,13 +1,15 @@
 ﻿using Exchange.System.Enums;
+using Newtonsoft.Json;
 
 namespace Exchange.System.Packages
 {
     public class Request<T> : Request
     {
         public Request(string query) : base(query) { }
+        [JsonConstructor]
         public Request(string query, ProtectionType protection) : base(query, protection) { }
 
-        public RequestBody<T> Body { get; set; }
+        [JsonProperty] public RequestBody<T> Body { get; set; }
     }
 
     public class Request
@@ -15,10 +17,11 @@ namespace Exchange.System.Packages
         public Request(string query) =>
             Query = query;
 
+        [JsonConstructor]
         public Request(string query, ProtectionType protection) : this(query) =>
             Protection = protection;
 
-        public string Query { get; set; }
-        public ProtectionType Protection { get; set; }
+        [JsonProperty] public string Query { get; set; }
+        [JsonProperty] public ProtectionType Protection { get; set; }
     }
 }

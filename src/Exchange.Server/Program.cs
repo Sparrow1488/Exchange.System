@@ -15,7 +15,7 @@ namespace Exchange.Server
         public const string Host = "127.0.0.1";
         public const int Port = 80;
 
-        private static IRouter _router = new Router();
+        private static Router _router = new Router();
         
         private static async Task Main()
         {
@@ -46,13 +46,13 @@ namespace Exchange.Server
 
         private static async Task ProcessRequestByPackageTypeAsync()
         {
-            var requestContext = await _router.AcceptRequestAsync();
+            var requestContext = await _router.NewAcceptRequestAsync();
 
-            if (requestContext.Content is Package requestPackageImp)
+            if (requestContext.Request is Request requestImp)
             {
                 Console.WriteLine("GET => {0}; EncryptType => {1}",
-                    requestPackageImp.RequestType.ToString(),
-                        requestContext.EncryptType.ToString());
+                    requestImp.Query,
+                        requestContext.Protection.ToString());
                 await ProcessRequestAsync(requestContext);
             }
             else

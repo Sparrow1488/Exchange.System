@@ -1,9 +1,10 @@
 ﻿using Exchange.Server.Exceptions.NetworkExceptions;
 using Exchange.Server.Extensions;
 using Exchange.Server.Primitives;
+using Exchange.Server.Protocols;
 using Exchange.Server.Protocols.Selectors;
+using Exchange.System.Entities;
 using Exchange.System.Packages;
-using Exchange.System.Packages.Primitives;
 using ExchangeSystem.Helpers;
 using ExchangeSystem.Packages;
 using System;
@@ -22,8 +23,9 @@ namespace Exchange.Server.Controllers
         public async Task ProcessRequestAsync(RequestContext context)
         {
             Context = context;
-            Response = ExecuteRequestMethod<ResponsePackage>();
-            await SendResponseAsync();
+            //Response = ExecuteRequestMethod<ResponsePackage>();
+            //await SendResponseAsync();
+            await NewSendResponseAsync();
         }
 
         private T ExecuteRequestMethod<T>()
@@ -48,6 +50,18 @@ namespace Exchange.Server.Controllers
             Ex.ThrowIfTrue<ConnectionException>(() => !Context.Client.Connected, "Client was not connected!");
             var protocol = new ProtocolSelector().SelectProtocol(Context.EncryptType);
             await protocol.SendResponseAsync(Context.Client, Response);
+        }
+
+        private async Task NewSendResponseAsync()
+        {
+            Ex.ThrowIfTrue<ConnectionException>(() => !Context.Client.Connected, "Client was not connected!");
+            var protocol = new NewDefaultProtocol(Context.Client);
+            await protocol.SendResponseAsync(CreateTestResponse());
+        }
+
+        private Response CreateTestResponse()
+        {
+            return new Response<TestEntity>(new TestEntity("Ну как там с деньгами?"));
         }
     }
 }

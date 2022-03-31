@@ -6,6 +6,6 @@ namespace Exchange.System.Sendlers
     public interface IRequestSendler
     {
         Task<ResponsePackage> SendRequest(Package package);
-        Task<Response> SendRequest(Request request);
+        Task<Response> SendRequestAsync(Request request);
     }
 }

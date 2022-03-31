@@ -4,7 +4,6 @@ using Exchange.Server.Protocols;
 using Exchange.Server.Protocols.Selectors;
 using Exchange.System.Helpers;
 using Exchange.System.Packages;
-using Exchange.System.Packages.Primitives;
 using Exchange.System.Protection;
 using ExchangeSystem.Helpers;
 using Newtonsoft.Json;
@@ -30,6 +29,25 @@ namespace Exchange.Server.Routers
         {
             Ex.ThrowIfNull(clientToProccess);
             _queue.Enqueue(clientToProccess);
+        }
+
+        public async Task<RequestContext> NewAcceptRequestAsync()
+        {
+            var client = _queue.Dequeue();
+            Ex.ThrowIfTrue<ConnectionException>(!client.Connected, "Client is not connected");
+            RequestContext context = default;
+
+            var stream = client.GetStream();
+            string requestInfoStringify = await _networkChannel.ReadAsync(stream);
+            Console.WriteLine(requestInfoStringify);
+            var requestInfo = JsonConvert.DeserializeObject<RequestInformator>(requestInfoStringify, _jsonSettings);
+            var protocol = new NewDefaultProtocol(client);
+            var request = await protocol.AcceptRequestAsync();
+            context = RequestContext.ConfigureContext(context =>
+                                context.SetRequest(request)
+                                        .SetClient(client)
+                                            .SetProtection(request.Protection));
+            return context;
         }
 
         public async Task<RequestContext> AcceptRequestAsync()

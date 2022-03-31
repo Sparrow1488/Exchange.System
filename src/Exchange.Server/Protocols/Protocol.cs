@@ -7,8 +7,7 @@ namespace Exchange.Server.Protocols
 {
     public abstract class Protocol : IProtocol
     {
-        public abstract EncryptType EncryptType { get; protected set; }
-
+        public virtual EncryptType EncryptType { get; protected set; }
         public EncryptType GetProtocolEncryptType() => EncryptType;
         public abstract Task<Package> ReceivePackageAsync(TcpClient client);
         public abstract Task SendResponseAsync(TcpClient client, ResponsePackage response);

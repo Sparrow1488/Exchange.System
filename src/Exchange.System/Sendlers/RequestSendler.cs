@@ -40,7 +40,7 @@ namespace Exchange.System.Sendlers
             return _responsePackage;
         }
 
-        public Task<Response> SendRequest(Request request)
+        public Task<Response> SendRequestAsync(Request request)
         {
             throw new NotImplementedException();
         }

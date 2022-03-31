@@ -1,13 +1,16 @@
-﻿namespace Exchange.System.Enums
+﻿using Newtonsoft.Json;
+
+namespace Exchange.System.Enums
 {
     public class ProtectionType
     {
-        private ProtectionType(string typeName)
+        [JsonConstructor]
+        private ProtectionType(string name)
         {
-            Name = typeName;
+            Name = name;
         }
 
-        public readonly string Name;
+        [JsonProperty] public readonly string Name;
 
         public static readonly ProtectionType Default = new ProtectionType("Default");
         public static readonly ProtectionType AesRsa = new ProtectionType("AesRsa");
