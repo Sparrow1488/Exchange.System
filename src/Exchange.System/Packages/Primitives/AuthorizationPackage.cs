@@ -1,15 +1,12 @@
 ﻿using Exchange.System.Entities;
 using Exchange.System.Enums;
-using Newtonsoft.Json;
 
 namespace Exchange.System.Packages.Primitives
 {
     public class AuthorizationPackage : Package
     {
-        [JsonConstructor]
-        public AuthorizationPackage(UserPassport requestObject) : base(requestObject)
+        public AuthorizationPackage(ControllerType requestType, IRequestObject attachObject, string userToken) : base(requestType, attachObject, userToken)
         {
-            RequestType = ControllerType.Authorization;
         }
     }
 }

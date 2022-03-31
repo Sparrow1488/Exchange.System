@@ -2,6 +2,7 @@ C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchang
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Server.Tests\obj\Debug\netcoreapp3.1\Exchange.Server.Tests.AssemblyInfoInputs.cache
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Server.Tests\obj\Debug\netcoreapp3.1\Exchange.Server.Tests.AssemblyInfo.cs
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Server.Tests\obj\Debug\netcoreapp3.1\Exchange.Server.Tests.csproj.CoreCompileInputs.cache
+C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Server.Tests\obj\Debug\netcoreapp3.1\Exchange.Server.Tests.csproj.AssemblyReference.cache
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Server.Tests\bin\Debug\netcoreapp3.1\Exchange.Server.deps.json
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Server.Tests\bin\Debug\netcoreapp3.1\Exchange.Server.runtimeconfig.json
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Server.Tests\bin\Debug\netcoreapp3.1\Exchange.Server.runtimeconfig.dev.json
@@ -125,7 +126,6 @@ C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchang
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Server.Tests\bin\Debug\netcoreapp3.1\Exchange.Server.pdb
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Server.Tests\bin\Debug\netcoreapp3.1\Exchange.Server.dll.config
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Server.Tests\bin\Debug\netcoreapp3.1\Exchange.System.pdb
-C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Server.Tests\obj\Debug\netcoreapp3.1\Exchange.Server.Tests.csproj.AssemblyReference.cache
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Server.Tests\obj\Debug\netcoreapp3.1\Exchange.Server.Tests.csproj.CopyComplete
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Server.Tests\obj\Debug\netcoreapp3.1\Exchange.Server.Tests.dll
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Server.Tests\obj\Debug\netcoreapp3.1\Exchange.Server.Tests.pdb

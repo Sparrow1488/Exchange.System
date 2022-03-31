@@ -21,5 +21,16 @@ namespace Exchange.System.Enums
         public static readonly ResponseStatus UnhandleException = new ResponseStatus("UnhandleException", "UnhandleException on server");
 
         public override string ToString() => StatusName ?? string.Empty;
+        public override int GetHashCode() => base.GetHashCode();
+        public override bool Equals(object obj)
+        {
+            bool isEquals = false;
+            if (obj is ResponseStatus compareType)
+            {
+                if(compareType.StatusName == StatusName && compareType.Message == Message)
+                    isEquals = true;
+            }
+            return isEquals;
+        }
     }
 }

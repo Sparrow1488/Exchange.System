@@ -2,6 +2,7 @@
 using Exchange.System.Enums;
 using Exchange.System.Packages;
 using Exchange.System.Sendlers;
+using ExchangeSystem.Helpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -29,11 +30,18 @@ namespace Exchange.Sample.Client
                 var sendler = new NewRequestSendler(connectionSettings);
                 _logger.LogInformation("GET => " + "Authorization");
                 var response = await sendler.SendRequestAsync(CreateAuthorizationRequest());
-                if (response is Response<Guid> correctResponse)
+                _logger.LogInformation("STATUS => " + response.Report.Status.ToString());
+                _logger.LogInformation($"MESSAGE => {response.Report.Message}");
+
+                if (response.Report.Status.Equals(AuthorizationStatus.Success))
                 {
-                    _logger.LogInformation("STATUS => " + correctResponse.Report.Status.ToString());
-                    _logger.LogInformation($"MESSAGE => {correctResponse.Report.Message}; " +
-                        $"GUID => {correctResponse.Content.ToString()}");
+                    var correctResponse = response as Response<Guid>;
+                    Ex.ThrowIfNull(correctResponse);
+                    _logger.LogInformation("GUID => " + correctResponse.Content.ToString());
+                }
+                else if (response.Report.Status.Equals(AuthorizationStatus.Failed))
+                {
+                    _logger.LogWarning("Authorization Failed");
                 }
                 else
                 {
@@ -50,7 +58,7 @@ namespace Exchange.Sample.Client
         private Request CreateAuthorizationRequest()
         {
             var request = new Request<UserPassport>("Authorization", ProtectionType.Default);
-            request.Body = new Body<UserPassport>(new UserPassport("asd", "1234"));
+            request.Body = new Body<UserPassport>(new UserPassport("asfd", "1234"));
             return request;
         }
 

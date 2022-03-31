@@ -1,6 +1,7 @@
 ﻿using Exchange.Server.Exceptions.NetworkExceptions;
 using Exchange.Server.Primitives;
 using Exchange.Server.Protocols;
+using Exchange.System.Entities;
 using Exchange.System.Packages;
 using ExchangeSystem.Helpers;
 using ExchangeSystem.Packages;
@@ -14,7 +15,6 @@ namespace Exchange.Server.Controllers
     {
         internal Controller() { }
 
-        public ResponsePackage ResponsePackage { get; private set; }
         public Response Response { get; private set; }
         public RequestContext Context { get; private set; }
 
@@ -32,12 +32,19 @@ namespace Exchange.Server.Controllers
             try
             {
                 string requestMethodName = Context.Request.Query;
-                responsePack = (T)GetType().GetMethod(requestMethodName).Invoke(this, null);
+                var method = GetType().GetMethod(requestMethodName);
+                responsePack = (T)method.Invoke(this, new object[0]);
+                if (false) 
+                {
+                    // method.ReturnType.Equals(typeof(Task))
+                    // TODO : сделать асинхронную реализацию
+                    var task = (Task)method.Invoke(this, new object[] { });
+                } 
             }
             catch (Exception ex)
             {
                 var report = new ResponseReport(ex?.InnerException?.Message, ResponseStatus.Bad);
-                responsePack = new Response<ResponseReport>(report);
+                responsePack = new Response<EmptyEntity>(report, new EmptyEntity());
             }
             return (T)responsePack ?? default;
         }

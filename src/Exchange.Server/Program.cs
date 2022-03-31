@@ -38,12 +38,10 @@ namespace Exchange.Server
         private static async Task ProcessRouterQueueAsync()
         {
             if(_router.GetQueueLength() > 0)
-                await ProcessRequestByPackageTypeAsync();
-            else
-                Console.WriteLine("Queue is empty");
+                await ProcessRequestAsync();
         }
 
-        private static async Task ProcessRequestByPackageTypeAsync()
+        private static async Task ProcessRequestAsync()
         {
             var requestContext = await _router.AcceptRequestAsync();
 
@@ -52,7 +50,7 @@ namespace Exchange.Server
                 Console.WriteLine("GET => {0}; EncryptType => {1}",
                     requestImp.Query,
                         requestContext.Protection.ToString());
-                await NewProcessRequestAsync(requestContext);
+                await ProcessRequestAsync(requestContext);
             }
             else
             {
@@ -60,18 +58,10 @@ namespace Exchange.Server
             }
         }
 
-        private static async Task NewProcessRequestAsync(RequestContext requestContext)
+        private static async Task ProcessRequestAsync(RequestContext requestContext)
         {
             ControllerSelector controllerSelector = new ControllerSelector();
             Controller controller = controllerSelector.SelectController(requestContext.Request.Query);
-            await controller.ProcessRequestAsync(requestContext);
-        }
-
-        private static async Task OldProcessRequestAsync(RequestContext requestContext)
-        {
-            ControllerSelector controllerSelector = new ControllerSelector();
-            Controller controller = controllerSelector.SelectController(
-                                        requestContext.Content.As<Package>().RequestType.ToString());
             await controller.ProcessRequestAsync(requestContext);
         }
     }
