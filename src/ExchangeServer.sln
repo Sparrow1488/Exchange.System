@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31005.135
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exchange.Server", "Exchange.Server\Exchange.Server.csproj", "{D263B1F7-C4EC-43E3-A702-7249D0EB2B9C}"
 EndProject
@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exchange.System.Tests", "Ex
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exchange.Sample.Client", "Exchange.Sample.Client\Exchange.Sample.Client.csproj", "{49DF8442-EA94-4657-8C66-EF38E85D8979}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.System", "Exchange.System\Exchange.System.csproj", "{57C4E9C8-E8E9-4CA7-A5C5-6F050EEB2E2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exchange.System", "Exchange.System\Exchange.System.csproj", "{57C4E9C8-E8E9-4CA7-A5C5-6F050EEB2E2D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.Tests", "Exchange.Tests\Exchange.Tests.csproj", "{AE623B24-CDB4-4752-87B3-E8810EAA7A2E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{57C4E9C8-E8E9-4CA7-A5C5-6F050EEB2E2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57C4E9C8-E8E9-4CA7-A5C5-6F050EEB2E2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57C4E9C8-E8E9-4CA7-A5C5-6F050EEB2E2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE623B24-CDB4-4752-87B3-E8810EAA7A2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE623B24-CDB4-4752-87B3-E8810EAA7A2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE623B24-CDB4-4752-87B3-E8810EAA7A2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE623B24-CDB4-4752-87B3-E8810EAA7A2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
