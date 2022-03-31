@@ -1,10 +1,9 @@
 ﻿using Exchange.Server.Controllers;
-using Exchange.Server.Extensions;
 using Exchange.Server.Primitives;
 using Exchange.Server.Protocols.Receivers;
 using Exchange.Server.Routers;
+using Exchange.System.Extensions;
 using Exchange.System.Packages;
-using Exchange.System.Packages.Primitives;
 using System;
 using System.Threading.Tasks;
 
@@ -53,7 +52,7 @@ namespace Exchange.Server
                 Console.WriteLine("GET => {0}; EncryptType => {1}",
                     requestImp.Query,
                         requestContext.Protection.ToString());
-                await ProcessRequestAsync(requestContext);
+                await NewProcessRequestAsync(requestContext);
             }
             else
             {
@@ -61,7 +60,14 @@ namespace Exchange.Server
             }
         }
 
-        private static async Task ProcessRequestAsync(RequestContext requestContext)
+        private static async Task NewProcessRequestAsync(RequestContext requestContext)
+        {
+            ControllerSelector controllerSelector = new ControllerSelector();
+            Controller controller = controllerSelector.SelectController(requestContext.Request.Query);
+            await controller.ProcessRequestAsync(requestContext);
+        }
+
+        private static async Task OldProcessRequestAsync(RequestContext requestContext)
         {
             ControllerSelector controllerSelector = new ControllerSelector();
             Controller controller = controllerSelector.SelectController(

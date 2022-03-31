@@ -33,7 +33,7 @@ namespace Exchange.Server.Tests
                                             context.SetContent(requestContent)
                                                 .SetEncription(EncryptType.None));
             await controller.ProcessRequestAsync(context);
-            var response = controller.Response;
+            var response = controller.ResponsePackage;
             var responseReport = response.ResponseData as ResponseReport;
             Assert.NotNull(response);
             Assert.NotNull(responseReport);
@@ -50,7 +50,7 @@ namespace Exchange.Server.Tests
                                             context.SetContent(requestContent)
                                                 .SetEncription(EncryptType.None));
             await controller.ProcessRequestAsync(context);
-            var response = controller.Response;
+            var response = controller.ResponsePackage;
             var responseReport = response.ResponseData as ResponseReport;
             Assert.NotNull(response);
             Assert.NotNull(responseReport);

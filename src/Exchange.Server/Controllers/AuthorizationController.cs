@@ -1,8 +1,7 @@
-﻿using Exchange.Server.Extensions;
-using Exchange.System.Entities;
+﻿using Exchange.System.Entities;
 using Exchange.System.Enums;
+using Exchange.System.Extensions;
 using Exchange.System.Packages;
-using Exchange.System.Packages.Primitives;
 using ExchangeSystem.Helpers;
 using ExchangeSystem.Packages;
 using System;
@@ -11,7 +10,26 @@ namespace Exchange.Server.Controllers
 {
     public class AuthorizationController : Controller
     {
-        public ResponsePackage Authorization()
+        public Response Authorization()
+        {
+            Response response = default;
+            var clientPassport = Context.Request.As<Request<UserPassport>>().Body.Content;
+            if (clientPassport is UserPassport userPassport)
+            {
+                Ex.ThrowIfEmptyOrNull(userPassport.Login, "Login wasn't be null or empty!");
+                Ex.ThrowIfEmptyOrNull(userPassport.Password, "Password wasn't be null or empty!");
+                if (CompleteUserAuthorization(userPassport))
+                    response = CreateSuccessAuthResponse();
+                else response = CreateFailedAuthResponse();
+            }
+            else
+            {
+                throw new ArgumentException($"Input data is not a {nameof(UserPassport)}");
+            }
+            return response;
+        }
+
+        public ResponsePackage OldAuthorization()
         {
             ResponsePackage response = default;
             var requestData = Context.Content.As<Package>().RequestObject;
@@ -43,5 +61,11 @@ namespace Exchange.Server.Controllers
 
         private ResponsePackage CreateFailedAuthResponsePackage() =>
             new ResponsePackage(new ResponseReport(AuthorizationStatus.Failed.Message, AuthorizationStatus.Failed), ResponseStatus.Bad);
+
+        private Response CreateSuccessAuthResponse() =>
+            new Response<ResponseReport>(new ResponseReport("Success authorization", AuthorizationStatus.Success));
+
+        private Response CreateFailedAuthResponse() =>
+            new Response<ResponseReport>(new ResponseReport("Failed authorization", AuthorizationStatus.Failed));
     }
 }

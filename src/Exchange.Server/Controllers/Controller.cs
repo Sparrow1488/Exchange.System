@@ -1,9 +1,8 @@
 ﻿using Exchange.Server.Exceptions.NetworkExceptions;
-using Exchange.Server.Extensions;
 using Exchange.Server.Primitives;
 using Exchange.Server.Protocols;
 using Exchange.Server.Protocols.Selectors;
-using Exchange.System.Entities;
+using Exchange.System.Extensions;
 using Exchange.System.Packages;
 using ExchangeSystem.Helpers;
 using ExchangeSystem.Packages;
@@ -17,18 +16,35 @@ namespace Exchange.Server.Controllers
     {
         internal Controller() { }
 
-        public ResponsePackage Response { get; private set; }
+        public ResponsePackage ResponsePackage { get; private set; }
+        public Response Response { get; private set; }
         public RequestContext Context { get; private set; }
 
         public async Task ProcessRequestAsync(RequestContext context)
         {
             Context = context;
-            //Response = ExecuteRequestMethod<ResponsePackage>();
-            //await SendResponseAsync();
-            await NewSendResponseAsync();
+            Response = ExecuteRequestMethod<Response>();
+            await SendResponseAsync();
         }
 
         private T ExecuteRequestMethod<T>()
+            where T : Response
+        {
+            Response responsePack;
+            try
+            {
+                string requestMethodName = Context.Request.Query;
+                responsePack = (T)GetType().GetMethod(requestMethodName).Invoke(this, null);
+            }
+            catch (Exception ex)
+            {
+                var report = new ResponseReport(ex?.InnerException?.Message, ResponseStatus.Bad);
+                responsePack = new Response<ResponseReport>(report);
+            }
+            return (T)responsePack ?? default;
+        }
+
+        private T OldExecuteRequestMethod<T>()
             where T : ResponsePackage
         {
             ResponsePackage responsePack;
@@ -44,24 +60,20 @@ namespace Exchange.Server.Controllers
             }
             return (T)responsePack ?? default;
         }
-        
+
         private async Task SendResponseAsync()
         {
             Ex.ThrowIfTrue<ConnectionException>(() => !Context.Client.Connected, "Client was not connected!");
-            var protocol = new ProtocolSelector().SelectProtocol(Context.EncryptType);
-            await protocol.SendResponseAsync(Context.Client, Response);
+            var protocol = new NewDefaultProtocol(Context.Client);
+            await protocol.SendResponseAsync(Response);
         }
 
-        private async Task NewSendResponseAsync()
+        private async Task OldSendResponseAsync()
         {
             Ex.ThrowIfTrue<ConnectionException>(() => !Context.Client.Connected, "Client was not connected!");
-            var protocol = new NewDefaultProtocol(Context.Client);
-            await protocol.SendResponseAsync(CreateTestResponse());
+            var protocol = new ProtocolSelector().SelectProtocol(Context.EncryptType);
+            await protocol.SendResponseAsync(Context.Client, ResponsePackage);
         }
 
-        private Response CreateTestResponse()
-        {
-            return new Response<TestEntity>(new TestEntity("Ну как там с деньгами?"));
-        }
     }
 }

@@ -50,7 +50,7 @@ namespace Exchange.Server.Routers
             return context;
         }
 
-        public async Task<RequestContext> AcceptRequestAsync()
+        public async Task<RequestContext> OldAcceptRequestAsync()
         {
             var client = _queue.Dequeue();
             Ex.ThrowIfTrue<ConnectionException>(!client.Connected, "Client is not connected");

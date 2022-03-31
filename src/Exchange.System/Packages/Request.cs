@@ -1,4 +1,5 @@
-﻿using Exchange.System.Enums;
+﻿using Exchange.System.Abstractions;
+using Exchange.System.Enums;
 using Newtonsoft.Json;
 
 namespace Exchange.System.Packages

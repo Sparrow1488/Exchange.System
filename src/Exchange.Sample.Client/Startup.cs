@@ -25,13 +25,13 @@ namespace Exchange.Sample.Client
         public async Task RunAsync()
         {
             _logger.LogInformation($"{nameof(Startup)} running");
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 20; i++)
             {
                 var connectionSettings = CreateConnectionSettings();
                 var sendler = new NewRequestSendler(connectionSettings);
-                _logger.LogInformation("GET => " + ControllerType.Authorization.ToString());
+                _logger.LogInformation("GET => " + "Authorization");
                 var response = await sendler.SendRequestAsync(CreateAuthorizationRequest());
-                if (response is Response<TestEntity> correctResponse)
+                if (response is Response<ResponseReport> correctResponse)
                 {
                     _logger.LogInformation("Success");
                     _logger.LogInformation($"MESSAGE => {correctResponse.Content.Message}");
@@ -44,10 +44,12 @@ namespace Exchange.Sample.Client
             }
         }
 
+        #region OLD
+
         public async Task RunOldAsync()
         {
             _logger.LogInformation($"{nameof(Startup)} OLD running");
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 20; i++)
             {
                 var connectionSettings = CreateConnectionSettings();
                 var sendler = new NewRequestSendler(connectionSettings);
@@ -65,6 +67,7 @@ namespace Exchange.Sample.Client
                 await DelayAsync();
             }
         }
+        #endregion
 
         private ConnectionSettings CreateConnectionSettings() =>
             new ConnectionSettings(_config.GetValue<string>("EndpointHost"), 
@@ -80,11 +83,11 @@ namespace Exchange.Sample.Client
 
         private Request CreateAuthorizationRequest()
         {
-            var request = new Request<TestEntity>("authorization", ProtectionType.Default);
-            request.Body = new RequestBody<TestEntity>(new TestEntity("Пароля не будет"));
+            var request = new Request<UserPassport>("Authorization", ProtectionType.Default);
+            request.Body = new RequestBody<UserPassport>(new UserPassport("asd", "1234"));
             return request;
         }
 
-        private async Task DelayAsync() => await Task.Delay(TimeSpan.FromSeconds(1));
+        private async Task DelayAsync() => await Task.Delay(TimeSpan.FromMilliseconds(50));
     }
 }
