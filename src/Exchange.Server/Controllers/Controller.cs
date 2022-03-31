@@ -2,12 +2,12 @@
 using Exchange.Server.Primitives;
 using Exchange.Server.Protocols;
 using Exchange.System.Entities;
+using Exchange.System.Enums;
 using Exchange.System.Packages;
 using ExchangeSystem.Helpers;
 using ExchangeSystem.Packages;
 using System;
 using System.Threading.Tasks;
-using ResponseStatus = Exchange.System.Enums.ResponseStatus;
 
 namespace Exchange.Server.Controllers
 {
@@ -28,25 +28,19 @@ namespace Exchange.Server.Controllers
         private T ExecuteRequestMethod<T>()
             where T : Response
         {
-            Response responsePack;
+            Response response;
             try
             {
                 string requestMethodName = Context.Request.Query;
                 var method = GetType().GetMethod(requestMethodName);
-                responsePack = (T)method.Invoke(this, new object[0]);
-                if (false) 
-                {
-                    // method.ReturnType.Equals(typeof(Task))
-                    // TODO : сделать асинхронную реализацию
-                    var task = (Task)method.Invoke(this, new object[] { });
-                } 
+                response = (T)method.Invoke(this, new object[0]);
+                // TODO : сделать асинхронную реализацию
             }
             catch (Exception ex)
             {
-                var report = new ResponseReport(ex?.InnerException?.Message, ResponseStatus.Bad);
-                responsePack = new Response<EmptyEntity>(report, new EmptyEntity());
+                response = HandleException(ex);
             }
-            return (T)responsePack ?? default;
+            return (T)response ?? default;
         }
 
         private async Task SendResponseAsync()
@@ -54,6 +48,20 @@ namespace Exchange.Server.Controllers
             Ex.ThrowIfTrue<ConnectionException>(() => !Context.Client.Connected, "Client was not connected!");
             var protocol = new NewDefaultProtocol(Context.Client);
             await protocol.SendResponseAsync(Response);
+        }
+
+        private Response HandleException(Exception ex)
+        {
+            ResponseReport report;
+            if (ex?.InnerException is InvalidCastException)
+            {
+                report = new ResponseReport(ResponseStatus.Invalid.Message, ResponseStatus.Invalid);
+            }
+            else
+            {
+                report = new ResponseReport(ex?.InnerException?.Message, ResponseStatus.Bad);
+            }
+            return new Response<EmptyEntity>(report, new EmptyEntity());
         }
     }
 }

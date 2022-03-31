@@ -29,7 +29,7 @@ namespace Exchange.Sample.Client
                 var connectionSettings = CreateConnectionSettings();
                 var sendler = new NewRequestSendler(connectionSettings);
                 _logger.LogInformation("GET => " + "Authorization");
-                var response = await sendler.SendRequestAsync(CreateAuthorizationRequest());
+                var response = await sendler.SendRequestAsync(CreateEmptyRequest());
                 _logger.LogInformation("STATUS => " + response.Report.Status.ToString());
                 _logger.LogInformation($"MESSAGE => {response.Report.Message}");
 
@@ -59,6 +59,13 @@ namespace Exchange.Sample.Client
         {
             var request = new Request<UserPassport>("Authorization", ProtectionType.Default);
             request.Body = new Body<UserPassport>(new UserPassport("asfd", "1234"));
+            return request;
+        }
+
+        private Request CreateEmptyRequest()
+        {
+            var request = new Request<EmptyEntity>("Authorization", ProtectionType.Default);
+            request.Body = new Body<EmptyEntity>(new EmptyEntity());
             return request;
         }
 
