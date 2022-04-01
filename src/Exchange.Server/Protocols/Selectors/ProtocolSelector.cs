@@ -1,4 +1,5 @@
-﻿using Exchange.System.Protection;
+﻿using Exchange.System.Enums;
+using Exchange.System.Protection;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -24,6 +25,11 @@ namespace Exchange.Server.Protocols.Selectors
                 if (instance.EncryptType == encryptType)
                     return instance;
             }
+            throw new NullReferenceException("Reflection can't found no one protocols");
+        }
+
+        public NetworkProtocol SelectProtocol(ProtectionType protectionType)
+        {
             throw new NullReferenceException("Reflection can't found no one protocols");
         }
     }

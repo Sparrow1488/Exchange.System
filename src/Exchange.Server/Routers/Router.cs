@@ -1,65 +1,63 @@
 ﻿using Exchange.Server.Exceptions.NetworkExceptions;
+using Exchange.Server.Primitives;
 using Exchange.Server.Protocols;
-using Exchange.Server.Protocols.Selectors;
+using Exchange.System.Enums;
+using Exchange.System.Helpers;
 using Exchange.System.Packages;
-using Exchange.System.Packages.Default;
-using Exchange.System.Protection;
+using ExchangeSystem.Helpers;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
 namespace Exchange.Server.Routers
 {
-    public class Router : IRouter
+    public sealed class Router : IRouter
     {
-        private TcpClient _client;
-        private IProtocolSelector _selector;
-        private IProtocol _selectedProtocol;
-        private Package _receivedPackage;
-        private EncryptType _encryptType = EncryptType.None;
+        private Queue<TcpClient> _queue = new Queue<TcpClient>();
+
         private NetworkChannel _networkChannel = new NetworkChannel();
+        private JsonSerializerSettings _jsonSettings = new JsonSerializerSettings() {
+            TypeNameHandling = TypeNameHandling.All
+        };
 
-        /// <summary>
-        /// Получает запрос от подключенного пользователя, выбирая необходимый протокол и декодера
-        /// </summary>
-        /// <param name="client">Подключенный клиент</param>
-        /// <returns>Пакет-запрос пользователя типа Package</returns>
-        public async Task<IPackage> IssueRequestAsync(TcpClient client)
+        public void AddInQueue(TcpClient clientToProccess)
         {
-            if (!client.Connected)
-                throw new ConnectionException();
-            if (client == null)
-                throw new NullReferenceException($"Переданный клиент '{nameof(client)}' не может быть равен null") ;
-
-            _client = client;
-            var stream = _client.GetStream();
-
-            string _requestInfoJson = await _networkChannel.ReadAsync(stream);
-            var _requestInfo = (RequestInformator)JsonConvert.DeserializeObject(_requestInfoJson, typeof(RequestInformator), new JsonSerializerSettings
-            {
-                TypeNameHandling = TypeNameHandling.All,
-            });
-            _encryptType = _requestInfo.EncryptType;
-
-            _selectedProtocol = LookForProtocol(_requestInfo.EncryptType);
-            _receivedPackage = await _selectedProtocol.ReceivePackageAsync(client) as Package;
-            _encryptType = _selectedProtocol.GetProtocolEncryptType();
-
-            return _receivedPackage;
+            Ex.ThrowIfNull(clientToProccess);
+            _queue.Enqueue(clientToProccess);
         }
-        /// <summary>
-        /// Используйте этот метод после метода "IssueRequest()".
-        /// </summary>
-        public EncryptType GetPackageEncryptType()
+
+        public async Task<RequestContext> AcceptRequestAsync()
         {
-            return _encryptType;
+            var client = _queue.Dequeue();
+            Ex.ThrowIfTrue<ConnectionException>(!client.Connected, "Client is not connected");
+            RequestContext context = default;
+
+            var stream = client.GetStream();
+            string requestInfoStringify = await _networkChannel.ReadAsync(stream);
+            Console.WriteLine(requestInfoStringify);
+            var requestInfo = JsonConvert.DeserializeObject<RequestInformator>(requestInfoStringify, _jsonSettings);
+            var protocol = CreateProtocol(requestInfo.ProtectionType, client);
+            await protocol.AcceptRequest();
+            var request = protocol.GetRequest<Request>();
+            context = RequestContext.ConfigureContext(context =>
+                                context.SetRequest(request)
+                                        .SetClient(client)
+                                            .SetProtection(request.Protection));
+            return context;
         }
-        private IProtocol LookForProtocol(EncryptType encryptType)
+
+        public int GetQueueLength() => _queue.Count;
+
+        private NetworkProtocol CreateProtocol(ProtectionType protection, TcpClient tcpClient)
         {
-            _selector = new ProtocolSelector();
-            return _selector.SelectProtocol(encryptType);
+            NetworkProtocol selectedProtocol = default;
+            if(protection.ToString() == ProtectionType.Default.ToString())
+                selectedProtocol = new NewDefaultProtocol(tcpClient);
+            if (protection == ProtectionType.AesRsa)
+                throw new NotImplementedException();
+            return selectedProtocol;
         }
-        
     }
 }

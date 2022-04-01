@@ -1,58 +1,44 @@
-﻿using Exchange.Server.LocalDataBase;
-using Exchange.Server.Models;
-using Exchange.Server.Protocols;
-using Exchange.Server.Protocols.Selectors;
+﻿using Exchange.Server.Primitives;
 using Exchange.System.Entities;
 using Exchange.System.Enums;
-using Exchange.System.Packages.Default;
-using Exchange.System.Protection;
+using Exchange.System.Extensions;
+using Exchange.System.Packages;
+using ExchangeSystem.Helpers;
+using ExchangeSystem.Packages;
 using System;
-using System.Net.Sockets;
 
 namespace Exchange.Server.Controllers
 {
     public class AuthorizationController : Controller
     {
-        public override RequestType RequestType => RequestType.Authorization;
-        protected override Protocol Protocol { get; set; }
-        protected override IProtocolSelector ProtocolSelector { get; set; } = new ProtocolSelector();
+        public AuthorizationController() : base() { } 
+        public AuthorizationController(RequestContext context) : base(context) { }
 
-        private string _authToken = string.Empty;
+        public virtual Response Authorization(UserPassport passport)
+        {
+            Response response;
+            Ex.ThrowIfNull(passport);
+            Ex.ThrowIfEmptyOrNull(passport.Login, "Login wasn't be null or empty!");
+            Ex.ThrowIfEmptyOrNull(passport.Password, "Password wasn't be null or empty!");
 
-        public override void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType)
-        {
-            EncryptType = encryptType;
-            Client = connectedClient;
-            var receivedPack = package as Package;
-            var userPassport = receivedPack.RequestObject as UserPassport;
-            Console.WriteLine("Received user passport. Pas: {0}, Log: {1}", userPassport.Password, 
-                                                                                                                                      userPassport.Login);
-            UserModel userModel = new UserModel();
-            var findUser = userModel.ReceiveUserBy(userPassport);
-            if (findUser != null)
-            {
-                var findPassport = userModel.ReceivePassportBy(userPassport.Login, userPassport.Password);
-                var validUser = new User(findUser); // сделал такую дикость, потому что не понял как изменить автосгенерированный тип EF.User на мой, нормальный
-                validUser.UserPassport = findPassport;
-                if (validUser != null)
-                    PrepareResponsePackage(true, validUser);
-                else
-                    PrepareResponsePackage(false, validUser);
-            }
-            else
-                PrepareResponsePackage(false, null);
-            SendResponse();
+            if (CompleteUserAuthorization(passport))
+                response = CreateSuccessAuthResponse();
+            else response = CreateFailedAuthResponse();
+            return response;
         }
-        public void PrepareResponsePackage(bool authSuccess, User authUser)
+
+        private bool CompleteUserAuthorization(UserPassport passport)
         {
-            if (authSuccess)
-            {
-                _authToken = ServerLocalDb.AddNew(authUser.UserPassport);
-                authUser.UserPassport.Token = _authToken;
-                Response = new ResponsePackage(authUser, ResponseStatus.Ok);
-            }
-            else
-                Response = new ResponsePackage(string.Empty, ResponseStatus.Exception, "Ошибка авторизации");
+            bool authSuccess = false;
+            if (passport.Login == "asd" && passport.Password == "1234")
+                authSuccess = true;
+            return authSuccess;
         }
+
+        private Response CreateSuccessAuthResponse() =>
+            new Response<Guid>(new ResponseReport("Success authorization", AuthorizationStatus.Success), Guid.NewGuid());
+
+        private Response CreateFailedAuthResponse() =>
+            new Response<EmptyEntity>(new ResponseReport("Failed authorization", AuthorizationStatus.Failed), new EmptyEntity());
     }
 }
