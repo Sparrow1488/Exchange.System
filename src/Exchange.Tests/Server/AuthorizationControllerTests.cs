@@ -47,21 +47,33 @@ namespace Exchange.Tests.Server
             Assert.AreEqual(AuthorizationStatus.Failed, authResult.Report.Status);
         }
 
-        private RequestContext CreateRequestContextWithUserPassport(string login, string passport)
+        [Test]
+        public void Authorize_InvalidInputEntity_EmptyEntityAndBadStatus()
         {
-            var request = new Request<UserPassport>("Authorization", ProtectionType.Default);
-            request.Body = new Body<UserPassport>(new UserPassport(login, passport));
+            var report = CreateResponseReport(ResponseStatus.Bad);
+            var expected = new Response<EmptyEntity>(report, new EmptyEntity());
+            var requestContext = CreateRequestContextWithEmptyEntity();
+            _controllerUnderTests = AuthorizationControllerMoqFactory.Order(expected, requestContext);
+
+            var authResult = _controllerUnderTests.Authorization();
+            Assert.IsAssignableFrom<Response<EmptyEntity>>(authResult);
+            Assert.AreEqual(ResponseStatus.Bad, authResult.Report.Status);
+        }
+
+        private RequestContext CreateRequestContextWithUserPassport(string login, string passport) =>
+            CreateRequestContext(new UserPassport(login, passport));
+
+        private RequestContext CreateRequestContextWithEmptyEntity() =>
+            CreateRequestContext(new EmptyEntity());
+
+        private RequestContext CreateRequestContext<TBody>(TBody bodyContent)
+        {
+            var request = new Request<TBody>("Authorization", ProtectionType.Default);
+            request.Body = new Body<TBody>(bodyContent);
             return RequestContext.ConfigureContext(context => context.SetRequest(request));
         }
 
-        private ResponseReport CreateResponseReport(AuthorizationStatus status, string message = null)
-        {
-            ResponseReport report = default;
-            if (status.Equals(AuthorizationStatus.Failed))
-                report = new ResponseReport(message ?? AuthorizationStatus.Failed.Message, AuthorizationStatus.Failed);
-            else if (status.Equals(AuthorizationStatus.Success))
-                report = new ResponseReport(message ?? AuthorizationStatus.Failed.Message, AuthorizationStatus.Success);
-            return report;
-        }
+        private ResponseReport CreateResponseReport(ResponseStatus status, string message = null) =>
+            new ResponseReport(message ?? status.Message, status);
     }
 }
