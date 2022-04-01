@@ -1,4 +1,5 @@
-﻿using Exchange.System.Entities;
+﻿using Exchange.Server.Primitives;
+using Exchange.System.Entities;
 using Exchange.System.Enums;
 using Exchange.System.Extensions;
 using Exchange.System.Packages;
@@ -10,7 +11,9 @@ namespace Exchange.Server.Controllers
 {
     public class AuthorizationController : Controller
     {
-        public Response Authorization()
+        public AuthorizationController(RequestContext context) : base(context) { }
+
+        public virtual Response Authorization()
         {
             Response response = default;
             var clientPassport = Context.Request.As<Request<UserPassport>>().Body.Content;

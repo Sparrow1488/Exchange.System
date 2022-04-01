@@ -13,7 +13,8 @@ namespace Exchange.Server.Controllers
 {
     public abstract class Controller
     {
-        internal Controller() { }
+        public Controller(RequestContext context = default) =>
+            Context = context;
 
         public Response Response { get; private set; }
         public RequestContext Context { get; private set; }
