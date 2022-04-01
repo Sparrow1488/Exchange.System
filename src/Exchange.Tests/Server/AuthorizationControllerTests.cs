@@ -15,49 +15,33 @@ namespace Exchange.Tests.Server
         private AuthorizationController _controllerUnderTests;
 
         [SetUp]
-        public void Setup() { }
+        public void Setup() 
+        {
+            _controllerUnderTests = AuthorizationControllerMoqFactory.Order();
+        }
 
         [Test]
         [TestCase("asd", "1234")]
+        [TestCase("Sparrow", "12312323")]
+        [TestCase("gigachad", "222224444")]
         public void Authorize_ValidUserPassport_AuthTokenAndSuccessStatus(
             string login, string password)
         {
             var report = CreateResponseReport(AuthorizationStatus.Success);
             var expected = new Response<Guid>(report, Guid.NewGuid());
             var context = CreateRequestContextWithUserPassport(login, password);
-            _controllerUnderTests = AuthorizationControllerMoqFactory.Order(expected, context);
+            var controllerUnderTests = AuthorizationControllerMoqFactory.Order(expected, context);
 
-            var authResult = _controllerUnderTests.Authorization();
+            var authResult = controllerUnderTests.Authorization((UserPassport)context.Request.GetBodyContent());
+
             Assert.IsAssignableFrom<Response<Guid>>(authResult);
             Assert.AreEqual(AuthorizationStatus.Success , authResult.Report.Status);
         }
 
         [Test]
-        [TestCase(null, "")]
-        public void Authorize_InvalidUserPassport_EmptyEntityAndFailedStatus(
-            string login, string password)
+        public void Authorize_Null_ArgumentNullException()
         {
-            var report = CreateResponseReport(AuthorizationStatus.Failed);
-            var expected = new Response<EmptyEntity>(report, new EmptyEntity());
-            var requestContext = CreateRequestContextWithUserPassport(login, password);
-            _controllerUnderTests = AuthorizationControllerMoqFactory.Order(expected, requestContext);
-
-            var authResult = _controllerUnderTests.Authorization();
-            Assert.IsAssignableFrom<Response<EmptyEntity>>(authResult);
-            Assert.AreEqual(AuthorizationStatus.Failed, authResult.Report.Status);
-        }
-
-        [Test]
-        public void Authorize_InvalidInputEntity_EmptyEntityAndBadStatus()
-        {
-            var report = CreateResponseReport(ResponseStatus.Bad);
-            var expected = new Response<EmptyEntity>(report, new EmptyEntity());
-            var requestContext = CreateRequestContextWithEmptyEntity();
-            _controllerUnderTests = AuthorizationControllerMoqFactory.Order(expected, requestContext);
-
-            var authResult = _controllerUnderTests.Authorization();
-            Assert.IsAssignableFrom<Response<EmptyEntity>>(authResult);
-            Assert.AreEqual(ResponseStatus.Bad, authResult.Report.Status);
+            Assert.Throws<ArgumentNullException>(() => _controllerUnderTests.Authorization(null));
         }
 
         private RequestContext CreateRequestContextWithUserPassport(string login, string passport) =>

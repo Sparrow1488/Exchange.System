@@ -16,20 +16,14 @@ namespace Exchange.Server.Controllers
 
         public virtual Response Authorization(UserPassport passport)
         {
+            Response response;
             Ex.ThrowIfNull(passport);
-            Response response = default;
-            if (passport is UserPassport userPassport)
-            {
-                Ex.ThrowIfEmptyOrNull(userPassport.Login, "Login wasn't be null or empty!");
-                Ex.ThrowIfEmptyOrNull(userPassport.Password, "Password wasn't be null or empty!");
-                if (CompleteUserAuthorization(userPassport))
-                    response = CreateSuccessAuthResponse();
-                else response = CreateFailedAuthResponse();
-            }
-            else
-            {
-                throw new ArgumentException($"Input data is not a {nameof(UserPassport)}");
-            }
+            Ex.ThrowIfEmptyOrNull(passport.Login, "Login wasn't be null or empty!");
+            Ex.ThrowIfEmptyOrNull(passport.Password, "Password wasn't be null or empty!");
+
+            if (CompleteUserAuthorization(passport))
+                response = CreateSuccessAuthResponse();
+            else response = CreateFailedAuthResponse();
             return response;
         }
 
