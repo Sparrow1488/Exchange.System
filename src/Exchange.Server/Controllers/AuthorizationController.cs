@@ -11,13 +11,14 @@ namespace Exchange.Server.Controllers
 {
     public class AuthorizationController : Controller
     {
+        public AuthorizationController() : base() { } 
         public AuthorizationController(RequestContext context) : base(context) { }
 
-        public virtual Response Authorization()
+        public virtual Response Authorization(UserPassport passport)
         {
+            Ex.ThrowIfNull(passport);
             Response response = default;
-            var clientPassport = Context.Request.As<Request<UserPassport>>().Body.Content;
-            if (clientPassport is UserPassport userPassport)
+            if (passport is UserPassport userPassport)
             {
                 Ex.ThrowIfEmptyOrNull(userPassport.Login, "Login wasn't be null or empty!");
                 Ex.ThrowIfEmptyOrNull(userPassport.Password, "Password wasn't be null or empty!");

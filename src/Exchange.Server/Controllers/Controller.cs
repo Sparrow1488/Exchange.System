@@ -3,16 +3,20 @@ using Exchange.Server.Primitives;
 using Exchange.Server.Protocols;
 using Exchange.System.Entities;
 using Exchange.System.Enums;
+using Exchange.System.Exceptions;
 using Exchange.System.Packages;
 using ExchangeSystem.Helpers;
 using ExchangeSystem.Packages;
 using System;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Exchange.Server.Controllers
 {
     public abstract class Controller
     {
+        public Controller() { }
         public Controller(RequestContext context = default) =>
             Context = context;
 
@@ -34,7 +38,13 @@ namespace Exchange.Server.Controllers
             {
                 string requestMethodName = Context.Request.Query;
                 var method = GetType().GetMethod(requestMethodName);
-                response = (T)method.Invoke(this, new object[0]);
+                var methodParams = method.GetParameters();
+                if (methodParams.Length == 0)
+                    response = InvokeMethodWithoutParameter<T>(method);
+                else if (methodParams.Length == 1)
+                    response = InvokeMethodWithParameterFromBody<T>(method);
+                else
+                    throw new InvalidRequestException("This request cannot be handle, because processing controller have not any method what can use in this situation");
                 // TODO : сделать асинхронную реализацию
             }
             catch (Exception ex)
@@ -42,6 +52,15 @@ namespace Exchange.Server.Controllers
                 response = HandleException(ex);
             }
             return (T)response ?? default;
+        }
+
+        private TReturn InvokeMethodWithoutParameter<TReturn>(MethodInfo method) =>
+            (TReturn)method.Invoke(this, new object[0]);
+
+        private TReturn InvokeMethodWithParameterFromBody<TReturn>(MethodInfo method)
+        {
+            var bodyContent = Context.Request.GetBodyContent();
+            return (TReturn)method.Invoke(this, new object[] { bodyContent });
         }
 
         private async Task SendResponseAsync()

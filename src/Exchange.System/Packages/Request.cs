@@ -11,6 +11,8 @@ namespace Exchange.System.Packages
         public Request(string query, ProtectionType protection) : base(query, protection) { }
 
         [JsonProperty] public Body<T> Body { get; set; }
+
+        public override object GetBodyContent() => Body.Content;
     }
 
     public class Request
@@ -24,5 +26,7 @@ namespace Exchange.System.Packages
 
         [JsonProperty] public string Query { get; set; }
         [JsonProperty] public ProtectionType Protection { get; set; }
+
+        public virtual object GetBodyContent() => null;
     }
 }
