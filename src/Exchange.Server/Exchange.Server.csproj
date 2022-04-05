@@ -6,8 +6,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\GetLetters.cs" />
+    <Compile Remove="Controllers\GetPublications.cs" />
+    <Compile Remove="Controllers\GetSource.cs" />
+    <Compile Remove="Controllers\Message.cs" />
+    <Compile Remove="Controllers\NewLetter.cs" />
+    <Compile Remove="Controllers\NewPublication.cs" />
+    <Compile Remove="Controllers\TokenAuthorizationController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Security.Permissions" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>

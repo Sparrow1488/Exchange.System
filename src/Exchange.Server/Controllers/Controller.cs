@@ -1,31 +1,86 @@
-﻿using Exchange.Server .Exceptions.NetworkExceptions;
+﻿using Exchange.Server.Exceptions.NetworkExceptions;
+using Exchange.Server.Primitives;
 using Exchange.Server.Protocols;
-using Exchange.Server.Protocols.Selectors;
-using Exchange.System.Packages.Default;
-using Exchange.System.Protection;
-using System.Net.Sockets;
+using Exchange.System.Entities;
 using Exchange.System.Enums;
+using Exchange.System.Exceptions;
+using Exchange.System.Packages;
+using ExchangeSystem.Helpers;
+using ExchangeSystem.Packages;
+using System;
+using System.Reflection;
+using System.Threading.Tasks;
 
-namespace Exchange.Server .Controllers
+namespace Exchange.Server.Controllers
 {
     public abstract class Controller
     {
-        protected abstract Protocol Protocol { get; set; }
-        protected abstract IProtocolSelector ProtocolSelector { get; set; }
-        public abstract RequestType RequestType { get; }
-        public EncryptType EncryptType { get; protected set; }
+        public Controller() { }
+        public Controller(RequestContext context = default) =>
+            Context = context;
 
-        protected TcpClient Client;
-        protected ResponsePackage Response;
+        public Response Response { get; private set; }
+        public RequestContext Context { get; private set; }
 
-        public abstract void ProcessRequest(TcpClient connectedClient, Package package, EncryptType encryptType);
-        protected void SendResponse()
+        public async Task ProcessRequestAsync(RequestContext context)
         {
-            Protocol = ProtocolSelector.SelectProtocol(EncryptType);
-            if (Client.Connected)
-                Protocol.SendResponseAsync(Client, Response);
+            Context = context;
+            Response = ExecuteRequestMethod<Response>();
+            await SendResponseAsync();
+        }
+
+        private T ExecuteRequestMethod<T>()
+            where T : Response
+        {
+            Response response;
+            try
+            {
+                string requestMethodName = Context.Request.Query;
+                var method = GetType().GetMethod(requestMethodName);
+                var methodParams = method.GetParameters();
+                if (methodParams.Length == 0)
+                    response = InvokeMethodWithoutParameter<T>(method);
+                else if (methodParams.Length == 1)
+                    response = InvokeMethodWithParameterFromBody<T>(method);
+                else
+                    throw new InvalidRequestException("This request cannot be handle, because processing controller have not any method what can use in this situation");
+                // TODO : сделать асинхронную реализацию
+            }
+            catch (Exception ex)
+            {
+                response = HandleException(ex);
+            }
+            return (T)response ?? default;
+        }
+
+        private TReturn InvokeMethodWithoutParameter<TReturn>(MethodInfo method) =>
+            (TReturn)method.Invoke(this, new object[0]);
+
+        private TReturn InvokeMethodWithParameterFromBody<TReturn>(MethodInfo method)
+        {
+            var bodyContent = Context.Request.GetBodyContent();
+            return (TReturn)method.Invoke(this, new object[] { bodyContent });
+        }
+
+        private async Task SendResponseAsync()
+        {
+            Ex.ThrowIfTrue<ConnectionException>(() => !Context.Client.Connected, "Client was not connected!");
+            var protocol = new NewDefaultProtocol(Context.Client);
+            await protocol.SendResponseAsync(Response);
+        }
+
+        private Response HandleException(Exception ex)
+        {
+            ResponseReport report;
+            if (ex?.InnerException is InvalidCastException)
+            {
+                report = new ResponseReport(ResponseStatus.Invalid.Message, ResponseStatus.Invalid);
+            }
             else
-                throw new ConnectionException("Клиент не был подключен");
+            {
+                report = new ResponseReport(ex?.InnerException?.Message, ResponseStatus.Bad);
+            }
+            return new Response<EmptyEntity>(report, new EmptyEntity());
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Net.Sockets;
 
 namespace Exchange.Server.Protocols.Receivers
 {
-    public class ClientReceiver : IClientReceiver
+    public class ClientReceiver : IClientReceiver, IDisposable
     {
         private ClientReceiver(IPAddress address, int port) =>
             _listener = new TcpListener(address, port);
@@ -23,6 +23,7 @@ namespace Exchange.Server.Protocols.Receivers
         }
 
         public void Start() => _listener.Start();
+        public void Dispose() => _listener.Stop();
 
         public TcpClient AcceptClient()
         {
