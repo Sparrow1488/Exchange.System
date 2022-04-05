@@ -37,7 +37,7 @@ namespace Exchange.Sample.Client.Services
         {
             var sendler = new NewRequestSendler(_connection);
             _logger.LogDebug("GET => " + "Authorization");
-            var response = await sendler.SendRequestAsync(CreateAuthorizationRequest());
+            var response = await sendler.SendRetryRequestAsync(CreateAuthorizationRequest());
             _logger.LogInformation("STATUS => " + response.Report.Status.ToString());
             _logger.LogInformation($"MESSAGE => {response.Report.Message}");
 
