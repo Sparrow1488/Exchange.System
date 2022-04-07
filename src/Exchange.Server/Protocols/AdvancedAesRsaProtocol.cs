@@ -5,6 +5,7 @@ using Exchange.System.Packages;
 using Exchange.System.Protection;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -89,7 +90,8 @@ namespace Exchange.Server.Protocols
 
         private async Task GetEncryptedRequestAsync()
         {
-            var encryptedRequest =  await _channel.ReadDataAsync(TcpClient.GetStream());
+            var encryptedRequest = (await _channel.ReadDataAsync(TcpClient.GetStream()))
+                                        .TakeWhile(x => x != 0).ToArray();
             var decryptedRequest = _aesEncryptor.Decrypt(encryptedRequest);
             var jsonRequest = _channel.Encoding.GetString(decryptedRequest);
             Request = JsonConvert.DeserializeObject<Request>(jsonRequest, JsonSettings);

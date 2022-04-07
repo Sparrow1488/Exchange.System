@@ -48,7 +48,6 @@ namespace Exchange.System.Sendlers
         {
             var rsa = new RsaEncryptor();
             rsa.GenerateKeysBag();
-            
             return rsa;
         }
 
@@ -64,9 +63,9 @@ namespace Exchange.System.Sendlers
         {
             var rsa = new RsaEncryptor();
             var keys = _aesEncryptor.GetKeys();
-            rsa.UseKeys(new RsaKeysBag(_serverPublicKey, new byte[0]));
-            var encKey = _rsaEncryptor.Encrypt(keys.Key);
-            var encIV = _rsaEncryptor.Encrypt(keys.IV);
+            rsa.UseKeys(new RsaKeysBag(_serverPublicKey, default));
+            var encKey = rsa.Encrypt(keys.Key);
+            var encIV = rsa.Encrypt(keys.IV);
             _aesKeysStringify = new AesKeysStringify(new AesKeysBag(encKey, encIV));
         }
 
