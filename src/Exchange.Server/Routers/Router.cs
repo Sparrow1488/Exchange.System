@@ -52,10 +52,10 @@ namespace Exchange.Server.Routers
         private NetworkProtocol CreateProtocol(ProtectionType protection, TcpClient tcpClient)
         {
             NetworkProtocol selectedProtocol = default;
-            if(protection.ToString() == ProtectionType.Default.ToString())
-                selectedProtocol = new NewDefaultProtocol(tcpClient);
-            if (protection == ProtectionType.AesRsa)
-                throw new NotImplementedException();
+            if(ProtectionType.Default.Equals(protection))
+                selectedProtocol = new AdvancedDefaultProtocol(tcpClient);
+            if (ProtectionType.AesRsa.Equals(protection))
+                selectedProtocol = new AdvancedAesRsaProtocol(tcpClient);
             return selectedProtocol;
         }
     }

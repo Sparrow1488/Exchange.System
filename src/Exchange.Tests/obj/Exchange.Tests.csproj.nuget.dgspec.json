@@ -92,6 +92,9 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
+              "C:\\Users\\aleks\\OneDrive\\Desktop\\Илья\\Repositories\\Encryptors\\src\\Encryptors\\Encryptors.csproj": {
+                "projectPath": "C:\\Users\\aleks\\OneDrive\\Desktop\\Илья\\Repositories\\Encryptors\\src\\Encryptors\\Encryptors.csproj"
+              },
               "C:\\Users\\aleks\\OneDrive\\Desktop\\Илья\\Repositories\\ExchangeSystem\\src\\Exchange.System\\Exchange.System.csproj": {
                 "projectPath": "C:\\Users\\aleks\\OneDrive\\Desktop\\Илья\\Repositories\\ExchangeSystem\\src\\Exchange.System\\Exchange.System.csproj"
               }

@@ -128,3 +128,4 @@ C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchang
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Server\obj\Debug\netcoreapp3.1\Exchange.Server.dll
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Server\obj\Debug\netcoreapp3.1\Exchange.Server.pdb
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Server\obj\Debug\netcoreapp3.1\Exchange.Server.genruntimeconfig.cache
+C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Server\bin\Debug\netcoreapp3.1\Encryptors.pdb

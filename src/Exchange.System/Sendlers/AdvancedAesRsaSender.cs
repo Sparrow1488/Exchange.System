@@ -4,14 +4,15 @@ using Exchange.System.Enums;
 using Exchange.System.Packages;
 using Exchange.System.Protection;
 using Newtonsoft.Json;
-using System.Text;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Exchange.System.Sendlers
 {
-    public class AdvancedAesRsaSendler : RequestSender
+    public class AdvancedAesRsaSender : RequestSender
     {
-        public AdvancedAesRsaSendler(ConnectionSettings settings) : base(settings) { }
+        public AdvancedAesRsaSender(ConnectionSettings settings) : base(settings) { }
 
         protected override ProtocolProtectionInfo ProtocolProtection => 
             new ProtocolProtectionInfo(ProtectionType.AesRsa);
@@ -29,6 +30,9 @@ namespace Exchange.System.Sendlers
             await GetServerPublicKeyAsync();
             EncryptOwnAesKeys();
             await SendEncryptedAesKeysAsync();
+            await Task.Delay(500);
+            await SendEncryptedRequestAsync();
+            await Task.Delay(500);
             await GetEncryptedResponseAsync();
             return Response;
         }
@@ -44,11 +48,17 @@ namespace Exchange.System.Sendlers
         {
             var rsa = new RsaEncryptor();
             rsa.GenerateKeysBag();
+            
             return rsa;
         }
 
-        private async Task GetServerPublicKeyAsync() =>
-            _serverPublicKey = await Channel.ReadDataAsync(NetworkStream);
+        private async Task GetServerPublicKeyAsync() 
+        {
+            var publicKeyData = (await Channel.ReadDataAsync(NetworkStream)).TakeWhile(x => x != 0).ToArray();
+            var publicKeyInBase64 = Channel.Encoding.GetString(publicKeyData);
+            _serverPublicKey = Convert.FromBase64String(publicKeyInBase64);
+            //_serverPublicKey = _serverPublicKey
+        }
 
         private void EncryptOwnAesKeys()
         {
@@ -63,14 +73,22 @@ namespace Exchange.System.Sendlers
         private async Task SendEncryptedAesKeysAsync()
         {
             string keysStringify = JsonConvert.SerializeObject(_aesKeysStringify, JsonSettings);
-            var dataToSend = Encoding.UTF8.GetBytes(keysStringify);
+            var dataToSend = Channel.Encoding.GetBytes(keysStringify);
             await Channel.WriteAsync(NetworkStream, dataToSend);
+        }
+
+        private async Task SendEncryptedRequestAsync()
+        {
+            var jsonRequest = GetRequestStringify();
+            var requestBytes = Channel.Encoding.GetBytes(jsonRequest);
+            var encryptedRequestBytes = _aesEncryptor.Encrypt(requestBytes);
+            await Channel.WriteAsync(NetworkStream, encryptedRequestBytes);
         }
 
         private async Task GetEncryptedResponseAsync()
         {
             var encryptedDataResponse = await Channel.ReadDataAsync(NetworkStream);
-            var responseData = _aesEncryptor.Encrypt(encryptedDataResponse);
+            var responseData = _aesEncryptor.Decrypt(encryptedDataResponse);
             var jsonResponse = Channel.Encoding.GetString(responseData);
             Response = JsonConvert.DeserializeObject<Response>(jsonResponse, JsonSettings);
         }

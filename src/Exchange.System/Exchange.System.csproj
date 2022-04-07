@@ -13,10 +13,4 @@
     <ProjectReference Include="..\..\..\Encryptors\src\Encryptors\Encryptors.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Encryptors">
-      <HintPath>..\Bin\Encryptors.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

@@ -1481,6 +1481,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "Encryptors": "1.0.0",
           "EntityFramework": "6.4.4",
           "Exchange.System": "1.0.0",
           "Newtonsoft.Json": "13.0.1",

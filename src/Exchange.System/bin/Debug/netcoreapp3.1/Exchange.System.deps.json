@@ -8,9 +8,9 @@
     ".NETCoreApp,Version=v3.1": {
       "Exchange.System/1.0.0": {
         "dependencies": {
+          "Encryptors": "1.0.0",
           "Newtonsoft.Json": "13.0.1",
-          "Polly": "7.2.3",
-          "Encryptors": "1.0.0.0"
+          "Polly": "7.2.3"
         },
         "runtime": {
           "Exchange.System.dll": {}
@@ -32,12 +32,9 @@
           }
         }
       },
-      "Encryptors/1.0.0.0": {
+      "Encryptors/1.0.0": {
         "runtime": {
-          "Encryptors.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "Encryptors.dll": {}
         }
       }
     }
@@ -62,8 +59,8 @@
       "path": "polly/7.2.3",
       "hashPath": "polly.7.2.3.nupkg.sha512"
     },
-    "Encryptors/1.0.0.0": {
-      "type": "reference",
+    "Encryptors/1.0.0": {
+      "type": "project",
       "serviceable": false,
       "sha512": ""
     }

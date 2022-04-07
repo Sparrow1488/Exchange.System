@@ -14,5 +14,18 @@ namespace Exchange.System.Enums
 
         public static readonly ProtectionType Default = new ProtectionType("Default");
         public static readonly ProtectionType AesRsa = new ProtectionType("AesRsa");
+
+        public override bool Equals(object obj)
+        {
+            bool isEquals = false;
+            if (obj is ProtectionType type)
+            {
+                if (type.Name == Name)
+                {
+                    isEquals = true;
+                }
+            }
+            return isEquals;
+        }
     }
 }

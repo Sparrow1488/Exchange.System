@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Exchange.Server.Protocols
 {
-    internal class NewDefaultProtocol : NetworkProtocol<Request, Response>, IAsyncDisposable
+    internal class AdvancedDefaultProtocol : NetworkProtocol<Request, Response>, IAsyncDisposable
     {
-        public NewDefaultProtocol(TcpClient tcpClient) : base(tcpClient) { }
+        public AdvancedDefaultProtocol(TcpClient tcpClient) : base(tcpClient) { }
 
         public override ProtectionType Protection => ProtectionType.Default;
         private NetworkStream _stream => TcpClient.GetStream();

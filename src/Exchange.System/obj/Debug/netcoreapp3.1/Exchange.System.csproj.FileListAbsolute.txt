@@ -21,3 +21,4 @@ C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchang
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.System\obj\Debug\netcoreapp3.1\Exchange.System.csproj.CopyComplete
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.System\obj\Debug\netcoreapp3.1\Exchange.System.dll
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.System\obj\Debug\netcoreapp3.1\Exchange.System.pdb
+C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.System\bin\Debug\netcoreapp3.1\Encryptors.pdb
