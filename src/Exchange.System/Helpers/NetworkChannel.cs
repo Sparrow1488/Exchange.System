@@ -9,26 +9,12 @@ namespace Exchange.System.Helpers
     public class NetworkChannel : INetworkChannelWriter, INetworkChannelReader
     {
         public Encoding Encoding { get; } = Encoding.UTF8;
-        public int BufferSize 
-        { 
-            get 
-            { 
-                return _bufferSize; 
-            } 
-            set 
-            {
-                if (value < 0)
-                    throw new ArgumentException("Вы указали недопустимое значение для размера буфера");
-                else
-                    _bufferSize = value; 
-            } 
-        }
+        public int BufferSize => _bufferSize;
         private int _bufferSize = 1024;
 
-        public NetworkChannel(int bufferSize)
-        {
-            BufferSize = bufferSize;
-        }
+        public NetworkChannel(int bufferSize) =>
+            _bufferSize = bufferSize;
+
         public NetworkChannel() { }
 
         public async Task<string> ReadAsync(NetworkStream stream)

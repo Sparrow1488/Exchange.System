@@ -13,7 +13,7 @@ namespace Exchange.System.Sendlers
         }
         protected ConnectionSettings ConnectionSettings { get; }
         protected ProtectedPackage SecretPackage { get; set; }
-        protected Informator _requestInfo;
+        protected ProtocolProtectionInfo _requestInfo;
         public abstract  Task<ResponsePackage> SendRequest(Package package);
 
         public string ToEncryptJson()

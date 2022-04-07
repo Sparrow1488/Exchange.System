@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Exchange.System.Sendlers
 {
-    public class RequestSendler : IRequestSendler
+    public class RequestSendler : IRequestSender
     {
         public RequestSendler(ConnectionSettings settings) =>
             ConnectionInfo = settings;
@@ -17,7 +17,7 @@ namespace Exchange.System.Sendlers
         private NetworkChannel _networkHelper = new NetworkChannel(180000);
         private NetworkStream _stream;
         private TcpClient _client;
-        private Informator _informator = new Informator(Protection.EncryptType.None);
+        private ProtocolProtectionInfo _informator;
         private byte[] _requestData;
         private ResponsePackage _responsePackage;
         private JsonSerializerSettings _jsonSettings = new JsonSerializerSettings()
@@ -75,5 +75,8 @@ namespace Exchange.System.Sendlers
             string jsonResponse = await _networkHelper.ReadAsync(_stream);
             return JsonConvert.DeserializeObject<T>(jsonResponse, _jsonSettings);
         }
+
+        public Task<Response> SendRetryRequestAsync(Request request) =>
+            throw new NotImplementedException();
     }
 }

@@ -49,7 +49,7 @@ namespace Exchange.Server.Protocols
             bool can = Int32.TryParse(secretPackageSize, out int correctSecretPack);
             if (!can)
                 throw new Exception("Пришла хуета, а не размер пакета");
-            _networkChannel.BufferSize = correctSecretPack;
+            //_networkChannel.BufferSize = correctSecretPack;
             byte[] bufferForSecretPackage = await _networkChannel.ReadDataAsync(stream);
             string _protectedJsonPackage = _networkChannel.Encoding.GetString(bufferForSecretPackage);
             ProtectedPackage pack = (ProtectedPackage)JsonConvert.DeserializeObject(_protectedJsonPackage, new JsonSerializerSettings
@@ -114,7 +114,7 @@ namespace Exchange.Server.Protocols
 
         private async Task ReceiveClientKey()
         {
-            _networkChannel.BufferSize = 2100;
+            //_networkChannel.BufferSize = 2100;
             byte[] clientKeyData = await _networkChannel.ReadDataAsync(_stream);
             var xmlKey = new NetworkChannel().Encoding.GetString(clientKeyData);
             _clientPublicKey = new RsaConverter().AsParameters(xmlKey);

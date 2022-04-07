@@ -130,8 +130,3 @@ C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Tests\obj\Debug
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Tests\obj\Debug\netcoreapp3.1\Exchange.Tests.dll
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Tests\obj\Debug\netcoreapp3.1\Exchange.Tests.pdb
 C:\Users\Dom\Desktop\GitRepositories\ExchangeSystem\src\Exchange.Tests\obj\Debug\netcoreapp3.1\Exchange.Tests.genruntimeconfig.cache
-C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Tests\obj\Debug\netcoreapp3.1\Exchange.Tests.csproj.AssemblyReference.cache
-C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Tests\obj\Debug\netcoreapp3.1\Exchange.Tests.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Tests\obj\Debug\netcoreapp3.1\Exchange.Tests.AssemblyInfoInputs.cache
-C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Tests\obj\Debug\netcoreapp3.1\Exchange.Tests.AssemblyInfo.cs
-C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.Tests\obj\Debug\netcoreapp3.1\Exchange.Tests.csproj.CoreCompileInputs.cache

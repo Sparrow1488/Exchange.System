@@ -36,7 +36,7 @@ namespace Exchange.Server.Routers
 
             var stream = client.GetStream();
             string requestInfoStringify = await _networkChannel.ReadAsync(stream);
-            var requestInfo = JsonConvert.DeserializeObject<RequestInformator>(requestInfoStringify, _jsonSettings);
+            var requestInfo = JsonConvert.DeserializeObject<ProtocolProtectionInfo>(requestInfoStringify, _jsonSettings);
             var protocol = CreateProtocol(requestInfo.ProtectionType, client);
             await protocol.AcceptRequest();
             var request = protocol.GetRequest<Request>();
