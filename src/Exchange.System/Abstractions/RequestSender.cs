@@ -40,6 +40,9 @@ namespace Exchange.System.Abstractions
         public virtual async Task<Response> SendRetryRequestAsync(Request request) =>
             await _retryPolicy.ExecuteAsync(() => SendRequestAsync(request));
 
+        protected async Task SendProtocolProtectionAsync() =>
+            await Channel.WriteAsync(NetworkStream, GetProtocolProtecInBytes());
+
         protected async Task OpenConnectionAsync() =>
             await TcpClient.ConnectAsync(Connection.HostName, Connection.Port);
 

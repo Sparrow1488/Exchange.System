@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Exchange.System.Sendlers
 {
-    public class AdvancedRequestSendler : RequestSender
+    public class AdvancedRequestSender : RequestSender
     {
-        public AdvancedRequestSendler(ConnectionSettings settings) : base(settings) { }
+        public AdvancedRequestSender(ConnectionSettings settings) : base(settings) { }
 
         protected override ProtocolProtectionInfo ProtocolProtection => 
             new ProtocolProtectionInfo(ProtectionType.Default);
@@ -24,9 +24,6 @@ namespace Exchange.System.Sendlers
             CloseConnection();
             return Response;
         }
-
-        private async Task SendProtocolProtectionAsync() =>
-            await Channel.WriteAsync(NetworkStream, GetProtocolProtecInBytes());
 
         private async Task SendRequestAsync() =>
             await Channel.WriteAsync(NetworkStream, GetRequestInBytes());

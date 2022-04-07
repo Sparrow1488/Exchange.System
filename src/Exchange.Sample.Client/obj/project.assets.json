@@ -666,10 +666,21 @@
           "buildTransitive/netcoreapp3.1/_._": {}
         }
       },
+      "Encryptors/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/Encryptors.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Encryptors.dll": {}
+        }
+      },
       "Exchange.System/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "Encryptors": "1.0.0",
           "Newtonsoft.Json": "13.0.1",
           "Polly": "7.2.3"
         },
@@ -1792,6 +1803,11 @@
         "system.text.json.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "Encryptors/1.0.0": {
+      "type": "project",
+      "path": "../../../Encryptors/src/Encryptors/Encryptors.csproj",
+      "msbuildProject": "../../../Encryptors/src/Encryptors/Encryptors.csproj"
     },
     "Exchange.System/1.0.0": {
       "type": "project",

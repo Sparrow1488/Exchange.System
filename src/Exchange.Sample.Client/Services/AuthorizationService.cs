@@ -35,11 +35,10 @@ namespace Exchange.Sample.Client.Services
 
         public async Task AuthorizeAsync(string login, string password)
         {
-            var sendler = new AdvancedRequestSendler(_connection);
+            var sendler = new AdvancedRequestSender(_connection);
             _logger.LogDebug("GET => " + "Authorization");
             var response = await sendler.SendRequestAsync(CreateAuthorizationRequest());
             _logger.LogInformation("STATUS => " + response.Report.Status.ToString());
-            _logger.LogInformation($"MESSAGE => {response.Report.Message}");
 
             if (IsAuthSuccess(response))
             {

@@ -19,6 +19,16 @@
         "runtime": {
           "lib/netstandard2.0/Polly.dll": {}
         }
+      },
+      "Encryptors/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/Encryptors.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Encryptors.dll": {}
+        }
       }
     }
   },
@@ -73,10 +83,16 @@
         "polly.7.2.3.nupkg.sha512",
         "polly.nuspec"
       ]
+    },
+    "Encryptors/1.0.0": {
+      "type": "project",
+      "path": "../../../Encryptors/src/Encryptors/Encryptors.csproj",
+      "msbuildProject": "../../../Encryptors/src/Encryptors/Encryptors.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "Encryptors >= 1.0.0",
       "Newtonsoft.Json >= 13.0.1",
       "Polly >= 7.2.3"
     ]
@@ -113,7 +129,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\aleks\\OneDrive\\Desktop\\Илья\\Repositories\\Encryptors\\src\\Encryptors\\Encryptors.csproj": {
+              "projectPath": "C:\\Users\\aleks\\OneDrive\\Desktop\\Илья\\Repositories\\Encryptors\\src\\Encryptors\\Encryptors.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

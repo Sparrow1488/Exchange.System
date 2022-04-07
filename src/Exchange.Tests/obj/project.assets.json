@@ -1467,6 +1467,16 @@
           "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
         }
       },
+      "Encryptors/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/Encryptors.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Encryptors.dll": {}
+        }
+      },
       "Exchange.Server/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
@@ -1487,6 +1497,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "Encryptors": "1.0.0",
           "Newtonsoft.Json": "13.0.1",
           "Polly": "7.2.3"
         },
@@ -5493,6 +5504,11 @@
         "system.xml.xpath.xmldocument.4.3.0.nupkg.sha512",
         "system.xml.xpath.xmldocument.nuspec"
       ]
+    },
+    "Encryptors/1.0.0": {
+      "type": "project",
+      "path": "../../../Encryptors/src/Encryptors/Encryptors.csproj",
+      "msbuildProject": "../../../Encryptors/src/Encryptors/Encryptors.csproj"
     },
     "Exchange.Server/1.0.0": {
       "type": "project",
