@@ -1,5 +1,6 @@
 ﻿using Exchange.System.Abstractions;
 using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace Exchange.System.Helpers
             }
             while (stream.DataAvailable);
             stream.Flush();
-            return receivedBuffer;
+            return CleanBytesArray(receivedBuffer);
         }
 
         public async Task WriteAsync(NetworkStream stream, byte[] data)
@@ -51,6 +52,19 @@ namespace Exchange.System.Helpers
                 await stream.WriteAsync(data, 0, data.Length);
             }
             while (stream.DataAvailable);
+        }
+
+        private byte[] CleanBytesArray(byte[] array)
+        {
+            int startEmptyArrayBytesIndex = array.Length - 1;
+            for (int i = startEmptyArrayBytesIndex; i >= 0; i--)
+            {
+                if (array[i] == 0)
+                    startEmptyArrayBytesIndex--;
+                else break;
+            }
+            Array.Resize(ref array, startEmptyArrayBytesIndex + 1);
+            return array;
         }
     }
 }
