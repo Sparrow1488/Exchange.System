@@ -43,7 +43,8 @@ namespace Exchange.Server.Routers
             context = RequestContext.ConfigureContext(context =>
                                 context.SetRequest(request)
                                         .SetClient(client)
-                                            .SetProtection(request.Protection));
+                                         .SetProtection(request.Protection))
+                                          .SetProtocol(protocol);
             return context;
         }
 

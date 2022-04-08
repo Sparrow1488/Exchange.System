@@ -46,7 +46,7 @@ namespace Exchange.Server
 
             if (requestContext.Request is Request requestImp)
             {
-                Console.WriteLine("GET => {0}; EncryptType => {1}",
+                Console.WriteLine("GET => {0}; Protection => {1}",
                     requestImp.Query,
                         requestContext.Protection.ToString());
                 await ProcessRequestAsync(requestContext);

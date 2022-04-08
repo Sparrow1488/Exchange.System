@@ -65,8 +65,8 @@ namespace Exchange.Server.Controllers
         private async Task SendResponseAsync()
         {
             Ex.ThrowIfTrue<ConnectionException>(() => !Context.Client.Connected, "Client was not connected!");
-            var protocol = new AdvancedDefaultProtocol(Context.Client);
-            await protocol.SendResponseAsync(Response);
+            Context.Protocol.SetResponse(Response);
+            await Context.Protocol.SendResponse();
         }
 
         private Response HandleException(Exception ex)

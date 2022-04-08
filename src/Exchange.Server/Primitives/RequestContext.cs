@@ -1,4 +1,5 @@
-﻿using Exchange.System.Enums;
+﻿using Exchange.Server.Protocols;
+using Exchange.System.Enums;
 using Exchange.System.Packages;
 using Exchange.System.Protection;
 using System;
@@ -15,6 +16,7 @@ namespace Exchange.Server.Primitives
         public EncryptType EncryptType { get; private set; }
         public ProtectionType Protection { get; private set; }
         public TcpClient Client { get; private set; }
+        public NetworkProtocol Protocol { get; private set; }
 
         public static RequestContext ConfigureContext(Action<RequestContext> config)
         {
@@ -50,6 +52,12 @@ namespace Exchange.Server.Primitives
         public RequestContext SetRequest(Request request)
         {
             Request = request;
+            return this;
+        }
+
+        public RequestContext SetProtocol(NetworkProtocol protocol)
+        {
+            Protocol = protocol;
             return this;
         }
     }

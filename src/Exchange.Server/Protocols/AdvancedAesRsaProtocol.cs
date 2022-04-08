@@ -37,6 +37,7 @@ namespace Exchange.Server.Protocols
         private readonly RsaEncryptor _rsaEncryptor = CreateRsaEncryptor();
         private NetworkChannel _channel = new NetworkChannel();
         private AesKeysStringify _aesKeysStringify;
+        private byte[] _encryptedResponseData = default;
 
         public override async Task<Request> AcceptRequestAsync()
         {
@@ -47,8 +48,12 @@ namespace Exchange.Server.Protocols
             return Request;
         }
 
-        public override Task SendResponseAsync(Response response) =>
-            throw new NotImplementedException();
+        public override async Task SendResponseAsync(Response response)
+        {
+            Response = response;
+            EncryptResponse();
+            await SendEncryptedResponseAsync();
+        }
 
         public ValueTask DisposeAsync() =>
             throw new NotImplementedException();
@@ -95,5 +100,15 @@ namespace Exchange.Server.Protocols
             var jsonRequest = _channel.Encoding.GetString(decryptedRequest);
             Request = JsonConvert.DeserializeObject<Request>(jsonRequest, JsonSettings);
         }
+
+        private void EncryptResponse()
+        {
+            var responseStringify = JsonConvert.SerializeObject(Response, JsonSettings);
+            var encodedJsonResponse = _channel.Encoding.GetBytes(responseStringify);
+            _encryptedResponseData = _aesEncryptor.Encrypt(encodedJsonResponse);
+        }
+
+        private async Task SendEncryptedResponseAsync() =>
+            await _channel.WriteAsync(TcpClient.GetStream(), _encryptedResponseData);
     }
 }

@@ -30,10 +30,10 @@ namespace Exchange.System.Sendlers
             await GetServerPublicKeyAsync();
             EncryptOwnAesKeys();
             await SendEncryptedAesKeysAsync();
-            await Task.Delay(500);
+            await Task.Delay(50);
             await SendEncryptedRequestAsync();
-            await Task.Delay(500);
             await GetEncryptedResponseAsync();
+            CloseConnection();
             return Response;
         }
 
@@ -53,10 +53,9 @@ namespace Exchange.System.Sendlers
 
         private async Task GetServerPublicKeyAsync() 
         {
-            var publicKeyData = (await Channel.ReadDataAsync(NetworkStream)).TakeWhile(x => x != 0).ToArray();
+            var publicKeyData = await Channel.ReadDataAsync(NetworkStream);
             var publicKeyInBase64 = Channel.Encoding.GetString(publicKeyData);
             _serverPublicKey = Convert.FromBase64String(publicKeyInBase64);
-            //_serverPublicKey = _serverPublicKey
         }
 
         private void EncryptOwnAesKeys()

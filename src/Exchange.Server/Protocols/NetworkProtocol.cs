@@ -32,6 +32,7 @@ namespace Exchange.Server.Protocols
         public override Task SendResponse() => SendResponseAsync((TResponse)Response);
         public override T GetRequest<T>() => Request as T;
         public override T GetResponse<T>() => Response as T;
+        public override void SetResponse<TResponseObj>(TResponseObj response) => Response = response as Response;
 
         public abstract Task<TRequest> AcceptRequestAsync();
         public abstract Task SendResponseAsync(TResponse response);
@@ -45,5 +46,7 @@ namespace Exchange.Server.Protocols
             where T : class;
         public abstract T GetResponse<T>() 
             where T : class;
+        public abstract void SetResponse<TResponseObj>(TResponseObj response)
+            where TResponseObj : class;
     }
 }
