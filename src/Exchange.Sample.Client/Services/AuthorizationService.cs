@@ -37,7 +37,6 @@ namespace Exchange.Sample.Client.Services
         public async Task AuthorizeAsync(string login, string password)
         {
             _sender = new AdvancedRequestSender(_connection);
-            _logger.LogDebug("GET => " + "Authorization");
             var response = await _sender.SendRetryRequestAsync(CreateAuthorizationRequest());
 
             if (IsAuthSuccess(response))
@@ -61,6 +60,7 @@ namespace Exchange.Sample.Client.Services
 
         private Request CreateAuthorizationRequest()
         {
+            _logger.LogDebug("GET => " + "Authorization/AuthorizationHashed");
             var request = new Request<HashedUserPassport>("Authorization/AuthorizationHashed", ProtectionType.Default);
             var hashedPassport = HashedUserPassport.CreateHashed(_passport);
             request.Body = new Body<HashedUserPassport>(hashedPassport);

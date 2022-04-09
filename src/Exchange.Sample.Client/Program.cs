@@ -23,6 +23,7 @@ namespace Exchange.Sample.Client
                 services.AddTransient(provider => BuildConnectionSettings(provider));
                 services.AddTransient(provider => BuildUserPassport(provider));
                 services.AddTransient<IAuthorizationService, AuthorizationService>();
+                services.AddTransient<IProfileManageService, ProfileManageService>();
                 services.AddTransient<Startup>();
             }).UseSerilog().Build();
 
