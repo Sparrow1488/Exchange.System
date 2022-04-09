@@ -11,6 +11,11 @@ namespace Exchange.System.Sendlers
 
     public interface IRequestSender
     {
-
+        Task SendRequestAsync();
+        Task SendRetryRequestAsync();
+        void SetRequest<TRequest>(TRequest requestObj)
+            where TRequest : class;
+        TResponse GetResponse<TResponse>()
+            where TResponse : class;
     }
 }

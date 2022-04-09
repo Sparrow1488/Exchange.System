@@ -64,5 +64,12 @@ namespace Exchange.System.Abstractions
         protected virtual JsonSerializerSettings CreateJsonSerializationSettings() =>
             new JsonSerializerSettings(){
                 TypeNameHandling = TypeNameHandling.All };
+
+        public Task SendRequestAsync() => SendRequestAsync(Request);
+        public Task SendRetryRequestAsync() => SendRetryRequestAsync(Request);
+        public void SetRequest<TRequest>(TRequest requestObj) 
+            where TRequest : class => Request = requestObj as Request;
+        public TResponse GetResponse<TResponse>()
+            where TResponse : class => Response as TResponse;
     }
 }

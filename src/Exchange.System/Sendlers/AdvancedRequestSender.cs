@@ -25,7 +25,7 @@ namespace Exchange.System.Sendlers
             return Response;
         }
 
-        private async Task SendRequestAsync() =>
+        private new async Task SendRequestAsync() =>
             await Channel.WriteAsync(NetworkStream, GetRequestInBytes());
 
         private async Task GetResponseAsync<TResponse>()

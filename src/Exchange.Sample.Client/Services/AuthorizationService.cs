@@ -29,23 +29,24 @@ namespace Exchange.Sample.Client.Services
         private readonly ConnectionSettings _connection;
         private readonly UserPassport _passport;
         private AuthorizationContext _context;
+        private IRequestSender<Request, Response> _sender;
 
         public async Task AuthorizeAsync() =>
             await AuthorizeAsync(_passport.Login, _passport.Password);
 
         public async Task AuthorizeAsync(string login, string password)
         {
-            var sendler = new AdvancedAesRsaSender(_connection);
+            _sender = new AdvancedAesRsaSender(_connection);
             _logger.LogDebug("GET => " + "Authorization");
-            var response = await sendler.SendRequestAsync(CreateAuthorizationRequest());
-            _logger.LogInformation("STATUS => " + response.Report.Status.ToString());
+            var response = await _sender.SendRequestAsync(CreateAuthorizationRequest());
 
             if (IsAuthSuccess(response))
             {
                 var correctResponse = response as Response<Guid>;
                 Ex.ThrowIfNull(correctResponse);
-                _logger.LogDebug("GUID => " + correctResponse.Content.ToString());
                 _context = CreateSuccessContext(correctResponse);
+
+                _logger.LogInformation("GUID => " + correctResponse.Content.ToString());
             }
             else if (IsAuthFailed(response))
             {
@@ -62,7 +63,6 @@ namespace Exchange.Sample.Client.Services
 
         private Request CreateAuthorizationRequest()
         {
-            _logger.LogDebug("Created authorization request");
             var request = new Request<UserPassport>("Authorization", ProtectionType.Default);
             request.Body = new Body<UserPassport>(_passport);
             return request;
