@@ -4,7 +4,7 @@ using Exchange.System.Packages;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
-namespace Exchange.System.Sendlers
+namespace Exchange.System.Senders
 {
     public class AdvancedRequestSender : RequestSender
     {

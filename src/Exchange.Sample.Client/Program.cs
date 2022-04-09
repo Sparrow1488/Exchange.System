@@ -1,7 +1,7 @@
 ﻿using Exchange.Sample.Client.Abstractions;
 using Exchange.Sample.Client.Services;
 using Exchange.System.Entities;
-using Exchange.System.Sendlers;
+using Exchange.System.Senders;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

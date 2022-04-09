@@ -3,7 +3,7 @@ using Exchange.Sample.Client.Primitives;
 using Exchange.System.Entities;
 using Exchange.System.Enums;
 using Exchange.System.Packages;
-using Exchange.System.Sendlers;
+using Exchange.System.Senders;
 using ExchangeSystem.Helpers;
 using Microsoft.Extensions.Logging;
 using System;

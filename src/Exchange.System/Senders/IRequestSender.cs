@@ -1,7 +1,7 @@
 ﻿using Exchange.System.Packages;
 using System.Threading.Tasks;
 
-namespace Exchange.System.Sendlers
+namespace Exchange.System.Senders
 {
     public interface IRequestSender<TRequest, TResponse> : IRequestSender
     {

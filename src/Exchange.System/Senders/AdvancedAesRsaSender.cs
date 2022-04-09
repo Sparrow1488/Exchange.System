@@ -5,10 +5,9 @@ using Exchange.System.Packages;
 using Exchange.System.Protection;
 using Newtonsoft.Json;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace Exchange.System.Sendlers
+namespace Exchange.System.Senders
 {
     public class AdvancedAesRsaSender : RequestSender
     {

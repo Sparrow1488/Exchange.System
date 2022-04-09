@@ -1,6 +1,6 @@
 ﻿using Exchange.System.Helpers;
 using Exchange.System.Packages;
-using Exchange.System.Sendlers;
+using Exchange.System.Senders;
 using Newtonsoft.Json;
 using Polly;
 using Polly.Retry;

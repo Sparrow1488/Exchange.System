@@ -1,4 +1,4 @@
-﻿namespace Exchange.System.Sendlers
+﻿namespace Exchange.System.Senders
 {
     public class ConnectionSettings
     {
