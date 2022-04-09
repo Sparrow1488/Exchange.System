@@ -79,7 +79,7 @@ if(response.Report.Status == ResponseStatus.Success){
 private UserPassport _passport = new UserPassport("asd", "1234");
 
 private Request<HashedUserProfile> CreateAuthRequest(){
-    var request = new Request<HashedUserPassport>("Authorization", 											ProtectionType.Default);
+    var request = new Request<HashedUserPassport>("Authorization", ProtectionType.Default);
     var hashedPassport = HashedUserPassport.CreateHashed(passport);
     request.Body = new Body<HashedUserPassport>(hashedPassport);
     return request;
