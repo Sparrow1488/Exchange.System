@@ -2,6 +2,6 @@
 {
     public interface IControllerSelector
     {
-        Controller SelectController(string controllerName);
+        Controller SelectController(string query);
     }
 }

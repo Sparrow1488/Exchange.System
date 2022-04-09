@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Polly;
 using Polly.Retry;
 using System;
+using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
@@ -16,9 +17,12 @@ namespace Exchange.System.Abstractions
         {
             Connection = settings;
             _retryPolicy = Policy.Handle<JsonSerializationException>()
+                            .Or<IOException>()
                             .Or<SocketException>().WaitAndRetryAsync(_maxRetries,
                                 sleepSuration => TimeSpan.FromMilliseconds(250));
             _tcpClient = new TcpClient();
+            _tcpClient.SendTimeout = TimeSpan.FromSeconds(5).Milliseconds;
+            _tcpClient.ReceiveTimeout = TimeSpan.FromSeconds(5).Milliseconds;
             Channel = new NetworkChannel();
             JsonSettings = CreateJsonSerializationSettings();
         }

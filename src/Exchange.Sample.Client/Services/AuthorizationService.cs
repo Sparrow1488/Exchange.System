@@ -36,17 +36,15 @@ namespace Exchange.Sample.Client.Services
 
         public async Task AuthorizeAsync(string login, string password)
         {
-            _sender = new AdvancedAesRsaSender(_connection);
+            _sender = new AdvancedRequestSender(_connection);
             _logger.LogDebug("GET => " + "Authorization");
-            var response = await _sender.SendRequestAsync(CreateAuthorizationRequest());
+            var response = await _sender.SendRetryRequestAsync(CreateAuthorizationRequest());
 
             if (IsAuthSuccess(response))
             {
                 var correctResponse = response as Response<Guid>;
                 Ex.ThrowIfNull(correctResponse);
                 _context = CreateSuccessContext(correctResponse);
-
-                _logger.LogInformation("GUID => " + correctResponse.Content.ToString());
             }
             else if (IsAuthFailed(response))
             {
@@ -63,8 +61,9 @@ namespace Exchange.Sample.Client.Services
 
         private Request CreateAuthorizationRequest()
         {
-            var request = new Request<UserPassport>("Authorization", ProtectionType.Default);
-            request.Body = new Body<UserPassport>(_passport);
+            var request = new Request<HashedUserPassport>("Authorization/AuthorizationHashed", ProtectionType.Default);
+            var hashedPassport = HashedUserPassport.CreateHashed(_passport);
+            request.Body = new Body<HashedUserPassport>(hashedPassport);
             return request;
         }
 

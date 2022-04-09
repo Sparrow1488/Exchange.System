@@ -11,9 +11,7 @@ namespace Exchange.Server.Primitives
     {
         private RequestContext() { }
 
-        public Package Content { get; private set; }
         public Request Request { get; private set; }
-        public EncryptType EncryptType { get; private set; }
         public ProtectionType Protection { get; private set; }
         public TcpClient Client { get; private set; }
         public NetworkProtocol Protocol { get; private set; }
@@ -23,18 +21,6 @@ namespace Exchange.Server.Primitives
             var context = new RequestContext();
             config?.Invoke(context);
             return context;
-        }
-
-        public RequestContext SetContent(Package package)
-        {
-            Content = package;
-            return this;
-        }
-
-        public RequestContext SetEncription(EncryptType encryptType)
-        {
-            EncryptType = encryptType;
-            return this;
         }
 
         public RequestContext SetProtection(ProtectionType protection)

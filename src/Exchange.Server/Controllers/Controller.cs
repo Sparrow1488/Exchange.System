@@ -35,8 +35,8 @@ namespace Exchange.Server.Controllers
             Response response;
             try
             {
-                string requestMethodName = Context.Request.Query;
-                var method = GetType().GetMethod(requestMethodName);
+                string requestAction = GetRequestControllerAction();
+                var method = GetType().GetMethod(requestAction);
                 var methodParams = method.GetParameters();
                 if (methodParams.Length == 0)
                     response = InvokeMethodWithoutParameter<T>(method);
@@ -51,6 +51,17 @@ namespace Exchange.Server.Controllers
                 response = HandleException(ex);
             }
             return (T)response ?? default;
+        }
+
+        private string GetRequestControllerAction()
+        {
+            string action;
+            var queryChapters = Context.Request.Query.Split("/");
+            if (queryChapters.Length > 1)
+                action = queryChapters[1];
+            else
+                action = queryChapters[0];
+            return action;
         }
 
         private TReturn InvokeMethodWithoutParameter<TReturn>(MethodInfo method) =>

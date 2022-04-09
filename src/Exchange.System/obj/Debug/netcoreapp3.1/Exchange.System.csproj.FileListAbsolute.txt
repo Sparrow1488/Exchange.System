@@ -22,3 +22,16 @@ C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchang
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.System\obj\Debug\netcoreapp3.1\Exchange.System.dll
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.System\obj\Debug\netcoreapp3.1\Exchange.System.pdb
 C:\Users\aleks\OneDrive\Desktop\Илья\Repositories\ExchangeSystem\src\Exchange.System\bin\Debug\netcoreapp3.1\Encryptors.pdb
+C:\Users\ilyao\Desktop\Repos\ExchangeSystem\src\Exchange.System\obj\Debug\netcoreapp3.1\Exchange.System.csproj.AssemblyReference.cache
+C:\Users\ilyao\Desktop\Repos\ExchangeSystem\src\Exchange.System\obj\Debug\netcoreapp3.1\Exchange.System.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ilyao\Desktop\Repos\ExchangeSystem\src\Exchange.System\obj\Debug\netcoreapp3.1\Exchange.System.AssemblyInfoInputs.cache
+C:\Users\ilyao\Desktop\Repos\ExchangeSystem\src\Exchange.System\obj\Debug\netcoreapp3.1\Exchange.System.AssemblyInfo.cs
+C:\Users\ilyao\Desktop\Repos\ExchangeSystem\src\Exchange.System\obj\Debug\netcoreapp3.1\Exchange.System.csproj.CoreCompileInputs.cache
+C:\Users\ilyao\Desktop\Repos\ExchangeSystem\src\Exchange.System\obj\Debug\netcoreapp3.1\Exchange.System.dll
+C:\Users\ilyao\Desktop\Repos\ExchangeSystem\src\Exchange.System\obj\Debug\netcoreapp3.1\Exchange.System.pdb
+C:\Users\ilyao\Desktop\Repos\ExchangeSystem\src\Exchange.System\bin\Debug\netcoreapp3.1\Exchange.System.deps.json
+C:\Users\ilyao\Desktop\Repos\ExchangeSystem\src\Exchange.System\bin\Debug\netcoreapp3.1\Exchange.System.dll
+C:\Users\ilyao\Desktop\Repos\ExchangeSystem\src\Exchange.System\bin\Debug\netcoreapp3.1\Exchange.System.pdb
+C:\Users\ilyao\Desktop\Repos\ExchangeSystem\src\Exchange.System\bin\Debug\netcoreapp3.1\Encryptors.dll
+C:\Users\ilyao\Desktop\Repos\ExchangeSystem\src\Exchange.System\bin\Debug\netcoreapp3.1\Encryptors.pdb
+C:\Users\ilyao\Desktop\Repos\ExchangeSystem\src\Exchange.System\obj\Debug\netcoreapp3.1\Exchange.System.csproj.CopyComplete

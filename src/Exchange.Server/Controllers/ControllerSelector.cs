@@ -1,5 +1,6 @@
 ﻿using Exchange.Server.Exceptions;
 using Exchange.System.Enums;
+using Exchange.System.Helpers;
 using ExchangeSystem.Helpers;
 using System;
 using System.Linq;
@@ -9,8 +10,9 @@ namespace Exchange.Server.Controllers
 {
     public class ControllerSelector : IControllerSelector
     {
-        public Controller SelectController(string controllerName)
+        public Controller SelectController(string query)
         {
+            var controllerName = QueryParser.GetController(query);
             Ex.ThrowIfEmptyOrNull(controllerName);
             Type parent = typeof(Controller);
             Type[] findTypes = Assembly.GetExecutingAssembly()

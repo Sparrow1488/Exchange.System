@@ -2,6 +2,7 @@
 using Exchange.System.Entities;
 using Exchange.System.Enums;
 using Exchange.System.Extensions;
+using Exchange.System.Helpers;
 using Exchange.System.Packages;
 using ExchangeSystem.Helpers;
 using ExchangeSystem.Packages;
@@ -11,15 +12,13 @@ namespace Exchange.Server.Controllers
 {
     public class AuthorizationController : Controller
     {
-        public AuthorizationController() : base() { } 
+        public AuthorizationController() : base() { }
         public AuthorizationController(RequestContext context) : base(context) { }
 
         public virtual Response Authorization(UserPassport passport)
         {
             Response response;
-            Ex.ThrowIfNull(passport);
-            Ex.ThrowIfEmptyOrNull(passport.Login, "Login wasn't be null or empty!");
-            Ex.ThrowIfEmptyOrNull(passport.Password, "Password wasn't be null or empty!");
+            ThrowIfPassportInvalid(passport);
 
             if (CompleteUserAuthorization(passport))
                 response = CreateSuccessAuthResponse();
@@ -40,5 +39,26 @@ namespace Exchange.Server.Controllers
 
         private Response CreateFailedAuthResponse() =>
             new Response<EmptyEntity>(new ResponseReport("Failed authorization", AuthorizationStatus.Failed), new EmptyEntity());
+
+        private void ThrowIfPassportInvalid(UserPassport passport)
+        {
+            Ex.ThrowIfNull(passport);
+            Ex.ThrowIfEmptyOrNull(passport.Login, "Login wasn't be null or empty!");
+            Ex.ThrowIfEmptyOrNull(passport.Password, "Password wasn't be null or empty!");
+        }
+
+        public virtual Response AuthorizationHashed(HashedUserPassport hashedPassport)
+        {
+            ThrowIfPassportInvalid(hashedPassport);
+            Response response;
+            var hasher = new Hasher();
+            if (hasher.VerifyHash(hashedPassport.Login, "asd")
+                && hasher.VerifyHash(hashedPassport.Password, "1234"))
+            {
+                response = CreateSuccessAuthResponse();
+            }
+            else response = CreateFailedAuthResponse();
+            return response;
+        }
     }
 }

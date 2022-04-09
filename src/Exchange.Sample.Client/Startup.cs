@@ -25,7 +25,7 @@ namespace Exchange.Sample.Client
         public async Task RunAsync()
         {
             _logger.LogInformation($"{nameof(Startup)} running");
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < 2; i++)
             {
                 await _authorization.AuthorizeAsync();
                 if (_authorization.IsSuccess())

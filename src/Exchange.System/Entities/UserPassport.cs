@@ -16,8 +16,8 @@ namespace Exchange.System.Entities
             Password = password;
         }
 
-        [JsonProperty] public string Login { get; set; }
-        [JsonProperty] public string Password { get; set; }
-        [JsonProperty] public string Token { get; set; }
+        [JsonProperty] public string Login { get; private set; }
+        [JsonProperty] public string Password { get; private set; }
+        [JsonProperty] public string Token { get; private set; }
     }
 }
