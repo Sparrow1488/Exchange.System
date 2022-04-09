@@ -1,11 +1,39 @@
 # ExchangeSystem
-## What is it
+## Introduction
 
 **ExchangeSystem** are networking protocols that can exchange information between two sides without network protection or use aes+rsa (and custom) encription. Under the hood is used a TCP/IP stable connection which guarantees that data will received.
 
-## Where can it used
+In this solution, you can extend an existing one, or write your own protocols using the `RequestSender` auxiliary class to work with `TcpClient`, or use your own solutions using the open `IRequestSender` interface (`IRequestSender<TRequest, TResponse>`). 
 
-This is project was developed for use in non-commercial applications likes online chat and message wall.
+As an example, you can see `AdvancedRequestSender` and `AdvancedAesRsaSender` using Aes256 and RSA1024 encryption algorithms implemented in the .NET standard library.
+
+```C#
+IRequestSender sender = new AdvancedRequestSender(connection);
+IRequestSender protectedSender = new AdvancedAesRsaSender(connection);
+```
+
+To work with your own protocols, you can use [Exchange.Server](https://github.com/Sparrow1488/ExchangeSystem/tree/main/src/Exchange.Server) in which requests are processed using controllers from the MVC pattern.
+
+```C#
+public class AuthorizationController : Controller
+{
+    public AuthorizationController() : base() { }
+    public AuthorizationController(RequestContext context) : base(context) { }
+
+    public virtual Response Authorization(HashedUserPassport passport)
+    {
+        Response response;
+        ThrowIfPassportInvalid(passport);
+        
+        CompleteUserAuthorization(passport);
+        if (IsAuthSuccess())
+            response = CreateSuccessAuthResponse();
+        else response = CreateFailedAuthResponse();
+        return response;
+    }
+    .....
+}
+```
 
 ## Roadmap
 
@@ -21,50 +49,40 @@ In the future I'll make a desktop (mobile) client and nice (hopefully) web-site.
   * Minimal interface
   * Download installer and read the application description
 
-## Code Examples
+## Dependencies
 
-[Client](https://github.com/Sparrow1488/ExchangeSystem/tree/main/src/Exchange.Sample.Client) with Dependency Injection:
+* For .NET Core 3.1
+  * [Encryptors](https://github.com/Sparrow1488/Encryptors) : .NET Core 3.1
+  * Newtonsoft.Json : v.13.0.1
+  * Polly : v.7.2.3
+
+## Examples
+
+* [Client with DI](https://github.com/Sparrow1488/ExchangeSystem/tree/main/src/Exchange.Sample.Client)
+
+## .NET Core Usage
+
+Sample usage on client side:
 
 ```C#
-// Startup
-public async Task RunAsync()
-{
-    _logger.LogInformation($"{nameof(Startup)} running");
-    await _authorization.AuthorizeAsync();
-    if (_authorization.IsSuccess())
-    {
-        var authToken = _authorization.GetToken();
-        _logger.LogInformation("Auth token => " + authToken.ToString());
-    }
-}
+var connection = new ConnectionSettings("127.0.0.1", 88);
+var sender = new AdvancedRequestSender(connection);
+var response = await sender.SendRetryRequestAsync(CreateAuthRequest());
+if(response.Report.Status == ResponseStatus.Success){
+    var responseWithToken = response as Response<Guid>;
+    ThrowIfNull(responseWithToken);
+    return responseWithToken.Content; // Guid
+} 
 ```
 
 ```C#
-// AuthorizationService
-public async Task AuthorizeAsync(string login, string password)
-{
-    var sendler = new NewRequestSendler(_connection);
-    _logger.LogDebug("GET => " + "Authorization");
-    var response = await sendler.SendRequestAsync(CreateAuthorizationRequest());
-    _logger.LogInformation("STATUS => " + response.Report.Status.ToString());
-    _logger.LogInformation($"MESSAGE => {response.Report.Message}");
+private UserPassport _passport = new UserPassport("asd", "1234");
 
-    if (response.Report.Status.Equals(AuthorizationStatus.Success))
-    {
-        var correctResponse = response as Response<Guid>;
-        Ex.ThrowIfNull(correctResponse);
-        _logger.LogDebug("GUID => " + correctResponse.Content.ToString());
-        _context.IsSuccess = true;
-        _context.Token = correctResponse.Content;
-    }
-    else if (response.Report.Status.Equals(AuthorizationStatus.Failed))
-    {
-        _logger.LogWarning("Authorization Failed");
-    }
-    else
-    {
-        _logger.LogError("Error");
-    }
+private Request<HashedUserProfile> CreateAuthRequest(){
+    var request = new Request<HashedUserPassport>("Authorization", 											ProtectionType.Default);
+    var hashedPassport = HashedUserPassport.CreateHashed(passport);
+    request.Body = new Body<HashedUserPassport>(hashedPassport);
+    return request;
 }
 ```
 
