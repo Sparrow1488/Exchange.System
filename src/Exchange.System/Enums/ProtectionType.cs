@@ -27,5 +27,10 @@ namespace Exchange.System.Enums
             }
             return isEquals;
         }
+
+        public override string ToString()
+        {
+            return Name ?? base.ToString();
+        }
     }
 }

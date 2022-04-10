@@ -1,13 +1,14 @@
 ﻿using Exchange.Server.Primitives;
-using System.Net.Sockets;
+using System;
 using System.Threading.Tasks;
 
 namespace Exchange.Server.Routers
 {
-    public interface IRouter
+    public interface IRouter : IDisposable
     {
-        void AddInQueue(TcpClient clientToProccess);
-        int GetQueueLength();
+        void Start();
+        void Stop();
         Task<RequestContext> AcceptRequestAsync();
+        IRouter Configure(Action<RouterConfiguration> config);
     }
 }

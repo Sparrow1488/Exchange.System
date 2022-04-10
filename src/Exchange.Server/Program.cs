@@ -13,7 +13,7 @@ namespace Exchange.Server
         public const string Host = "127.0.0.1";
         public const int Port = 80;
 
-        private static Router _router = new Router();
+        private static Router _router = new Router(Host, Port);
         
         private static async Task Main()
         {
@@ -27,17 +27,10 @@ namespace Exchange.Server
                     var client = receiver.AcceptClient();
                     Console.WriteLine("Client was connected");
 
-                    _router.AddInQueue(client); // задел на многопоточную обработку
-                    await ProcessRouterQueueAsync();
+
                     await Task.Delay(30);
                 }
             }
-        }
-
-        private static async Task ProcessRouterQueueAsync()
-        {
-            if(_router.GetQueueLength() > 0)
-                await ProcessRequestAsync();
         }
 
         private static async Task ProcessRequestAsync()
